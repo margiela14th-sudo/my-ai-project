@@ -142,10 +142,17 @@ function slide(title, sec, notesText) {
   T(s, "独立しているが、つながっている", { x: 0.8, y: 6.1, w: 11.7, h: 0.6, fontSize: 22, bold: true, color: FOREST, align: "center" });
 
   // 4 答えではなく問い
-  s = slide("今日、お伝えしたいこと", "はじめに", "【0:20】今日は、どちらの問題にも、一つの答えを示すつもりはありません。私なりの試みをお見せして、最後に皆さんと指導助言の先生に問いかけ、ご意見をいただきたいと思っています。");
-  await iconCircle(s, fa.FaHandshake, 5.9, 1.55, 1.5, HEX.sakura);
-  T(s, [{ text: "一つの答えではなく、\n" }, { text: "問い", options: { color: SAKURA } }, { text: "を共有したい" }], { x: 0.8, y: 3.25, w: 11.7, h: 2.0, fontSize: 44, bold: true, align: "center", valign: "middle" });
-  T(s, "最後に、皆さまと指導助言の先生からご意見をいただきます", { x: 0.8, y: 5.5, w: 11.7, h: 0.6, fontSize: 22, color: GRAY, align: "center" });
+  s = slide("今日の発表の流れ", "はじめに", "【0:40】今日の発表の流れです。まず、二つの問題を提起します。一つ目は教員不足、二つ目は学校でのAIの活用です。どちらも、関数やデータで数値を見ていきます。次に、私の過去の数学の授業を、AIを使う前と使った後で比べます。実証まではできていませんが、どんな可能性があり、どんな利点と欠点があるのかを考えます。そして最後に、研究仮説から考察し、結論として、AIの価値を決めるのは使う人の質だ、というところまでお話しします。どちらの問題にも一つの答えを示すつもりはありません。最後に、皆さんと指導助言の先生にご意見をいただけたらと思っています。");
+  const flow = [[fa.FaUsers, HEX.forest, "問題提起①", "教員不足を\n数値で見る"], [fa.FaLaptopCode, HEX.ai, "問題提起②", "教員のAI活用を\n数値で見る"], [fa.FaSyncAlt, HEX.moss, "比較", "AIを使う前と\n使った後"], [fa.FaSearch, HEX.gray, "考察", "仮説から\n言えること"], [gi.GiPlantSeed, HEX.sakura, "結論", "AIの価値は\n使う人の質"]];
+  for (let i = 0; i < 5; i++) {
+    const [ic, col, h, t] = flow[i], x = 0.8 + i * 2.42, last = i === 4;
+    card(s, x, 1.6, 2.15, 3.6, last ? HEX.sakuraTint : TINT);
+    await iconCircle(s, ic, x + 0.6, 1.85, 0.95, col);
+    T(s, h, { x, y: 2.95, w: 2.15, h: 0.5, fontSize: 18, bold: true, color: last ? SAKURA : INK, align: "center" });
+    T(s, t, { x, y: 3.5, w: 2.15, h: 1.3, fontSize: 17, align: "center", valign: "middle" });
+    if (i < 4) s.addImage({ data: await icon(fa.FaArrowRight, HEX.gray), x: x + 2.17, y: 3.2, w: 0.23, h: 0.25 });
+  }
+  T(s, [{ text: "一つの答えではなく、" }, { text: "問い", options: { color: SAKURA } }, { text: "を共有したい（最後にご意見をいただきます）" }], { x: 0.8, y: 5.55, w: 11.9, h: 0.8, fontSize: 24, bold: true, align: "center", valign: "middle" });
 
   // 5 14年間の歩み
   s = slide("14年間の歩み", "はじめに", "【0:40】少しだけ、これまでの歩みを振り返ります。2015年の北海道大会では平行四辺形の証明、2017年の和歌山大会では複合図、2018年の東京大会ではお掃除ロボットの授業を発表しました。2021年は振り子とGeoGebra、2022年はジグソー法、2023年は教師の手立てです。振り返ると、どれも「良い授業を、新しい手段で改善する」ことでした。今回、その手段が生成AIです。");
@@ -431,6 +438,19 @@ function slide(title, sec, notesText) {
   }
   T(s, "AIは速い。確かめる人がいて、はじめて使えるものになる", { x: 0.8, y: 5.85, w: 11.9, h: 0.7, fontSize: 26, bold: true, color: FOREST, align: "center" });
 
+  s = slide("AIを使う前と後：利点・欠点・可能性", "考察", "【1:00】AIを使う前と後を比べて、数学の授業づくりについて、利点と欠点、そして可能性を整理しました。実証はまだですので、見えてきたこととしてお聞きください。利点は、原典のデータをすぐにグラフにできること、動く教材を短い時間で作れること、過去の授業を整理して課題を言葉にできることです。欠点は、もっともらしい誤りが混ざること、確かめる時間が要ること、そしてAIは目の前の生徒の実態を知らないことです。頼りすぎると、教師が自分で考える機会が減るおそれもあります。可能性としては、過去の授業をアレンジして生かし直せること、生徒がAIの答えを数学で確かめる授業、そして若い先生が先輩の実践を土台に学べることです。");
+  const pc = [[fa.FaCheckCircle, HEX.forest, "TINT", "利点", ["原典データをすぐグラフ化", "動く教材を短時間で", "過去の授業を整理し\n課題を言葉にできる"]],
+              [fa.FaExclamationCircle, HEX.sakura, "sakuraTint", "欠点", ["もっともらしい誤りが混ざる", "確かめる時間が要る", "生徒の実態は知らない\n（頼りすぎに注意）"]],
+              [fa.FaLightbulb, HEX.ai, "aiTint", "可能性", ["過去の授業の生かし直し", "AIの答えを数学で\n確かめる授業", "若手が先輩の実践を\n土台に学べる"]]];
+  for (let i = 0; i < 3; i++) {
+    const [ic, col, tint, h, li] = pc[i], x = 0.8 + i * 4.0;
+    card(s, x, 1.55, 3.7, 4.55, tint === "TINT" ? TINT : HEX[tint]);
+    await iconCircle(s, ic, x + 0.3, 1.8, 0.9, col);
+    T(s, h, { x: x + 1.35, y: 1.8, w: 2.2, h: 0.9, fontSize: 30, bold: true, color: col, valign: "middle" });
+    T(s, bl(li), { x: x + 0.35, y: 2.95, w: 3.2, h: 3.0, fontSize: 18, paraSpaceAfter: 10 });
+  }
+  T(s, "※ 数学の授業づくりに限定。実証前のため、見えてきた見通しとして示す", { x: 0.8, y: 6.3, w: 11.9, h: 0.4, fontSize: 13, color: GRAY, align: "center" });
+
   s = slide("提案と、これからの検証", "考察", "【0:50】以上から、三つを提案します。一つ目、AI LESSON REMAKE。特に、人間が判断するステップを手順に組み込むこと。二つ目、AIの答えを数学で確かめる活動を、授業に取り入れること。三つ目、効果を測ること。授業準備の時間を改善の前後で記録して時間削減率を求め、国際調査と同じ項目で、先生の意識も調べます。生徒の到達度や振り返りも比べていきます。");
   const pp = [[fa.FaSyncAlt, HEX.forest, "提案1", "AI LESSON REMAKE\n人間の判断を手順に"], [fa.FaSearch, HEX.sakura, "提案2", "AIの答えを\n数学で確かめる授業"], [fa.FaChartLine, HEX.ai, "提案3", "効果を測る\n（時間・意識・到達度）"]];
   for (let i = 0; i < 3; i++) {
@@ -443,11 +463,20 @@ function slide(title, sec, notesText) {
   card(s, 0.8, 5.0, 11.9, 1.5, HEX.sakuraTint);
   T(s, [{ text: "時間削減率（%）＝（改善前 − 改善後）÷ 改善前 × 100\n", options: { fontSize: 22, bold: true, color: SAKURA } }, { text: "教師：準備時間・負担感（TALISと同じ項目）／生徒：到達率・説明・振り返り", options: { fontSize: 17 } }], { x: 0.8, y: 5.0, w: 11.9, h: 1.5, align: "center", valign: "middle" });
 
+  s = slide("結論：AIの価値は、使う人の土台で決まる", "考察", "【1:00】ここまでをまとめると、結論はこうです。授業の質は、土台とAIのかけ算だと考えています。土台とは、自分の授業の記録、うまくいったことも失敗したことも含めた、一次情報です。土台がゼロなら、AIをどれだけかけても、ゼロです。AIをただ使うだけでは、薄っぺらいものしかできず、AIに使われるだけになってしまいます。私自身、薄っぺらいかもしれません。それでも、14年間の授業があったから、AIにアレンジを頼むことができました。だからこそ、現場の先生方には、自分の土台とともに、生成AIの活用を進めてほしいと思っています。");
+  T(s, "授業の質 ＝ 土台 × AI", { x: 0.8, y: 1.4, w: 11.9, h: 1.3, fontSize: 56, bold: true, color: FOREST, align: "center", valign: "middle" });
+  card(s, 0.8, 2.9, 5.75, 2.35, TINT);
+  await iconCircle(s, gi.GiPlantSeed, 1.1, 3.15, 0.95, HEX.forest);
+  T(s, [{ text: "土台（一次情報）\n", options: { fontSize: 22, bold: true, color: FOREST } }, { text: "自分の授業記録\n成功も失敗も、生徒の反応も", options: { fontSize: 18 } }], { x: 2.25, y: 2.95, w: 4.2, h: 2.25, valign: "middle" });
+  card(s, 6.95, 2.9, 5.75, 2.35, HEX.sakuraTint);
+  T(s, [{ text: "土台が 0 なら\n", options: { fontSize: 22, bold: true } }, { text: "AIをかけても 0", options: { fontSize: 36, bold: true, color: SAKURA } }, { text: "\n使われるだけ・薄っぺらくなる", options: { fontSize: 17 } }], { x: 6.95, y: 2.9, w: 5.75, h: 2.35, align: "center", valign: "middle" });
+  T(s, "だからこそ、土台とともに、生成AIの活用を進めたい", { x: 0.8, y: 5.5, w: 11.9, h: 0.9, fontSize: 30, bold: true, color: SAKURA, align: "center", valign: "middle" });
+
   // ===== 第4章 問いかけ =====
   divider("第5章", "AIと、どう共存するか", "皆さまへの問い", "【0:10】最後の章です。AIと一緒に資料を作ってみて、感じたことがあります。");
 
   // 25 AIと人間
-  s = slide("AIと人間、それぞれの役割", null, "【0:50】AIは、案を出すこと、作業、プログラムを書くことはとても速いです。でも、何を残すかを決めること、生徒の表情を見て問い返すこと、授業に思いを込めることは、人間にしかできません。そもそも、土台がなければ、AIでアレンジすることもできません。私自身、土台があると言い切れるものではありませんが、14年間の授業がなければ、今回の資料は作れませんでした。");
+  s = slide("AIと人間、それぞれの役割", null, "【0:50】AIは、案を出すこと、作業、プログラムを書くことはとても速いです。でも、何を残すかを決めること、生徒の表情を見て問い返すこと、授業に思いを込めることは、人間にしかできません。AIと人間、それぞれの得意なことを生かして、共存していくことが大切だと考えています。");
   const co = [[fa.FaRobot, HEX.ai, "aiTint", "AIが得意", ["案を出す", "作業・整理", "プログラム"]], [fa.FaChalkboardTeacher, HEX.sakura, "sakuraTint", "人間にしかできない", ["何を残すか決める", "生徒を見て問い返す", "思いを込める"]]];
   for (let i = 0; i < 2; i++) {
     const [ic, col, tint, h, li] = co[i], x = 0.8 + i * 6.05;
@@ -474,7 +503,7 @@ function slide(title, sec, notesText) {
 
   // 28 おわりに
   s = pres.addSlide({ masterName: "DARK", sectionTitle: _sec });
-  s.addNotes("【1:00】今回の発表には、いろいろな賛否があると思います。それでも、私の14年間分の蓄積を込めました。私にとっては、最後の発表という部分もあると思っています。最後に、一番伝えたいことです。私たちの仕事は、最終的には、目の前の子どもたちのためにあります。いくらAIが入ってこようとも、どれだけ時間を短縮できようとも、一番大事なのは、それを使う人の誠実さと謙虚さです。だからこそ、使う人である私たち自身が、人間性を磨き続け、学び続けることが大切だと思います。私自身もそうありたいと思いますし、皆さんにも、ともに頑張っていただけたらと思います。ご清聴ありがとうございました。");
+  s.addNotes("【1:00】今回の発表には、いろいろな賛否があると思います。それでも、私の14年間分の蓄積を込めました。最後に、一番伝えたいことです。私たちの仕事は、最終的には、目の前の子どもたちのためにあります。いくらAIが入ってこようとも、どれだけ時間を短縮できようとも、一番大事なのは、それを使う人の誠実さと謙虚さです。だからこそ、使う人である私たち自身が、人間性を磨き続け、学び続けることが大切だと思います。私自身もそうありたいと思いますし、皆さんにも、ともに頑張っていただけたらと思います。ご清聴ありがとうございました。");
   T(s, "目の前の子どもたちのことを、一番に。", { x: 0.8, y: 1.0, w: 11.7, h: 1.2, fontSize: 40, bold: true, color: WHITE, valign: "middle" });
   T(s, "AIが入っても、時間を短縮できても、\n大事なのは、使う人の誠実さと謙虚さ。", { x: 0.8, y: 2.45, w: 11.7, h: 1.5, fontSize: 26, color: "E5EEDF", valign: "middle" });
   s.addShape(pres.shapes.ROUNDED_RECTANGLE, { x: 0.8, y: 4.3, w: 11.7, h: 1.3, fill: { color: "3B7A3C" }, line: { color: "3B7A3C" }, rectRadius: 0.15 });
