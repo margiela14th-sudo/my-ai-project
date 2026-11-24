@@ -21,7 +21,7 @@ GR = RGBColor(0x77, 0x77, 0x77); W = RGBColor(0xFF, 0xFF, 0xFF); LGR = RGBColor(
 
 TITLE = "生成AIを活用した数学科授業の改善と新たな授業モデルの提案"
 SUB = "～関数分野における従来の授業実践を通して～"
-FOOT = "山口県中学校数学教育研究協議会 発表資料　" + TITLE
+FOOT = "令和8年度山口県中学校数学教育第二地区研究協議会 発表資料　" + TITLE
 DATE = "2026/11/26"
 
 prs = Presentation()
@@ -86,7 +86,7 @@ def font_chart(ch, size=12):
 # ---------- 1 表紙 ----------
 s = prs.slides.add_slide(BL)
 bar = s.shapes.add_shape(MSO_SHAPE.RECTANGLE, Inches(0.5), Inches(0.45), Inches(0.14), Inches(0.45)); bar.fill.solid(); bar.fill.fore_color.rgb = G; bar.line.fill.background()
-tb(s, Inches(0.75), Inches(0.38), Inches(9), Inches(0.6), ["令和8年度 山口県中学校数学教育研究協議会"], size=18, anchor=MSO_ANCHOR.MIDDLE)
+tb(s, Inches(0.75), Inches(0.38), Inches(9), Inches(0.6), ["令和8年度山口県中学校数学教育第二地区研究協議会"], size=18, anchor=MSO_ANCHOR.MIDDLE)
 tb(s, Inches(0.9), Inches(2.1), Inches(11.6), Inches(1.4), [[(TITLE, {"bold": True})]], size=36, align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE)
 tb(s, Inches(0.9), Inches(3.45), Inches(11.6), Inches(0.7), [SUB], size=24, align=PP_ALIGN.CENTER)
 tb(s, Inches(2.2), Inches(4.5), Inches(9), Inches(0.9), [[("変えるべきは、授業の本質ではない。その本質にたどり着くための手段である。", {"color": G, "bold": True})]], size=18, align=PP_ALIGN.CENTER, fill=LG)

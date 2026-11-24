@@ -77,7 +77,7 @@ def fig(path, width_mm, cap):
 
 
 # 表題
-para("令和8年度 山口県中学校数学教育研究協議会", align=WD_ALIGN_PARAGRAPH.LEFT, size=9)
+para("令和8年度山口県中学校数学教育第二地区研究協議会", align=WD_ALIGN_PARAGRAPH.LEFT, size=9)
 para("生成AIを活用した数学科授業の改善と新たな授業モデルの提案", True, WD_ALIGN_PARAGRAPH.CENTER, 15, GOT)
 para("～関数分野における従来の授業実践を通して～", False, WD_ALIGN_PARAGRAPH.CENTER, 12, GOT)
 para("下関市立名陵中学校　新田正幸", False, WD_ALIGN_PARAGRAPH.RIGHT, 10.5)
