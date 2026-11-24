@@ -82,183 +82,146 @@ def base(title, notes, sec=None):
 def font_chart(ch, size=12):
     ch.font.name = FONT; ch.font.size = Pt(size)
 
+# ===== 第2版のスライド本体（build_pptx.py のヘルパー部の後ろに連結して使う） =====
+# スタンス：資料はすべてAIを活用して作成。土台は14年間の授業実践。賛否は受け取り方次第。AIと人間の共存。
+
+def arrow(s, x, y, w=0.3, h=0.4):
+    a = s.shapes.add_shape(MSO_SHAPE.RIGHT_ARROW, x, y, Inches(w), Inches(h)); a.fill.solid(); a.fill.fore_color.rgb = GR; a.line.fill.background()
+
 
 # ---------- 1 表紙 ----------
 s = prs.slides.add_slide(BL)
 bar = s.shapes.add_shape(MSO_SHAPE.RECTANGLE, Inches(0.5), Inches(0.45), Inches(0.14), Inches(0.45)); bar.fill.solid(); bar.fill.fore_color.rgb = G; bar.line.fill.background()
 tb(s, Inches(0.75), Inches(0.38), Inches(9), Inches(0.6), ["令和8年度山口県中学校数学教育第二地区研究協議会"], size=18, anchor=MSO_ANCHOR.MIDDLE)
-tb(s, Inches(0.9), Inches(2.1), Inches(11.6), Inches(1.4), [[(TITLE, {"bold": True})]], size=36, align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE)
-tb(s, Inches(0.9), Inches(3.45), Inches(11.6), Inches(0.7), [SUB], size=24, align=PP_ALIGN.CENTER)
-tb(s, Inches(2.2), Inches(4.5), Inches(9), Inches(0.9), [[("変えるべきは、授業の本質ではない。その本質にたどり着くための手段である。", {"color": G, "bold": True})]], size=18, align=PP_ALIGN.CENTER, fill=LG)
+tb(s, Inches(0.9), Inches(1.9), Inches(11.6), Inches(1.4), [[(TITLE, {"bold": True})]], size=36, align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE)
+tb(s, Inches(0.9), Inches(3.25), Inches(11.6), Inches(0.7), [SUB], size=24, align=PP_ALIGN.CENTER)
+tb(s, Inches(2.2), Inches(4.3), Inches(9), Inches(1.0), [[("14年間の授業実践を土台に、生成AIと一緒に作った発表です", {"color": G, "bold": True})]], size=20, align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE, fill=LG)
 tb(s, Inches(7.3), Inches(5.9), Inches(5.6), Inches(0.9), ["下関市立名陵中学校　新田正幸"], size=20, align=PP_ALIGN.RIGHT)
 band = s.shapes.add_shape(MSO_SHAPE.RECTANGLE, 0, Inches(7.12), SW, Inches(0.38)); band.fill.solid(); band.fill.fore_color.rgb = G; band.line.fill.background()
 s.notes_slide.notes_text_frame.text = (
     "【0:20】今から、「生成AIを活用した数学科授業の改善と新たな授業モデルの提案 ～関数分野における従来の授業実践を通して～」という題で発表をします。"
     "下関市立名陵中学校の新田です。よろしくお願いします。")
 
-# ---------- 2 はじめに ----------
-s = base("はじめに　これまでの研究の延長として", (
-    "【0:30】まず、今回の研究の位置づけです。2021年は、関数y＝ax²の授業でGeoGebraを使い、ICTで「2乗に比例する関数とみなす」ことを支える授業を発表しました。"
-    "2022年はジグソー法による協働的な学び、2023年はねじれの位置を説明する授業での教師の手立てを発表しました。"
-    "どれも、良い授業を新しい手段で改善するという研究です。今回はその手段が生成AIです。授業の本質は変えずに、本質にたどり着くための手段を見直します。"), "はじめに")
-items = [("2021", "ICT活用", "GeoGebra\n関数y＝ax²・振り子"), ("2022", "ジグソー法", "協働的な学び\n正負の数・文字式"), ("2023", "教師の手立て", "ねじれの位置を\n説明する授業"), ("2026", "生成AI", "関数分野の授業を\n再構築する")]
-for i, (yr, means, th) in enumerate(items):
-    x = Inches(0.6 + i * 3.15); last = i == 3
-    tb(s, x, Inches(1.55), Inches(2.8), Inches(0.7), [[(yr, {"bold": True, "color": W})]], size=24, align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE, fill=R if last else G)
-    tb(s, x, Inches(2.35), Inches(2.8), Inches(2.4), [[(means, {"bold": True, "color": R if last else G})], th], size=20, align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE, line=R if last else G)
-    if i < 3:
-        a = s.shapes.add_shape(MSO_SHAPE.RIGHT_ARROW, x + Inches(2.83), Inches(3.35), Inches(0.3), Inches(0.4)); a.fill.solid(); a.fill.fore_color.rgb = GR; a.line.fill.background()
-tb(s, Inches(0.6), Inches(5.15), Inches(12.1), Inches(1.6), [[("共通する考え：", {"bold": True}), ("従来の良い授業を否定せず、", {}), ("新しい手段", {"color": R, "bold": True}), ("で改善する", {})],
-   [("2021年の課題●「ICTの効果を計る項目」「ICTを扱うタイミング」を、今回の出発点にする", {"color": B})]], size=20, fill=Y)
+# ---------- 2 この発表資料について ----------
+s = base("はじめに　この発表資料について", (
+    "【0:50】はじめに、お伝えしておきたいことがあります。今回の発表資料は、構成もスライドも原稿も、そして後でお見せする教材も、すべて生成AIを活用して作りました。"
+    "AIで作った発表と聞くと、賛否両論あると思います。ただ、中身には、私がこの14年間、授業で大切にしてきた思いと、その蓄積を載せたつもりです。"
+    "14年間の思いを、AIを活用して形にしてみました。どう受け取るかは、皆さんの受け取り方次第です。そのうえで、最後まで聞いていただけたらうれしいです。"), "はじめに")
+tb(s, Inches(0.6), Inches(1.35), Inches(12.1), Inches(1.4), [[("この発表資料は、", {}), ("すべて生成AIを活用して", {"color": R, "bold": True}), ("作成しました。", {})],
+   [("構成・スライド・発表原稿・グラフ・数学教材（振り子ラボ）", {"size": 18, "color": GR})]], size=26, align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE, fill=Y)
+tb(s, Inches(0.6), Inches(3.0), Inches(5.9), Inches(2.6), [[("AIが担ったこと", {"bold": True, "color": B})], "・資料の整理と構成案", "・統計資料の収集とグラフ化", "・スライド・原稿・教材の下書き"], size=20, line=B)
+tb(s, Inches(6.8), Inches(3.0), Inches(5.9), Inches(2.6), [[("中身（土台）", {"bold": True, "color": G})], "・14年間の授業実践と研究発表", "・授業で大切にしてきた思い", "・何を残し、何を変えるかの判断"], size=20, line=G)
+tb(s, Inches(0.6), Inches(5.85), Inches(12.1), Inches(0.9), [[("賛否両論あると思います。受け取り方は、皆さんにお任せします。", {"bold": True})]], size=20, align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE, fill=LG)
 
-# ---------- 3 現状① ----------
+# ---------- 3 14年間の歩み ----------
+s = base("14年間の歩み：良い授業を、新しい手段で改善してきた", (
+    "【0:40】これまでの歩みを少しだけ振り返ります。2015年ごろから振り子の授業を続け、2017年には桜の開花日やバトンパスの授業もつくりました。"
+    "2021年は、振り子の授業でGeoGebraを使い、全国大会で発表しました。2022年はジグソー法、2023年は教師の手立てを発表しました。"
+    "振り返ると、どれも「良い授業を、新しい手段で改善する」ことでした。今回、その手段が生成AIです。"
+    "14年間で学校も生徒も変わりましたが、現実の事象を数学で考える授業を大切にしたいという思いは、ずっと変わっていません。"), "はじめに")
+items = [("2015〜", "振り子の授業\n（3年 y＝ax²）"), ("2017", "桜の開花日\nバトンパス"), ("2021", "ICT活用\nGeoGebra×振り子"), ("2022", "ジグソー法\n協働的な学び"), ("2023", "教師の手立て\nねじれの位置"), ("2026", "生成AI\n授業を再構築")]
+for i, (yr, th) in enumerate(items):
+    x = Inches(0.45 + i * 2.15); last = i == 5
+    tb(s, x, Inches(1.5), Inches(1.9), Inches(0.65), [[(yr, {"bold": True, "color": W})]], size=22, align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE, fill=R if last else G)
+    tb(s, x, Inches(2.25), Inches(1.9), Inches(1.9), [th], size=17, align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE, line=R if last else G, fill=Y if last else None)
+    if i < 5: arrow(s, x + Inches(1.91), Inches(3.0), 0.22, 0.35)
+tb(s, Inches(0.6), Inches(4.5), Inches(12.1), Inches(1.0), [[("共通する考え：", {"bold": True}), ("従来の良い授業を否定せず、", {}), ("新しい手段", {"color": R, "bold": True}), ("で改善する", {})]], size=22, align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE, fill=LG)
+tb(s, Inches(0.6), Inches(5.7), Inches(12.1), Inches(1.1), [[("2021年に残した課題●「ICTの効果を計る項目」「ICTを扱うタイミング」→ 今回の出発点", {"color": B})]], size=18, align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE)
+
+# ---------- 4 数値で見る教員不足 ----------
 rows = [r for r in csv.DictReader(open(os.path.join(ROOT, "02_統計データ", "全国_教員採用選考_長期推移.csv"), encoding="utf-8-sig")) if int(r["西暦(採用年度)"]) >= 2000]
 lab = [r["採用年度"].replace("年度", "").replace("平成", "H").replace("令和", "R").replace("元", "1") for r in rows]
-s = base("教員を志望する人が減り、採用倍率は過去最低", (
-    "【0:50】第1章、教育現場の現状です。左は公立中学校の教員採用選考の受験者数です。平成25年度の約6万3千人をピークに、令和7年度は約3万7千人に減っています。"
-    "右は採用倍率で、平成12年度の17.9倍から、令和7年度は3.6倍と過去最低です。"
-    "ただし、倍率の低下には、大量退職に伴って採用者数が増えたことも影響しています。また、これは受験者数の推移であり、教員の総数が減っているという意味ではありません。"
-    "山口県の中学校数学は、令和7年度、受験者37人、採用者17人、2.2倍でした。"), "第1章")
-cd = CategoryChartData(); cd.categories = lab; cd.add_series("中学校 受験者数（人）", [int(r["中学校_受験者数"]) for r in rows])
-gf = s.shapes.add_chart(XL_CHART_TYPE.COLUMN_CLUSTERED, Inches(0.4), Inches(1.2), Inches(6.3), Inches(4.9), cd); ch = gf.chart; font_chart(ch, 11)
-ch.has_title = True; ch.chart_title.text_frame.text = "中学校 受験者数（人）"; ch.has_legend = False
-ch.plots[0].series[0].format.fill.solid(); ch.plots[0].series[0].format.fill.fore_color.rgb = G; ch.plots[0].gap_width = 40
+s = base("数値で見てみる：ここ数年の教員不足", (
+    "【0:50】まず、ここ数年の学校の教員不足を、数学的な数値で少し見てみたいと思いました。関数的な表現や、データの活用の部分です。ここは資料として載せておく、という意味合いですので、ご覧ください。"
+    "中学校の教員採用の倍率は、平成12年度の17.9倍から、令和7年度は3.6倍まで下がっています。ただ、これは受験者数の推移で、教員の総数が減っているという意味ではありません。採用者数が増えたことも影響しています。"
+    "勤務実態を見ると、在校時間は少し減りましたが、授業準備の時間はほとんど変わっていません。"
+    "数学の授業で扱う、グラフから傾向を読み取る、変化の割合を考える、ということを、自分たちの職場のことにも当てはめてみた、というイメージです。"), "第1章")
 cd2 = CategoryChartData(); cd2.categories = lab; cd2.add_series("中学校 採用倍率（倍）", [float(r["中学校_競争率"]) for r in rows])
-gf2 = s.shapes.add_chart(XL_CHART_TYPE.LINE_MARKERS, Inches(6.8), Inches(1.2), Inches(6.2), Inches(4.9), cd2); ch2 = gf2.chart; font_chart(ch2, 11)
-ch2.has_title = True; ch2.chart_title.text_frame.text = "中学校 採用倍率（倍）"; ch2.has_legend = False
+gf2 = s.shapes.add_chart(XL_CHART_TYPE.LINE_MARKERS, Inches(0.4), Inches(1.2), Inches(7.0), Inches(4.8), cd2); ch2 = gf2.chart; font_chart(ch2, 11)
+ch2.has_title = True; ch2.chart_title.text_frame.text = "公立中学校 教員採用選考の採用倍率（倍）"; ch2.has_legend = False
 sr = ch2.plots[0].series[0]; sr.format.line.color.rgb = R; sr.format.line.width = Pt(2.5); sr.smooth = False
 for idx in (0, len(rows) - 1):
     pt = sr.points[idx]; pt.data_label.has_text_frame = False; pt.data_label.show_value = True; pt.data_label.position = XL_LABEL_POSITION.ABOVE
     pt.data_label.font.size = Pt(16); pt.data_label.font.bold = True; pt.data_label.font.color.rgb = R
-tb(s, Inches(0.4), Inches(6.15), Inches(12.6), Inches(0.9), [
-    [("H12：17.9倍 → R7：3.6倍（過去最低）　", {"color": R, "bold": True}), ("山口県 中学校数学 R7：受験37人・採用17人・2.2倍", {"bold": True})],
-    [("出典：文部科学省「令和7年度（令和6年度実施）公立学校教員採用選考試験の実施状況等」参考資料1 第7表・第9表（単位：人、倍）。受験者数の推移であり、教員総数の推移ではない。", {"size": 10, "color": GR})]], size=16)
+tb(s, Inches(7.7), Inches(1.3), Inches(5.3), Inches(1.4), [[("中学校の採用倍率", {"bold": True})], [("17.9倍（H12）→ 3.6倍（R7）", {"size": 22, "color": R, "bold": True})]], size=17, line=G)
+tb(s, Inches(7.7), Inches(2.85), Inches(5.3), Inches(1.4), [[("山口県 中学校数学（R7）", {"bold": True})], [("受験37人・採用17人・2.2倍", {"size": 20})]], size=17, line=G)
+tb(s, Inches(7.7), Inches(4.4), Inches(5.3), Inches(1.6), [[("中学校教諭 平日1日（R4）", {"bold": True})], "在校等時間 11:32 → 11:01", [("授業準備 1:26 → 1:23（−3分）", {"color": R, "bold": True})]], size=17, fill=Y)
+tb(s, Inches(0.4), Inches(6.1), Inches(12.6), Inches(0.9), [[("※ 受験者数・倍率の推移であり、教員総数の推移ではない（採用者数の増加も影響）。", {"size": 12, "color": R})],
+   [("出典：文部科学省「令和7年度公立学校教員採用選考試験の実施状況等」参考資料1 第7表・第9表、「教員勤務実態調査（令和4年度）集計【確定値】」", {"size": 10, "color": GR})]], size=12)
 
-# ---------- 4 現状② ----------
-s = base("在校時間は減ったが、授業準備の時間は減っていない", (
-    "【0:50】次に勤務実態です。文部科学省の令和4年度の教員勤務実態調査では、中学校教諭の平日の在校等時間は11時間1分で、平成28年度より31分減りました。"
-    "一方で、授業準備は1時間26分から1時間23分と、ほとんど変わっていません。授業そのものは増えています。"
-    "教師不足も、令和3年度の始業日時点で、中学校で868人と報告されています。"
-    "教職の大変さは以前からありましたが、SNSや報道で勤務の実態が見えるようになったことも、職業選択に影響しているのではないか、と私は考えています。ただし、これは私の仮説で、因果関係は確かめられていません。"
-    "教員が増えることを待つだけでなく、今いる教員で教育の質をどう守るかを考えたいと思いました。"), "第1章")
-items = [("授業（主担当）", 196), ("授業準備", 83), ("生徒指導（集団）", 54), ("朝の業務", 44), ("部活動・クラブ活動", 37), ("成績処理", 36), ("学年・学級経営", 27)]
-cd = CategoryChartData(); cd.categories = [n for n, _ in items][::-1]; cd.add_series("令和4年度（分）", [v for _, v in items][::-1])
-gf = s.shapes.add_chart(XL_CHART_TYPE.BAR_CLUSTERED, Inches(0.4), Inches(1.2), Inches(7.6), Inches(5.0), cd); ch = gf.chart; font_chart(ch, 12)
-ch.has_title = True; ch.chart_title.text_frame.text = "中学校教諭 平日1日の業務別時間（分）R4"; ch.has_legend = False
-pl = ch.plots[0]; pl.gap_width = 40; pl.has_data_labels = True; pl.data_labels.font.size = Pt(12)
-sr = pl.series[0]; sr.format.fill.solid(); sr.format.fill.fore_color.rgb = RGBColor(0x9B, 0xBF, 0x9F)
-p = sr.points[len(items) - 2]; p.format.fill.solid(); p.format.fill.fore_color.rgb = R
-tb(s, Inches(8.3), Inches(1.3), Inches(4.7), Inches(1.7), [[("平日の在校等時間", {"bold": True})], [("11:32 → 11:01（−31分）", {"size": 22})]], size=18, line=G)
-tb(s, Inches(8.3), Inches(3.15), Inches(4.7), Inches(1.7), [[("授業準備（平日）", {"bold": True, "color": R})], [("1:26 → 1:23（−3分）", {"size": 22, "color": R, "bold": True})]], size=18, fill=Y)
-tb(s, Inches(8.3), Inches(5.0), Inches(4.7), Inches(1.2), [[("教師不足（R3始業日）", {"bold": True})], "中学校 868人（不足率0.40%）"], size=16, line=G)
-tb(s, Inches(0.4), Inches(6.3), Inches(12.6), Inches(0.7), [[("出典：文部科学省「教員勤務実態調査（令和4年度）集計【確定値】」（10・11月、時間:分）、「『教師不足』に関する実態調査」（令和4年1月）。", {"size": 10, "color": GR})]], size=10)
-
-# ---------- 5 数学で考える ----------
+# ---------- 5 B=W/(NE) ----------
 s = base("数学で考える：B ＝ W ÷（N × E）", (
-    "【0:50】第2章です。この問題を数学で考えてみます。教員1人当たりの平均業務時間をB、学校全体の業務量をW、教員数をN、業務効率をEとすると、B＝W÷（N×E）と表せます。"
-    "Wを一定とみれば、BはN×Eに反比例します。つまり、Bを減らす方法は、Nを増やす、Wを減らす、Eを高めるの三つです。"
-    "これは実測値ではなく、業務を均等に分け、効率が一様に上がると仮定した簡易的なモデルです。個人差や精神的な負担は表せません。"), "第2章")
-tb(s, Inches(2.2), Inches(1.35), Inches(8.9), Inches(1.3), [[("B ＝ W ÷（N × E）", {"bold": True, "size": 48})]], size=48, align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE, fill=LG)
-defs = [("B", "教員1人当たりの平均業務時間"), ("W", "学校全体の業務量（従来の標準時間に換算）"), ("N", "教員数"), ("E", "業務効率（従来を1とする）")]
-for i, (k, v) in enumerate(defs):
-    tb(s, Inches(1.2 + (i % 2) * 5.6), Inches(2.95 + (i // 2) * 0.85), Inches(5.4), Inches(0.75), [[(k + "：", {"bold": True, "color": G}), (v, {})]], size=20)
-sol = [("①　N を増やす", "採用・人材確保・復職支援・外部人材"), ("②　W を減らす", "業務の精選・会議削減・行事の再設計"), ("③　E を高める", "生成AI・教材の再利用・準備の効率化")]
-for i, (h, d) in enumerate(sol):
-    tb(s, Inches(0.6 + i * 4.15), Inches(4.75), Inches(3.95), Inches(1.45), [[(h, {"bold": True, "color": R if i == 2 else G})], [(d, {"size": 15})]], size=22, align=PP_ALIGN.CENTER, line=R if i == 2 else G, fill=Y if i == 2 else None)
-tb(s, Inches(0.6), Inches(6.35), Inches(12.2), Inches(0.6), [[("※ 実測値ではなく仮定に基づく簡易モデル（業務の均等配分・一様な効率改善を仮定。個人差や精神的負担は表せない）", {"size": 13, "color": GR})]], size=13)
-
-# ---------- 6 シミュレーション ----------
-s = base("三つの解決策で、1人当たりの業務時間はどう変わるか", (
-    "【0:40】仮の数値で計算してみます。教員20人、業務量200時間なら、1人10時間です。教員を25人にすると8時間、業務量を160時間にすると8時間、効率を125％にしても8時間です。"
-    "面白いのは、教員数を25％増やしても、Bは20％しか減らないことです。反比例だからです。中学校1年の反比例が、そのまま学校の問題を考える道具になります。"
-    "そして③は、人も業務も減らさずにBを減らせます。今回の研究は、この③、業務効率を高めることに焦点を当てます。"), "第2章")
+    "【0:50】この問題を数学で考えると、教員1人当たりの業務時間Bは、業務量Wを、教員数Nと業務効率Eの積でわったもの、と表せます。"
+    "教員を25％増やしても、Bは20％しか減りません。反比例だからです。一方で、効率Eを高めれば、人も業務も減らさずにBを減らせます。"
+    "もちろん、これは仮定に基づく簡単なモデルで、実際の数値ではありません。今回はこの「効率を高める」部分に、生成AIを使ってみました。"), "第2章")
+tb(s, Inches(0.5), Inches(1.3), Inches(6.3), Inches(1.2), [[("B ＝ W ÷（N × E）", {"bold": True, "size": 38})]], size=38, align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE, fill=LG)
+tb(s, Inches(0.5), Inches(2.6), Inches(6.3), Inches(1.8), ["B：教員1人当たりの平均業務時間", "W：学校全体の業務量", "N：教員数　E：業務効率（従来を1）"], size=17)
 cond = ["現状", "①N増", "②W減", "③E向上", "複合型"]; N = [20, 25, 20, 20, 20]; Wv = [200, 200, 160, 200, 180]; E = [1, 1, 1, 1.25, 1.2]
 Bv = [w / (n * e) for w, n, e in zip(Wv, N, E)]
 cd = CategoryChartData(); cd.categories = cond; cd.add_series("B（時間）", Bv)
-gf = s.shapes.add_chart(XL_CHART_TYPE.COLUMN_CLUSTERED, Inches(0.4), Inches(1.2), Inches(6.4), Inches(5.0), cd); ch = gf.chart; font_chart(ch, 13)
-ch.has_legend = False; ch.has_title = True; ch.chart_title.text_frame.text = "1人当たりの業務時間 B（時間）"
-pl = ch.plots[0]; pl.gap_width = 50; pl.has_data_labels = True; pl.data_labels.font.size = Pt(16); pl.data_labels.number_format = "0.0"; pl.data_labels.number_format_is_linked = False
-cols = [GR, G, G, R, RGBColor(0xE6, 0xA2, 0x3C)]
-for i, c in enumerate(cols):
+gf = s.shapes.add_chart(XL_CHART_TYPE.COLUMN_CLUSTERED, Inches(7.0), Inches(1.2), Inches(6.0), Inches(3.9), cd); ch = gf.chart; font_chart(ch, 12)
+ch.has_legend = False; ch.has_title = True; ch.chart_title.text_frame.text = "1人当たりの業務時間 B（時間）※仮定"
+pl = ch.plots[0]; pl.gap_width = 50; pl.has_data_labels = True; pl.data_labels.font.size = Pt(14); pl.data_labels.number_format = "0.0"; pl.data_labels.number_format_is_linked = False
+for i, c in enumerate([GR, G, G, R, RGBColor(0xE6, 0xA2, 0x3C)]):
     p = pl.series[0].points[i]; p.format.fill.solid(); p.format.fill.fore_color.rgb = c
-tbl = s.shapes.add_table(6, 5, Inches(7.0), Inches(1.3), Inches(6.0), Inches(3.2)).table
-hdr = ["条件", "N（人）", "W（時間）", "E", "B（時間）"]
-data = [hdr] + [[c, str(n), str(w), f"{int(e*100)}%", f"{b:g}"] for c, n, w, e, b in zip(cond, N, Wv, E, Bv)]
-for r_, row in enumerate(data):
-    for c_, v in enumerate(row):
-        cell = tbl.cell(r_, c_); cell.text = v
-        para = cell.text_frame.paragraphs[0]; para.alignment = PP_ALIGN.CENTER
-        f = para.runs[0].font; f.name = FONT; f.size = Pt(15); f.bold = r_ == 0 or (r_ == 4)
-        f.color.rgb = W if r_ == 0 else (R if r_ == 4 else K)
-        cell.fill.solid(); cell.fill.fore_color.rgb = G if r_ == 0 else (Y if r_ == 4 else W)
-tb(s, Inches(7.0), Inches(4.7), Inches(6.0), Inches(1.5), [[("N を25%増やしても、B は20%減（反比例）", {"bold": True})], [("③は人も業務も減らさずに B を減らす → ", {}), ("本研究の焦点", {"color": R, "bold": True})]], size=17, fill=LG)
-tb(s, Inches(0.4), Inches(6.35), Inches(12.6), Inches(0.6), [[("※ 数値はすべて仮定（実測値ではない）。", {"size": 13, "color": GR})]], size=13)
+tb(s, Inches(0.5), Inches(4.6), Inches(6.3), Inches(1.5), [[("N を25%増やしても B は20%減（反比例）", {"bold": True})], [("③ E を高める → 人も業務も減らさない", {"color": R, "bold": True})]], size=17, fill=Y)
+tb(s, Inches(7.0), Inches(5.2), Inches(6.0), Inches(0.9), ["条件：N=20人・W=200時間 → ①N=25 ②W=160 ③E=125% 複合 W=180・E=120%"], size=13)
+tb(s, Inches(0.5), Inches(6.3), Inches(12.4), Inches(0.6), [[("※ 実測値ではなく仮定に基づく簡易モデル（業務の均等配分・一様な効率改善を仮定。個人差や精神的負担は表せない）", {"size": 12, "color": GR})]], size=12)
 
-# ---------- 7 研究仮説 ----------
-s = base("研究仮説と研究の内容・方法", (
-    "【0:40】研究仮説です。従来の数学科授業実践における数学的な価値や教師の指導意図を継承しながら、生成AIを活用して授業を再構築することで、"
-    "教師の授業準備に関わる負担を軽減するとともに、生徒の数学的な見方・考え方を働かせる授業の実現につながるのではないか。"
-    "研究の内容は三つです。関数分野の過去の実践を振り返る。生成AIを使った授業再構築モデルをつくる。リメイク授業を提案し、検証の計画を立てる。"
-    "今回はまだ実践前の段階なので、成果ではなく提案と検証計画としてお話しします。"), "第2章")
-tb(s, Inches(0.6), Inches(1.3), Inches(12.1), Inches(2.4), [[("研究仮説", {"bold": True, "color": G, "size": 20})],
-   "従来の数学科授業実践における数学的な価値や教師の指導意図を継承しながら、生成AIを活用して授業を再構築することで、教師の授業準備に関わる負担を軽減するとともに、生徒の数学的な見方・考え方を働かせる授業の実現につながるのではないか。"], size=21, line=G)
-steps = [("①", "関数分野の過去の実践を振り返る", "1年 比例／2年 一次関数／3年 y＝ax²"), ("②", "授業再構築モデルをつくる", "AI LESSON REMAKE（7ステップ）"), ("③", "リメイク授業を提案し、検証計画を立てる", "実践前のため、成果ではなく計画を示す")]
-for i, (n, h, d) in enumerate(steps):
-    tb(s, Inches(0.6 + i * 4.15), Inches(4.0), Inches(3.95), Inches(2.3), [[(n + " " + h, {"bold": True})], [(d, {"size": 16, "color": B})]], size=19, fill=LG)
+# ---------- 6 研究仮説 ----------
+s = base("研究仮説", (
+    "【0:30】研究仮説です。従来の数学科授業実践における数学的な価値や教師の指導意図を継承しながら、生成AIを活用して授業を再構築することで、"
+    "教師の授業準備に関わる負担を軽減するとともに、生徒の数学的な見方・考え方を働かせる授業の実現につながるのではないか、と考えました。"), "第2章")
+tb(s, Inches(0.8), Inches(1.6), Inches(11.7), Inches(3.0), ["従来の数学科授業実践における数学的な価値や教師の指導意図を継承しながら、生成AIを活用して授業を再構築することで、教師の授業準備に関わる負担を軽減するとともに、生徒の数学的な見方・考え方を働かせる授業の実現につながるのではないか。"], size=24, anchor=MSO_ANCHOR.MIDDLE, line=G)
+for i, (n, h) in enumerate([("①", "過去の自分の実践を振り返る"), ("②", "AIでアレンジするモデルをつくる"), ("③", "リメイク授業と検証計画を示す")]):
+    tb(s, Inches(0.8 + i * 3.95), Inches(5.0), Inches(3.75), Inches(1.0), [[(n + " " + h, {"bold": True})]], size=19, align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE, fill=LG)
+tb(s, Inches(0.8), Inches(6.2), Inches(11.7), Inches(0.6), [[("※ リメイク授業は未実践。成果ではなく、提案と検証計画として示す。", {"color": GR})]], size=14)
 
-# ---------- 8 従来の実践 ----------
-s = base("関数分野の三つの実践と、その数学的な価値", (
-    "【0:50】第3章、従来の授業実践です。1年は、地震の初期微動継続時間と震源からの距離の関係を比例とみる授業です。"
-    "2年は、山口県の2月の平均気温とソメイヨシノの開花日の関係を一次関数とみなし、開花日を予想する授業です。2015年の2月の気温7.5℃から3月27日ごろと予想し、実際も3月27日でした。"
-    "3年は、巨大ブランコから始め、振り子の周期と長さの関係をy＝ax²とみなす授業です。"
-    "三つに共通する数学的な価値は、現実の事象を関数とみなし、式・表・グラフを使って予測し、確かめることです。"), "第3章")
+# ---------- 7 過去の実践 ----------
+s = base("過去の自分の授業実践：関数分野の三つ", (
+    "【0:50】ここからが中心です。過去の自分の授業実践を、AIを活用してアレンジしてみました。題材は関数分野の三つです。"
+    "1年は、地震の初期微動継続時間と震源からの距離を比例とみる授業。2年は、山口県の2月の平均気温とソメイヨシノの開花日を一次関数とみなして予想する授業です。2015年の気温7.5℃から3月27日ごろと予想し、実際も3月27日でした。"
+    "3年は、巨大ブランコから始めて、振り子の周期と長さをy＝ax²とみなす授業です。"
+    "どれも、現実の事象を関数とみなし、予測し、確かめる授業です。ここが、私の授業の土台です。桜の授業は、当時の数学通信にも載せた、思い入れのある授業です。"), "第3章")
 cards = [("1年　比例", "地震", "初期微動継続時間と\n震源からの距離", "比例とみなし、距離を求める"),
-         ("2年　一次関数", "ソメイヨシノの開花日", "2月の平均気温と開花日\n（山口県・気象庁データ）", "一次関数とみなし、開花日を予想する"),
+         ("2年　一次関数", "ソメイヨシノの開花日", "2月の平均気温と開花日\n（山口県・気象庁データ）", "一次関数とみなし、開花日を予想"),
          ("3年　関数y＝ax²", "振り子・巨大ブランコ", "周期 x 秒と長さ y m\n（実測データ）", "y＝ax²とみなし、周期2秒の振り子をつくる")]
 for i, (g_, t, d, v) in enumerate(cards):
     x = Inches(0.6 + i * 4.15)
     tb(s, x, Inches(1.3), Inches(3.95), Inches(0.65), [[(g_, {"bold": True, "color": W})]], size=20, align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE, fill=G)
     tb(s, x, Inches(2.05), Inches(3.95), Inches(3.0), [[(t, {"bold": True, "size": 22})], [(d, {"size": 16})], [("→ " + v, {"color": R, "bold": True, "size": 16})]], size=18, align=PP_ALIGN.CENTER, line=G)
-tb(s, Inches(0.6), Inches(5.35), Inches(12.1), Inches(1.0), [[("共通する数学的な価値：", {"bold": True}), ("現実の事象を", {}), ("関数とみなし", {"color": R, "bold": True}), ("、式・表・グラフで予測し、確かめる", {})]], size=21, align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE, fill=Y)
+tb(s, Inches(0.6), Inches(5.35), Inches(12.1), Inches(1.0), [[("土台：", {"bold": True}), ("現実の事象を", {}), ("関数とみなし", {"color": R, "bold": True}), ("、予測し、確かめる", {})]], size=22, align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE, fill=Y)
 
-# ---------- 9 良さと課題 ----------
+# ---------- 8 2021年の成果と課題 ----------
 s = base("2021年の振り子の授業：成果○と課題●", (
-    "【0:50】3年の振り子の授業は、2021年の全国大会で発表しました。そのときの成果は、GeoGebraで「2乗に比例する関数とみなす」活動がしやすくなったこと、実測値を元に予想して解決できたこと、実物とICTを関連づけて主体的に取り組めたことです。"
-    "課題は二つでした。ICTの効果を計る項目を振り返りシートに具体的に設けること、ICTを扱うタイミングを検討することです。実物の振り子を使う良さもあると書いています。"
-    "また、教材をつくり直す準備の時間もかかっていました。この課題を、今回の出発点にしました。"), "第3章")
-tb(s, Inches(0.6), Inches(1.3), Inches(6.0), Inches(4.6), [[("成果○（2021年 本人記述）", {"bold": True, "color": G})],
-   "○ ICT（GeoGebra）で「2乗に比例する関数とみなす」活動がしやすくなった", "○ 実測値が元になり、予想し解決できたことで数学的活動が深まった", "○ 実物の振り子とICTを関連づけ、主体的に取り組んだ"], size=19, line=G)
-tb(s, Inches(6.85), Inches(1.3), Inches(5.9), Inches(4.6), [[("課題●（2021年 本人記述）", {"bold": True, "color": R})],
-   "● 振り返りシートで、ICTの効果を計る項目を具体的に設ける必要がある", "● ICTを扱う授業内のタイミングは検討の余地がある（実物の振り子を使う良さもある）",
-   [("＋ 教材を毎年つくり直す準備の時間", {"color": B})]], size=19, fill=Y)
-tb(s, Inches(0.6), Inches(6.1), Inches(12.1), Inches(0.8), [[("出典：第103回全国算数・数学教育研究（埼玉）大会 発表資料・大会誌原稿（新田・山本 2021）", {"size": 12, "color": GR})]], size=12)
+    "【0:40】3年の振り子は、2021年の全国大会で発表した授業です。GeoGebraで「2乗に比例する関数とみなす」活動がしやすくなった一方で、"
+    "ICTの効果を計る項目がないこと、ICTを使うタイミング、という課題が残りました。実物の振り子を使う良さもある、とも書いています。この課題を、今回AIと一緒に考え直しました。"), "第3章")
+tb(s, Inches(0.6), Inches(1.3), Inches(6.0), Inches(4.6), [[("成果○", {"bold": True, "color": G})],
+   "○ GeoGebraで「2乗に比例する関数とみなす」活動がしやすくなった", "○ 実測値をもとに予想し解決でき、数学的活動が深まった", "○ 実物の振り子とICTを関連づけ、主体的に取り組んだ"], size=19, line=G)
+tb(s, Inches(6.85), Inches(1.3), Inches(5.9), Inches(4.6), [[("課題●", {"bold": True, "color": R})],
+   "● ICTの効果を計る項目を振り返りに設ける必要がある", "● ICTを扱うタイミングは検討の余地がある（実物の振り子を使う良さもある）", [("＋ 教材を毎年つくり直す準備の時間", {"color": B})]], size=19, fill=Y)
+tb(s, Inches(0.6), Inches(6.1), Inches(12.1), Inches(0.7), [[("出典：第103回全国算数・数学教育研究（埼玉）大会 発表資料・大会誌原稿（新田・山本 2021）", {"size": 12, "color": GR})]], size=12)
 
-# ---------- 10 AI LESSON REMAKE ----------
+# ---------- 9 AI LESSON REMAKE ----------
 s = base("AI LESSON REMAKE（授業再構築モデル）", (
-    "【1:00】第4章、今回提案する授業再構築モデル、AI LESSON REMAKEです。7つのステップがあります。"
-    "ステップ1で、過去の授業資料を生成AIに入力します。生徒の名前などは入れません。ステップ2と3で、良かった点と課題を三つずつ整理します。ここに過去の研究の課題を必ず入れます。"
-    "ステップ4で、生成AIに複数の改善案を出させます。大切なのはステップ5と6です。数学的に正しいか、教育的な価値があるかを教師が吟味し、残す・変える・削るの視点で授業を組み直します。"
-    "ここは教師の判断で、AIに丸投げしません。ステップ7で実践し、評価し、また改善します。"), "第4章")
+    "【0:50】アレンジの手順を、7つのステップにまとめました。過去の資料をAIに入れ、良かった点と課題を整理し、AIに改善案を出させます。"
+    "大事なのはステップ5と6です。数学的に正しいか、生徒にとって価値があるかを判断し、何を残して何を変えるかを決めるのは、教師です。ここはAIに任せません。"), "第4章")
 st = [("STEP1", "過去の授業資料を\n生成AIに入力"), ("STEP2", "良かった点を\n三つ整理"), ("STEP3", "課題を\n三つ整理"), ("STEP4", "AIに複数の\n改善案を提案させる"),
       ("STEP5", "教師が数学的妥当性と\n教育的価値を吟味"), ("STEP6", "残す・変える・削るで\n授業を再構築"), ("STEP7", "実践・評価・検証\n・再改善")]
 for i, (h, d) in enumerate(st):
-    teacher = i in (4, 5)
-    x = Inches(0.45 + i * 1.83)
+    teacher = i in (4, 5); x = Inches(0.45 + i * 1.83)
     tb(s, x, Inches(1.5), Inches(1.65), Inches(0.6), [[(h, {"bold": True, "color": W})]], size=17, align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE, fill=R if teacher else G)
     tb(s, x, Inches(2.2), Inches(1.65), Inches(2.2), [d], size=15, align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE, line=R if teacher else G, fill=Y if teacher else None)
-    if i < 6:
-        a = s.shapes.add_shape(MSO_SHAPE.RIGHT_ARROW, x + Inches(1.66), Inches(3.1), Inches(0.17), Inches(0.35)); a.fill.solid(); a.fill.fore_color.rgb = GR; a.line.fill.background()
-tb(s, Inches(7.75), Inches(4.55), Inches(3.5), Inches(0.6), [[("教師の判断（AIに丸投げしない）", {"bold": True, "color": R})]], size=15, align=PP_ALIGN.CENTER)
-tb(s, Inches(0.6), Inches(5.2), Inches(12.1), Inches(1.7), [[("既存のAIツールの位置づけ", {"bold": True, "color": G})],
-   "STEP4：導入発問メーカー／数学教材生成ツール　STEP6：板書型指導案メーカー・学習指導案メーカー　STEP7：振り返り自動化（Forms→Sheets→GAS）",
-   [("→ 他の先生も、自分の授業で同じ手順をたどれる（再現性）", {"color": B, "bold": True})]], size=16, fill=LG)
+    if i < 6: arrow(s, x + Inches(1.66), Inches(3.1), 0.17, 0.35)
+tb(s, Inches(7.75), Inches(4.55), Inches(3.5), Inches(0.6), [[("人間の判断（AIに任せない）", {"bold": True, "color": R})]], size=15, align=PP_ALIGN.CENTER)
+tb(s, Inches(0.6), Inches(5.2), Inches(12.1), Inches(1.6), [[("既存のAIツールの位置づけ", {"bold": True, "color": G})],
+   "STEP4：導入発問メーカー／数学教材生成ツール　STEP6：板書型指導案メーカー・学習指導案メーカー　STEP7：振り返り自動化",
+   [("→ 他の先生も、自分の得意な授業で同じ手順をたどれる", {"color": B, "bold": True})]], size=16, fill=LG)
 
-# ---------- 11 残す・変える・削る ----------
+# ---------- 10 残す・変える・削る ----------
 s = base("残す・変える・削る", (
-    "【0:50】ステップ6の判断の基準です。残すのは授業の本質です。数学的な価値、中心発問、生徒が自分で考える時間、実物に触れる体験です。"
-    "変えるのは、本質にたどり着くための手段です。教材の形、データの扱い方、支援の出し方です。"
-    "削るのは、本質に役立たない作業です。手作業の転記や、毎年のデータの打ち直しなどです。"
-    "変えるべきは、授業の本質ではない。その本質にたどり着くための手段である。これが、このモデルの考え方です。"), "第4章")
+    "【0:40】判断の基準は三つです。残すのは授業の本質。変えるのは、本質にたどり着くための手段。削るのは、本質に役立たない作業です。"
+    "変えるべきは、授業の本質ではない。その本質にたどり着くための手段である。これが今回の考え方です。"), "第4章")
 cols3 = [("残す", "授業の本質", ["数学的な価値", "中心発問", "生徒が考える時間", "実物に触れる体験"], G),
          ("変える", "本質にたどり着く手段", ["教材の形（動的教材）", "データの扱い方", "支援の出し方（段階的ヒント）"], B),
          ("削る", "本質に寄与しない作業", ["手作業の転記・計算", "毎年のデータ打ち直し", "教材の作り直し"], R)]
@@ -268,15 +231,13 @@ for i, (h, sub, li, c) in enumerate(cols3):
     tb(s, x, Inches(2.5), Inches(3.95), Inches(2.8), ["・" + t for t in li], size=19, line=c)
 tb(s, Inches(0.6), Inches(5.6), Inches(12.1), Inches(1.1), [[("変えるべきは、授業の本質ではない。その本質にたどり着くための手段である。", {"bold": True, "color": G})]], size=22, align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE, fill=Y)
 
-# ---------- 12 Before/After ----------
-s = base("重点事例：3年「振り子」Before／After", (
-    "【1:20】第5章、具体的なリメイク授業です。重点事例は3年の振り子です。"
-    "巨大ブランコの導入、「ひもの長さと1往復の時間にはどんな関係があるか」という中心発問、そして実物の振り子を測る体験は残します。"
-    "変えるのは三つです。一つ目、GeoGebraで見た目を比べていた場面を、関数ごとの「ずれ」を数値で比べられる教材にします。見た目だけでなく、根拠をもって「みなす」ためです。"
-    "二つ目、ヒントを3段階にして、つまずいている生徒に合わせて出します。正解はすぐには見せません。"
-    "三つ目、生成AIの答えを検証する活動を入れます。"
-    "そして2021年の課題に応えて、振り返りにICTの効果を計る項目を入れます。"), "第5章")
-rows12 = [("", "Before（2021年の実践）", "After（提案）"),
+# ---------- 11 Before/After ----------
+s = base("振り子の授業を、AIでアレンジ：Before／After", (
+    "【1:10】では、振り子の授業をどうアレンジしたかです。巨大ブランコの導入、「ひもの長さと1往復の時間にはどんな関係があるか」という問い、そして実物の振り子を測る体験は、そのまま残しました。ここは譲れない部分です。"
+    "変えたのは、見た目で比べていた場面を、数値の「ずれ」で比べられるようにしたこと。ヒントを3段階にして、つまずいている生徒に合わせて出せるようにしたこと。"
+    "そして、生成AIの答えを生徒が確かめる活動を入れたことです。2021年の課題だった振り返りの項目も加えました。"
+    "実物の振り子を測るのは時間がかかります。AIを使えば、全部シミュレーションで済ませることもできます。でも、それはしませんでした。自分の手で測って、ばらつきに悩む経験こそ、数学で現実を考える出発点だと思うからです。"), "第5章")
+rows12 = [("", "Before（2021年の実践）", "After（AIでアレンジ）"),
           ("導入・中心発問", "巨大ブランコ／長さと1往復の時間の関係は？", "同じ（残す）"),
           ("自力解決", "実物の振り子を測る → 点をとる", "実物で測る（残す）→ 振り子ラボに入力"),
           ("練り上げ", "GeoGebraで関数を重ね、見た目で比べる", "関数ごとの「ずれ」を数値で比べ、根拠をもってみなす"),
@@ -289,51 +250,58 @@ t.columns[0].width = Inches(2.2); t.columns[1].width = Inches(4.7); t.columns[2]
 for r_, row in enumerate(rows12):
     for c_, v in enumerate(row):
         cell = t.cell(r_, c_); cell.text = v; cell.vertical_anchor = MSO_ANCHOR.MIDDLE
-        para = cell.text_frame.paragraphs[0]; f = para.runs[0].font if para.runs else None
-        if f is None: continue
-        f.name = FONT; f.size = Pt(16); f.bold = r_ == 0 or c_ == 0
+        para = cell.text_frame.paragraphs[0]
+        if not para.runs: continue
+        f = para.runs[0].font; f.name = FONT; f.size = Pt(16); f.bold = r_ == 0 or c_ == 0
         changed = c_ == 2 and r_ > 0 and "残す" not in v and "同じ" not in v
         f.color.rgb = W if r_ == 0 else (R if changed else K)
         cell.fill.solid(); cell.fill.fore_color.rgb = (G if c_ != 2 else R) if r_ == 0 else (LG if c_ == 0 else (Y if changed else W))
 
-# ---------- 13 振り子ラボ ----------
-s = base("振り子ラボ：数値で「みなす」・AIの答えを確かめる", (
-    "【1:30】これが、生成AIと一緒に作った「振り子ラボ」です。ブラウザで動き、インストールは不要です。"
-    "実物で測ったデータを入れると、表とグラフに点が出ます。生徒は、比例、一次関数、反比例、y＝ax²の中から関数を選び、aを動かして点に近づけます。"
-    "「ずれを確かめる」を押すと、点とグラフのずれの大きさが出ます。2021年の授業データでは、y＝0.25x²のときずれは0.025m、比例だと0.138mでした。見た目だけでなく、数値で「y＝ax²とみなす」根拠を説明できます。"
-    "次に、「ある生成AIは、振り子の長さは周期に比例すると答えた。正しいか」と問います。AIの答えをうのみにせず、データで確かめる活動です。"
-    "最後は、周期2秒の振り子の長さを式から求め、シミュレーションと実物で確かめます。y＝0.25×2²で1m、理論でも約0.99mです。"
-    "なお、この関係はふれはばが小さいときに成り立つ近似です。教材ではふれはばを変えて、ずれ方も確かめられるようにしました。"), "第5章")
+# ---------- 12 振り子ラボ ----------
+s = base("AIと作った教材「振り子ラボ」", (
+    "【1:20】これが、生成AIと一緒に作った「振り子ラボ」です。ブラウザで動き、インストールはいりません。"
+    "実物で測ったデータを入れると、表とグラフに点が出ます。生徒は関数を選び、aを動かして点に近づけます。2021年の授業のデータでは、y＝0.25x²のときのずれは0.025m、比例だと0.138mでした。見た目だけでなく、数値を根拠に「y＝ax²とみなす」と説明できます。"
+    "そして、「ある生成AIは、振り子の長さは周期に比例すると答えた。本当か」と問います。AIの答えをうのみにせず、データで確かめる。これからの時代に必要な力だと思っています。"
+    "最後に、周期2秒の振り子の長さを式で求め、実物で確かめます。"
+    "この教材のプログラムも、AIが作ったものです。使う前に、数学的に正しいかを自分で確かめる。ここでも、判断するのは人間です。"), "第5章")
 img = os.path.join(ROOT, "05_数学教材", "振り子ラボ_画面.png")
 s.shapes.add_picture(img, Inches(0.45), Inches(1.2), height=Inches(4.75))
 tb(s, Inches(9.05), Inches(1.2), Inches(3.95), Inches(5.7), [
     [("① 実物のデータを入力", {"bold": True, "color": G})], [("表・グラフ・式が連動", {"size": 15})],
     [("② 関数を選び a を動かす", {"bold": True, "color": G})], [("ずれ：y＝0.25x² 0.025m／比例 0.138m", {"size": 15, "color": R})],
-    [("③ AIの答えを検証", {"bold": True, "color": G})], [("「長さは周期に比例する」は正しい？", {"size": 15})],
+    [("③ AIの答えを検証", {"bold": True, "color": G})], [("「長さは周期に比例する」は本当？", {"size": 15})],
     [("④ 周期2秒の振り子", {"bold": True, "color": G})], [("y＝0.25×2²＝1（m）→ 実物で確認", {"size": 15})],
     [("単一HTML・インストール不要", {"size": 14, "color": B})]], size=18, line=G)
 tb(s, Inches(0.45), Inches(6.05), Inches(8.5), Inches(0.9), [[("成立条件：", {"bold": True}), ("T＝2π√(L/g) より L＝(g/4π²)T²、g/4π²≒0.248。ふれはばが小さいときの近似。", {})]], size=14, fill=LG)
 
-# ---------- 14 1年・2年 ----------
-s = base("1年「地震」・2年「桜の開花日」のリメイク", (
-    "【1:10】1年と2年のリメイクです。2年の桜の授業では、2017年までのデータを使っていました。生成AIを使えば、気象庁のデータを最新の年まで整える作業を補助できます。ただし、数値は必ず教師が原典と照合します。"
-    "生徒は散布図の上で自分で直線を引き、2点から式を求めて開花日を予想します。グラフを手で描く時間を、考える時間に回せます。"
-    "ここでも「AIは、気温が1℃上がると開花は10日早くなると答えた。正しいか」とデータで確かめさせます。資料のデータでは、1℃でおよそ3日早まる程度です。"
-    "1年の地震の授業では、初期微動継続時間と震源からの距離の比例関係を、観測点のデータで確かめる教材を構想しています。理科との関連も大切にします。"), "第5章")
+# ---------- 13 1年・2年 ----------
+s = base("1年「地震」・2年「桜の開花日」のアレンジ", (
+    "【0:50】1年と2年も同じ手順でアレンジしました。2年の桜は、2017年までのデータを使っていましたが、AIの補助で最新の年まで整えます。数値は必ず原典と照らし合わせます。"
+    "生徒は散布図に自分で直線を引いて開花日を予想し、「AIの答え」もデータで確かめます。"
+    "1年の地震は、観測点のデータで比例を確かめる教材を構想しているところです。"), "第5章")
 for i, (g_, bf, af) in enumerate([("2年　桜の開花日（一次関数）", ["2017年までの表データ", "グラフは手描き", "「何が影響しているか」を考える"], ["データを最新年まで更新（AIが補助・教師が原典照合）", "散布図に自分で直線を引く動的教材", "「AIの答え」をデータで確かめる"]),
-                                   ("1年　地震（比例）", ["初期微動継続時間と震源からの距離を比例とみる"], ["観測点のデータで比例を確かめる教材（構想）", "比例定数＝1秒あたり何kmか、の意味を考える", "理科との関連"])]):
+                                   ("1年　地震（比例）", ["初期微動継続時間と震源からの距離を比例とみる"], ["観測点のデータで比例を確かめる教材（構想）", "比例定数＝1秒あたり何kmか", "理科との関連"])]):
     y0 = Inches(1.3 + i * 2.85)
     tb(s, Inches(0.5), y0, Inches(3.0), Inches(2.55), [[(g_, {"bold": True, "color": W})]], size=19, align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE, fill=G)
     tb(s, Inches(3.65), y0, Inches(4.0), Inches(2.55), [[("Before", {"bold": True})]] + ["・" + x for x in bf], size=16, line=G)
-    a = s.shapes.add_shape(MSO_SHAPE.RIGHT_ARROW, Inches(7.75), y0 + Inches(1.0), Inches(0.4), Inches(0.5)); a.fill.solid(); a.fill.fore_color.rgb = GR; a.line.fill.background()
-    tb(s, Inches(8.25), y0, Inches(4.6), Inches(2.55), [[("After（提案）", {"bold": True, "color": R})]] + ["・" + x for x in af], size=16, fill=Y)
+    arrow(s, Inches(7.75), y0 + Inches(1.0), 0.4, 0.5)
+    tb(s, Inches(8.25), y0, Inches(4.6), Inches(2.55), [[("After（AIでアレンジ）", {"bold": True, "color": R})]] + ["・" + x for x in af], size=16, fill=Y)
+
+# ---------- 14 AIと共存する ----------
+s = base("AIと共存する：人間にしかできない部分", (
+    "【1:00】今回、AIと一緒に資料を作ってみて感じたことがあります。AIは、案を出すこと、作業をすること、教材のプログラムを書くことは、とても速いです。"
+    "でも、何を残すかを決めること、目の前の生徒の表情を見て問い返すこと、授業に思いを込めること、そして結果に責任を持つことは、人間にしかできません。"
+    "そもそも、土台がなければ、AIでアレンジすることもできません。私自身、土台があると言い切れるものではありませんが、14年間の授業がなければ、今回の資料は作れませんでした。"
+    "これからの世の中で、AIは必ず必要になってきます。それを学校教育にどう取り入れ、人間らしさでどう扱い、人間にしかできない部分でどう共存していくか。それがとても大事なのではないかと考えています。便利だからこそ、使う側の人間の考えが問われるのだと思います。"), "第6章")
+tb(s, Inches(0.6), Inches(1.3), Inches(5.9), Inches(3.4), [[("AIが得意なこと", {"bold": True, "color": B})], "・案をたくさん出す", "・資料の整理・作業", "・教材のプログラムを書く", "・データを集めて形にする"], size=20, line=B)
+tb(s, Inches(6.8), Inches(1.3), Inches(5.9), Inches(3.4), [[("人間にしかできないこと", {"bold": True, "color": R})], "・何を残すかを決める", "・生徒の表情を見て問い返す", "・授業に思いを込める", "・結果に責任をもつ"], size=20, fill=Y)
+tb(s, Inches(0.6), Inches(4.95), Inches(12.1), Inches(1.9), [[("土台（14年間の授業実践）があってこそ、AIでアレンジできる", {"bold": True, "color": G})],
+   [("AIを学校教育にどう取り入れ、人間らしさでどう扱い、", {}), ("人間にしかできない部分でどう共存するか", {"bold": True, "color": R})]], size=20, align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE, fill=LG)
 
 # ---------- 15 期待される効果・限界・検証 ----------
 s = base("期待される効果と研究の限界、今後の検証", (
-    "【1:10】第6章、まとめです。今回は実践前のため、成果ではなく、期待される効果として示します。"
-    "教師側では、教材作成や指導案、板書計画の準備時間の短縮が期待されます。生徒側では、つまずきに応じたヒントで基礎の理解を支え、数値の根拠をもって関数とみなす説明ができることが期待されます。"
-    "研究の限界として、業務時間のモデルは簡易的な仮定に基づくこと、時間短縮や理解の向上はまだ測っていないこと、AIの出力の確認と修正には時間がかかることがあげられます。"
-    "今後は、準備時間を改善の前後で記録し、時間削減率をこの式で求めます。生徒の到達度や振り返りの内容も比べ、効果を確かめていきます。"), "第6章")
+    "【0:50】今回は実践前なので、成果ではなく、期待される効果としてお示しします。準備時間の短縮、段階的なヒントによる基礎の理解、数値を根拠にした説明、AIの答えを確かめる力です。"
+    "一方で、業務時間のモデルは簡単な仮定であること、時間短縮や理解の向上はまだ測っていないこと、AIの出力を確かめる時間もかかることが限界です。今後、時間を記録し、この式で確かめていきます。"), "第6章")
 tb(s, Inches(0.5), Inches(1.3), Inches(6.1), Inches(2.6), [[("期待される効果（未検証）", {"bold": True, "color": G})],
    "○ 教材・指導案・板書計画の準備時間の短縮", "○ 段階的ヒントによる基礎の理解の支援", "○ 数値の根拠をもって「みなす」説明", "○ AIの答えを数学的に検証する力"], size=17, line=G)
 tb(s, Inches(6.8), Inches(1.3), Inches(6.0), Inches(2.6), [[("研究の限界●", {"bold": True, "color": R})],
@@ -343,29 +311,28 @@ tb(s, Inches(0.5), Inches(4.1), Inches(12.3), Inches(2.85), [[("今後の検証"
    [("生徒：", {"bold": True}), ("基礎の到達率、数学的な説明、つまずく生徒への支援、得点分布、振り返りの内容", {})],
    [("時間削減率（％）＝（改善前の時間 − 改善後の時間）÷ 改善前の時間 × 100", {"bold": True, "color": R})]], size=17, fill=LG)
 
-# ---------- 16 結び ----------
-s = base("おわりに", (
-    "【1:00】最後に、この研究で伝えたいことです。これまでの優れた教育実践を否定するのではありません。"
-    "振り子の授業で大切にしてきた、現実の事象を関数とみなし、予想し、確かめるという本質は、これからも残します。"
-    "生成AIは目的ではなく、その本質にたどり着くための手段です。そして、教師がAIに判断を丸投げしないことが前提です。"
-    "変えるべきは、授業の本質ではない。その本質にたどり着くための手段である。教育の質を守るために、教師の時間を守る。"
-    "みなさんも、ご自身の得意な授業をAI LESSON REMAKEでリメイクしてみてください。ご清聴ありがとうございました。"), "第6章")
-tb(s, Inches(1.0), Inches(1.5), Inches(11.3), Inches(1.6), [[("変えるべきは、授業の本質ではない。", {"bold": True})], [("その本質にたどり着くための手段である。", {"bold": True})]], size=30, align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE, fill=LG)
-tb(s, Inches(1.0), Inches(3.35), Inches(11.3), Inches(1.1), [[("教育の質を守るために、教師の時間を守る。", {"bold": True, "color": R})]], size=30, align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE, fill=Y)
-tb(s, Inches(1.0), Inches(4.75), Inches(11.3), Inches(1.0), ["過去の実践を継承し、生成AIは手段として使う。判断するのは教師。"], size=20, align=PP_ALIGN.CENTER)
-tb(s, Inches(1.0), Inches(5.8), Inches(11.3), Inches(0.9), [[("ご清聴ありがとうございました。", {"bold": True})]], size=26, align=PP_ALIGN.CENTER)
+# ---------- 16 おわりに ----------
+s = base("おわりに　14年間の蓄積を込めて", (
+    "【1:10】最後になります。今回の発表には、いろいろな賛否があると思います。それでも、私の14年間分の蓄積を込めました。私にとっては、最後の発表という部分もあると思っています。"
+    "変えるべきは、授業の本質ではない。その本質にたどり着くための手段である。そして、教育の質を守るために、教師の時間を守る。"
+    "AIは目的ではなく手段です。判断し、思いを込めるのは人間です。14年間、たくさんの生徒と一緒に授業をつくってきました。その一つ一つが、今回の資料の土台になっています。その部分を、少しでも感じ取っていただけたらと思います。ご清聴ありがとうございました。"), "第6章")
+tb(s, Inches(1.0), Inches(1.35), Inches(11.3), Inches(1.5), [[("変えるべきは、授業の本質ではない。", {"bold": True})], [("その本質にたどり着くための手段である。", {"bold": True})]], size=28, align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE, fill=LG)
+tb(s, Inches(1.0), Inches(3.05), Inches(11.3), Inches(1.0), [[("教育の質を守るために、教師の時間を守る。", {"bold": True, "color": R})]], size=28, align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE, fill=Y)
+tb(s, Inches(1.0), Inches(4.3), Inches(11.3), Inches(1.4), ["14年間の授業実践の蓄積を、生成AIを活用して形にしました。", "賛否はあると思います。受け取り方は、皆さんにお任せします。"], size=20, align=PP_ALIGN.CENTER)
+tb(s, Inches(1.0), Inches(5.9), Inches(11.3), Inches(0.9), [[("ご清聴ありがとうございました。", {"bold": True})]], size=26, align=PP_ALIGN.CENTER)
 
 # ---------- 補足 ----------
-s = base("補足① 統計データの出典", "【補足・質疑用】統計の出典です。", "補足")
+s = base("補足① 統計データの出典と詳細", "【補足・質疑用】統計の出典と詳細です。", "補足")
 tb(s, Inches(0.5), Inches(1.3), Inches(12.3), Inches(5.6), [
-    "・文部科学省「令和7年度（令和6年度実施）公立学校教員採用選考試験の実施状況等」参考資料1 第7表（長期推移）・第2表-1・第9表-1（山口県・教科別）",
+    "・中学校 受験者数：H25 62,998人 → R7 36,621人　採用者数：H12 2,673人 → R7 10,168人",
+    "・教師不足（R3始業日）：中学校868人（0.40%）、全体2,558人（0.31%）※全国調査はこの1回",
+    "・文部科学省「令和7年度（令和6年度実施）公立学校教員採用選考試験の実施状況等」参考資料1 第7表・第2表-1・第9表-1",
     [("　https://www.mext.go.jp/content/20261001-kyoikushokuin-000046447_2.pdf", {"size": 13, "color": B})],
     "・文部科学省「教員勤務実態調査（令和4年度）集計【確定値】」",
     [("　https://www.mext.go.jp/content/20240404-mxt_zaimu01-100003067-1.pdf", {"size": 13, "color": B})],
     "・文部科学省「『教師不足』に関する実態調査」（令和4年1月）",
     [("　https://www.mext.go.jp/content/20220128-mxt_kyoikujinzai01-000020293-1.pdf", {"size": 13, "color": B})],
-    "・気象庁「過去の気象データ」（2月の平均気温・ソメイヨシノの開花日、山口）",
-    [("注意：採用選考の受験者数の推移であり、教員総数の推移ではない。教師不足の全国調査は令和3年度の1回。", {"color": R})]], size=17)
+    [("注意：採用選考の受験者数の推移であり、教員総数の推移ではない。", {"color": R})]], size=16)
 s = base("補足② 振り子モデルの成立条件と過去のデータ", "【補足・質疑用】振り子の式の根拠と、2021年の実測データです。", "補足")
 tb(s, Inches(0.5), Inches(1.3), Inches(6.2), Inches(5.6), [
     [("単振り子の周期", {"bold": True})], "T＝2π√(L/g) → L＝(g/4π²)T²", "g＝9.80665 m/s² のとき g/4π²≒0.248", "周期2秒 → L≒0.99 m（秒振り子）",
@@ -382,8 +349,7 @@ s = base("補足③ 理想的なバトンパス（2017年・3年）", "【補足
 tb(s, Inches(0.5), Inches(1.3), Inches(12.3), Inches(5.5), [
     "・運動会のリレー練習の場面設定（バトンが渡せない会話文）から問題をつくる",
     "・加速して走り出す次走者（y＝ax²）と、一定の速さで走る前走者（一次関数）のグラフで考える",
-    [("今後のリメイク候補：", {"bold": True}), ("スタート位置やタイミングを動かしてグラフの交点を確かめる動的教材", {})],
-    [("※ 本編では、資料が最もそろっている振り子を重点事例とした", {"color": GR})]], size=19)
+    [("今後のアレンジ候補：", {"bold": True}), ("スタート位置やタイミングを動かしてグラフの交点を確かめる動的教材", {})]], size=19)
 
 prs.save(OUT)
 print("saved", OUT, len(prs.slides), "slides")
