@@ -90,11 +90,11 @@ tb(s, Inches(0.75), Inches(0.38), Inches(9), Inches(0.6), ["令和8年度 山口
 tb(s, Inches(0.9), Inches(2.1), Inches(11.6), Inches(1.4), [[(TITLE, {"bold": True})]], size=36, align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE)
 tb(s, Inches(0.9), Inches(3.45), Inches(11.6), Inches(0.7), [SUB], size=24, align=PP_ALIGN.CENTER)
 tb(s, Inches(2.2), Inches(4.5), Inches(9), Inches(0.9), [[("変えるべきは、授業の本質ではない。その本質にたどり着くための手段である。", {"color": G, "bold": True})]], size=18, align=PP_ALIGN.CENTER, fill=LG)
-tb(s, Inches(7.3), Inches(5.9), Inches(5.6), Inches(0.9), ["下関市立東部中学校　新田 正幸"], size=20, align=PP_ALIGN.RIGHT)
+tb(s, Inches(7.3), Inches(5.9), Inches(5.6), Inches(0.9), ["下関市立名陵中学校　新田正幸"], size=20, align=PP_ALIGN.RIGHT)
 band = s.shapes.add_shape(MSO_SHAPE.RECTANGLE, 0, Inches(7.12), SW, Inches(0.38)); band.fill.solid(); band.fill.fore_color.rgb = G; band.line.fill.background()
 s.notes_slide.notes_text_frame.text = (
     "【0:20】今から、「生成AIを活用した数学科授業の改善と新たな授業モデルの提案 ～関数分野における従来の授業実践を通して～」という題で発表をします。"
-    "下関市立東部中学校の新田です。よろしくお願いします。")
+    "下関市立名陵中学校の新田です。よろしくお願いします。")
 
 # ---------- 2 はじめに ----------
 s = base("はじめに　これまでの研究の延長として", (

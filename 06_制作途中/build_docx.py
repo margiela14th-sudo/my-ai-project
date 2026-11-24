@@ -80,7 +80,7 @@ def fig(path, width_mm, cap):
 para("令和8年度 山口県中学校数学教育研究協議会", align=WD_ALIGN_PARAGRAPH.LEFT, size=9)
 para("生成AIを活用した数学科授業の改善と新たな授業モデルの提案", True, WD_ALIGN_PARAGRAPH.CENTER, 15, GOT)
 para("～関数分野における従来の授業実践を通して～", False, WD_ALIGN_PARAGRAPH.CENTER, 12, GOT)
-para("下関市立東部中学校　新田 正幸", False, WD_ALIGN_PARAGRAPH.RIGHT, 10.5)
+para("下関市立名陵中学校　新田正幸", False, WD_ALIGN_PARAGRAPH.RIGHT, 10.5)
 
 h1("１．研究主題設定の理由")
 para("教員採用選考の受験者数は減少しており、公立中学校の採用倍率は平成12年度の17.9倍から令和7年度の3.6倍へと低下し、過去最低となった（文部科学省，2025）。ただし、この低下には大量退職に伴う採用者数の増加（平成12年度2,673人→令和7年度10,168人）も影響しており、受験者数の減少は教員総数の減少を意味するものではない。山口県の中学校数学は、令和7年度採用で受験者37人、採用者17人、2.2倍であった。")
