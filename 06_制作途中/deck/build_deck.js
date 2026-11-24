@@ -192,19 +192,19 @@ function slide(title, sec, notesText) {
   const labs = rows.map(r => r[0].replace("年度", "").replace("平成", "H").replace("令和", "R").replace("元", "1"));
   s.addChart(pres.charts.LINE, [{ name: "採用倍率", labels: labs, values: rows.map(r => +r[4]) }], Object.assign({}, chartText, {
     x: 5.8, y: 1.45, w: 7.0, h: 4.9, showTitle: false, chartColors: [HEX.sakura], lineSize: 4, lineDataSymbolSize: 7, valAxisMinVal: 0, valAxisMaxVal: 20, catAxisLabelFrequency: 3, catAxisLabelFontSize: 13, valAxisLabelFontSize: 13 }));
-  T(s, "出典：文部科学省「令和7年度公立学校教員採用選考試験の実施状況等」参考資料1 第7表 ※受験者数の推移であり、教員総数の推移ではない", { x: 0.8, y: 6.45, w: 12, h: 0.4, fontSize: 11, color: GRAY });
+  T(s, "出典：文部科学省「令和7年度（令和6年度実施）公立学校教員採用選考試験の実施状況について」参考資料1 第7表 p.9（2025年12月25日公表）　※採用倍率＝受験者数÷採用者数。受験者数の推移であり、教員総数の推移ではない", { x: 0.8, y: 6.45, w: 12, h: 0.4, fontSize: 11, color: GRAY });
 
   // 7b 一次関数とみなす
-  s = slide("受験者数を、一次関数とみなすと", "問題意識①", "【0:50】ここを数学の目で見てみます。令和元年から7年の中学校の受験者数は、ほぼ一直線に減っています。一次関数とみなすと、変化の割合は、1年あたり約マイナス2,100人です。2年生で学ぶ「変化の割合」が、そのまま今の学校の課題を読み解く道具になります。ただし、このまま減り続けると決めつけることはできません。データから何が言えて、何が言えないかを考えることも、数学の大切な見方だと思います。");
+  s = slide("受験者数を、一次関数とみなすと", "問題意識①", "【0:50】ここを数学の目で見てみます。令和元年から7年の中学校の受験者数は、ほぼ一直線に減っています。一次関数とみなすと、変化の割合は、1年あたり約マイナス2,095人、およそ2,100人です。2年生で学ぶ「変化の割合」が、そのまま今の学校の課題を読み解く道具になります。ただし、このまま減り続けると決めつけることはできません。データから何が言えて、何が言えないかを考えることも、数学の大切な見方だと思います。");
   { const yrs = [2019, 2020, 2021, 2022, 2023, 2024, 2025], obs = [49190, 45763, 44105, 42587, 40960, 39273, 36621];
     const fitv = yrs.map(x => Math.round(49190 - 2094.8 * (x - 2019)));
     s.addChart(pres.charts.LINE, [{ name: "受験者数（実際）", labels: ["R1", "R2", "R3", "R4", "R5", "R6", "R7"], values: obs }, { name: "一次関数とみなした直線", labels: ["R1", "R2", "R3", "R4", "R5", "R6", "R7"], values: fitv }],
       Object.assign({}, chartText, { x: 0.8, y: 1.45, w: 7.3, h: 4.9, chartColors: [HEX.sakura, HEX.gray], lineSize: 3, lineDataSymbolSize: 8, showLegend: true, legendPos: "b", legendFontSize: 13, legendFontFace: "+mn-lt", valAxisMinVal: 30000, valAxisMaxVal: 52000, valAxisLabelFormatCode: "#,##0", catAxisLabelFontSize: 14 })); }
   card(s, 8.5, 1.55, 4.25, 2.3, HEX.sakuraTint);
-  T(s, [{ text: "変化の割合\n", options: { fontSize: 20, bold: true } }, { text: "約 −2,100人／年", options: { fontSize: 32, bold: true, color: SAKURA } }], { x: 8.5, y: 1.55, w: 4.25, h: 2.3, align: "center", valign: "middle" });
+  T(s, [{ text: "変化の割合\n", options: { fontSize: 20, bold: true } }, { text: "≒ −2,095人／年", options: { fontSize: 32, bold: true, color: SAKURA } }], { x: 8.5, y: 1.55, w: 4.25, h: 2.3, align: "center", valign: "middle" });
   card(s, 8.5, 4.05, 4.25, 2.3, TINT);
   T(s, [{ text: "(36,621 − 49,190) ÷ 6\n", options: { fontSize: 18 } }, { text: "ほぼ一直線に減少", options: { fontSize: 22, bold: true, color: FOREST } }], { x: 8.5, y: 4.05, w: 4.25, h: 2.3, align: "center", valign: "middle" });
-  T(s, "中学校の教員採用選考の受験者数（R1〜R7）。出典：文部科学省 参考資料1 第7表。※今後も同じ割合で減ると決めつけることはできない", { x: 0.8, y: 6.45, w: 12, h: 0.4, fontSize: 11, color: GRAY });
+  T(s, "データ：文部科学省「令和7年度（令和6年度実施）公立学校教員採用選考試験の実施状況について」参考資料1 第7表 p.9（2025年12月25日公表）の中学校受験者数。変化の割合・直線は発表者が計算。※今後も同じ割合で減るとは限らない", { x: 0.8, y: 6.45, w: 12, h: 0.4, fontSize: 11, color: GRAY });
 
   // 8 授業準備の時間
   s = slide("授業準備の時間は、変わっていない", "問題意識①", "【0:40】勤務の実態です。文部科学省の調査では、中学校の先生の平日の在校時間は、11時間32分から11時間1分へと、31分減りました。でも、授業準備の時間は、1時間26分から1時間23分。ほとんど変わっていません。");
@@ -216,7 +216,7 @@ function slide(title, sec, notesText) {
   T(s, "授業準備", { x: 6.9, y: 1.85, w: 5.6, h: 0.6, fontSize: 22, bold: true, align: "center" });
   T(s, "1:26 → 1:23", { x: 6.9, y: 2.6, w: 5.6, h: 1.2, fontSize: 48, bold: true, color: SAKURA, align: "center", valign: "middle" });
   T(s, "−3分", { x: 6.9, y: 3.9, w: 5.6, h: 1.1, fontSize: 54, bold: true, color: SAKURA, align: "center", valign: "middle" });
-  T(s, "中学校教諭・平日1日（平成28年度 → 令和4年度）　出典：文部科学省「教員勤務実態調査（令和4年度）集計【確定値】」", { x: 0.8, y: 6.1, w: 12, h: 0.4, fontSize: 12, color: GRAY });
+  T(s, "中学校教諭・平日1日当たり（10・11月、平成28年度 → 令和4年度）\n出典：文部科学省「教員勤務実態調査（令和4年度）集計【確定値】」p.1・p.2（2024年4月公表）", { x: 0.8, y: 6.1, w: 12, h: 0.4, fontSize: 11, color: GRAY });
 
   // 9 B=W/(NE)
   s = slide("数学で考えてみる", "問題意識①", "【0:50】この問題を数学で考えると、教員1人当たりの業務時間Bは、業務量Wを、教員数Nと業務効率Eの積でわったもの、と表せます。もちろん、仮定に基づく簡単なモデルです。Nを増やすことは、社会や行政の課題。Wを減らすことは、学校という組織の課題。そしてEを高めることは、私たち一人一人が、授業づくりの中で考えられることです。");
@@ -236,6 +236,7 @@ function slide(title, sec, notesText) {
   s.addChart(pres.charts.BAR, [{ name: "B", labels: ["現状", "N を増やす", "W を減らす", "E を高める"], values: [10, 8, 8, 8] }], Object.assign({}, chartText, {
     x: 0.8, y: 1.4, w: 7.2, h: 4.9, barDir: "col", showTitle: false, chartColors: [HEX.gray, HEX.moss, HEX.moss, HEX.sakura], showValue: true, dataLabelPosition: "outEnd", dataLabelFormatCode: "0", dataLabelFontSize: 22, dataLabelColor: HEX.ink, valAxisMinVal: 0, valAxisMaxVal: 12, barGapWidthPct: 55, catAxisLabelFontSize: 16, valAxisHidden: true, valGridLine: { style: "none" } }));
   T(s, "1人当たりの業務時間（時間）", { x: 0.8, y: 6.3, w: 7.2, h: 0.4, fontSize: 13, color: GRAY, align: "center" });
+  T(s, "※ N＝20人・W＝200時間などは発表者が設定した仮の数値（実測値ではない）", { x: 8.4, y: 6.35, w: 4.4, h: 0.5, fontSize: 11, color: GRAY });
   card(s, 8.4, 1.6, 4.35, 2.2, TINT);
   T(s, [{ text: "N を25％増やしても\n", options: { fontSize: 20 } }, { text: "B は20％減", options: { fontSize: 32, bold: true, color: FOREST } }], { x: 8.4, y: 1.6, w: 4.35, h: 2.2, align: "center", valign: "middle" });
   card(s, 8.4, 4.05, 4.35, 2.2, HEX.sakuraTint);
@@ -252,23 +253,23 @@ function slide(title, sec, notesText) {
   T(s, "過去12か月にAIを授業等で使用した教員の割合", { x: 0.8, y: 5.2, w: 4.4, h: 0.8, fontSize: 15, color: INK });
   s.addChart(pres.charts.BAR, [{ name: "日本（中学校）", labels: ["事務的業務の自動化に役立つ", "授業計画の作成・改善に役立つ", "不適切な提案をすることがある"], values: [73.1, 59.1, 66.5] }, { name: "OECD平均（中学校）", labels: ["事務的業務の自動化に役立つ", "授業計画の作成・改善に役立つ", "不適切な提案をすることがある"], values: [44.9, 53.0, 66.4] }],
     Object.assign({}, chartText, { x: 5.4, y: 1.45, w: 7.4, h: 4.9, barDir: "bar", showTitle: true, title: "AIについての考え方（「当てはまる」の割合、%）", chartColors: [HEX.sakura, HEX.gray], showValue: true, dataLabelPosition: "outEnd", dataLabelFormatCode: "0.0", dataLabelFontSize: 13, dataLabelColor: HEX.ink, valAxisMinVal: 0, valAxisMaxVal: 100, valAxisHidden: true, valGridLine: { style: "none" }, catAxisLabelFontSize: 14, showLegend: true, legendPos: "b", legendFontSize: 13, legendFontFace: "+mn-lt", barGapWidthPct: 60 }));
-  T(s, "出典：文部科学省・国立教育政策研究所「OECD国際教員指導環境調査（TALIS）2024報告書のポイント」", { x: 0.8, y: 6.45, w: 12, h: 0.4, fontSize: 11, color: GRAY });
+  T(s, "出典：文部科学省・国立教育政策研究所「OECD国際教員指導環境調査（TALIS）2024報告書のポイント」p.7（2025年10月公表）。調査は2024年2〜3月、日本の中学校教員3,558名", { x: 0.8, y: 6.45, w: 12, h: 0.4, fontSize: 11, color: GRAY });
 
   s = slide("校務での生成AI活用は、この3年で急速に広がった", "問題意識②", "【0:40】文部科学省の調査では、校務で生成AIを全く活用していない学校は、令和5年度の76.7％から、令和7年度には16.3％まで減りました。教職員の半数以上が活用している学校も、1.2％から17.1％に増えています。そして、活用した学校の98％が、働き方の改善に効果があったと感じています。AIは、もう特別なものではなくなりつつあります。");
   s.addChart(pres.charts.BAR, [{ name: "全く活用していない学校", labels: ["令和5年度", "令和6年度", "令和7年度"], values: [76.7, 58.9, 16.3] }, { name: "教職員の半数以上が活用している学校", labels: ["令和5年度", "令和6年度", "令和7年度"], values: [1.2, 2.7, 17.1] }],
     Object.assign({}, chartText, { x: 0.8, y: 1.45, w: 7.6, h: 4.9, barDir: "col", barGapWidthPct: 50, chartColors: [HEX.gray, HEX.sakura], showValue: true, dataLabelPosition: "outEnd", dataLabelFormatCode: "0.0", dataLabelFontSize: 15, dataLabelColor: HEX.ink, valAxisMinVal: 0, valAxisMaxVal: 90, showLegend: true, legendPos: "b", legendFontSize: 14, legendFontFace: "+mn-lt", catAxisLabelFontSize: 15 }));
   card(s, 8.8, 1.55, 3.95, 4.7, HEX.sakuraTint);
-  T(s, [{ text: "活用した学校の\n", options: { fontSize: 20, bold: true } }, { text: "98%", options: { fontSize: 72, bold: true, color: SAKURA } }, { text: "\nが働き方の改善に\n効果を実感", options: { fontSize: 20, bold: true } }], { x: 8.8, y: 1.55, w: 3.95, h: 4.7, align: "center", valign: "middle" });
-  T(s, "出典：文部科学省 中央教育審議会資料（2026年6月30日）「校務DXチェックリスト～自己点検結果～」より（校務での生成AIの活用状況、%）", { x: 0.8, y: 6.45, w: 12, h: 0.4, fontSize: 11, color: GRAY });
+  T(s, [{ text: "教職員の半数以上が\n活用した学校の\n", options: { fontSize: 18, bold: true } }, { text: "98%", options: { fontSize: 66, bold: true, color: SAKURA } }, { text: "\nが働き方の改善に\n効果があったと回答", options: { fontSize: 18, bold: true } }], { x: 8.8, y: 1.55, w: 3.95, h: 4.7, align: "center", valign: "middle" });
+  T(s, "出典：中央教育審議会 デジタル学習基盤特別委員会（第10回、2026年6月30日）資料1 p.12「校務DXチェックリスト 自己点検結果［確定値］」。「半数以上」＝「半分以上」＋「ほぼ全員」（発表者が合算）", { x: 0.8, y: 6.45, w: 12, h: 0.4, fontSize: 11, color: GRAY });
 
   s = slide("活用の余地を、関数で見る", "問題意識②", "【0:50】では、授業づくりでAIを使うと、どれくらいの余地があるのか。関数で考えてみます。中学校の先生の授業準備は、1日83分です。このうちAIで短縮できる割合をr％とすると、1日に短縮できる時間yは、y＝0.83rという比例の式で表せます。10％なら1日8.3分、仮に年間200日とすると約28時間です。ただし、これは仮定のモデルで、実際にどれだけ短縮できるかは、これから確かめる必要があります。");
   T(s, "y ＝ 0.83 r", { x: 0.8, y: 1.45, w: 6.0, h: 1.2, fontSize: 54, bold: true, color: FOREST, valign: "middle" });
-  T(s, "y：1日に短縮できる時間（分）\nr：AIで短縮できる割合（％）\n授業準備 83分／日（中学校教諭・令和4年度）", { x: 0.8, y: 2.75, w: 6.0, h: 1.5, fontSize: 18 });
+  T(s, "y：1日に短縮できる時間（分）\nr：AIで短縮できる割合（％）\n授業準備 83分／日（中学校教諭・平日、令和4年度）\n出典：文部科学省「教員勤務実態調査（令和4年度）」p.2", { x: 0.8, y: 2.7, w: 6.0, h: 1.7, fontSize: 14 });
   s.addChart(pres.charts.LINE, [{ name: "短縮時間（分/日）", labels: ["0%", "5%", "10%", "15%", "20%", "25%", "30%"], values: [0, 4.15, 8.3, 12.45, 16.6, 20.75, 24.9] }],
     Object.assign({}, chartText, { x: 7.0, y: 1.45, w: 5.8, h: 4.1, showTitle: true, title: "短縮できる割合 r と、1日の短縮時間 y（分）", chartColors: [HEX.sakura], lineSize: 3, lineDataSymbolSize: 8, showValue: true, dataLabelPosition: "t", dataLabelFormatCode: "0.0", dataLabelFontSize: 12, dataLabelColor: HEX.ink, valAxisMinVal: 0, valAxisMaxVal: 30, catAxisLabelFontSize: 13 }));
   card(s, 0.8, 4.5, 6.0, 1.8, HEX.sakuraTint);
   T(s, [{ text: "r＝10% なら 1日 8.3分\n", options: { fontSize: 24, bold: true, color: SAKURA } }, { text: "年間200日と仮定すると 約28時間", options: { fontSize: 20, bold: true } }], { x: 0.8, y: 4.5, w: 6.0, h: 1.8, align: "center", valign: "middle" });
-  T(s, "※ 仮定に基づく比例のモデル。実際の短縮時間は未測定であり、今後の検証で確かめる。", { x: 7.0, y: 5.7, w: 5.8, h: 0.6, fontSize: 13, color: GRAY });
+  T(s, "※ r と年間200日は発表者の仮定。実際の短縮時間は未測定であり、今後の検証で確かめる。", { x: 7.0, y: 5.7, w: 5.8, h: 0.6, fontSize: 13, color: GRAY });
 
   // ===== 第2章 AIを使う前 =====
   divider("第2章", "AIを使う前の、私の授業", "実物をそのままお見せします", "【0:10】ここで、AIを使う前の姿を、そのままお見せします。");
@@ -303,7 +304,7 @@ function slide(title, sec, notesText) {
   T(s, "→ 今回の出発点", { x: 0.8, y: 5.8, w: 11.7, h: 0.7, fontSize: 28, bold: true, color: SAKURA, align: "center" });
 
   // 15 三つの実践
-  s = slide("土台：関数分野の三つの授業", null, "【0:40】関数分野では、1年で地震の初期微動継続時間と震源からの距離を比例とみる授業、2年で山口県の2月の気温とソメイヨシノの開花日を一次関数とみなして予想する授業、3年で振り子の授業をしてきました。2015年の気温7.5℃から3月27日ごろと予想し、実際も3月27日でした。どれも、現実の事象を関数とみなし、予測し、確かめる授業です。ここが、私の授業の土台です。");
+  s = slide("土台：関数分野の三つの授業", null, "【0:40】関数分野では、1年で地震の初期微動継続時間と震源からの距離を比例とみる授業、2年で山口県の2月の気温とソメイヨシノの開花日を一次関数とみなして予想する授業、3年で振り子の授業をしてきました。2015年2月の気温7.5℃から3月27日ごろと予想し、気象庁の記録では実際の開花は3月25日でした。どれも、現実の事象を関数とみなし、予測し、確かめる授業です。ここが、私の授業の土台です。");
   const pr = [[gi.GiEarthCrack, HEX.forest, "1年　比例", "地震"], [gi.GiCherry, HEX.sakura, "2年　一次関数", "桜の開花日"], [gi.GiPendulumSwing, HEX.forest, "3年　y＝ax²", "振り子"]];
   for (let i = 0; i < 3; i++) {
     const [ic, col, g, t] = pr[i], x = 0.8 + i * 4.0;
@@ -314,6 +315,7 @@ function slide(title, sec, notesText) {
   }
   T(s, [{ text: "現実を" }, { text: "関数とみなし", options: { color: SAKURA } }, { text: "、予測し、確かめる" }], { x: 0.8, y: 5.6, w: 11.7, h: 0.9, fontSize: 30, bold: true, align: "center", valign: "middle" });
 
+  T(s, "桜のデータ：気象庁「過去の気象データ検索」下関 2月の平均気温／「さくらの開花日」下関（2015年：7.5℃、開花3月25日）", { x: 0.8, y: 6.5, w: 11.7, h: 0.35, fontSize: 11, color: GRAY });
   // ===== 第3章 AIでアレンジ =====
   divider("第3章", "AIで、アレンジしてみた", "AI LESSON REMAKE", "【0:10】では、これらの授業を、AIを使ってどうアレンジしたかです。");
 
@@ -370,15 +372,16 @@ function slide(title, sec, notesText) {
   T(s, "実物を測る体験は、あえて残した", { x: 0.8, y: 5.6, w: 11.7, h: 0.8, fontSize: 30, bold: true, color: SAKURA, align: "center" });
 
   // 21 振り子ラボ
-  s = slide("AIと作った教材「振り子ラボ」", null, "【0:50】これが、生成AIと一緒に作った「振り子ラボ」です。ブラウザで動き、インストールはいりません。実物で測ったデータを入れると、表とグラフに点が出ます。生徒は関数を選び、aを動かして、点にいちばん近いグラフを探します。2021年のデータでは、y＝0.25x²のずれが0.025m、比例だと0.138mでした。見た目だけでなく、数値を根拠に「y＝ax²とみなす」と説明できます。");
+  s = slide("AIと作った教材「振り子ラボ」", null, "【0:50】これが、生成AIと一緒に作った「振り子ラボ」です。ブラウザで動き、インストールはいりません。実物で測ったデータを入れると、表とグラフに点が出ます。生徒は関数を選び、aを動かして、点にいちばん近いグラフを探します。2021年のデータでは、y＝0.25x²のずれが0.025m、比例は、いちばん合うaにしても0.108mでした。見た目だけでなく、数値を根拠に「y＝ax²とみなす」と説明できます。");
   tag(s, "AI活用後", HEX.sakura);
   s.addImage({ path: path.join(ROOT, "05_数学教材", "振り子ラボ_画面.png"), x: 0.8, y: 1.5, w: 8.2, h: 4.61, shadow: { type: "outer", color: "000000", opacity: 0.2, blur: 8, offset: 3, angle: 90 } });
   T(s, "点とグラフのずれ", { x: 9.35, y: 1.6, w: 3.4, h: 0.5, fontSize: 20, bold: true, align: "center" });
   T(s, "y＝0.25x²", { x: 9.35, y: 2.2, w: 3.4, h: 0.5, fontSize: 20, color: SAKURA, align: "center" });
   T(s, "0.025m", { x: 9.35, y: 2.7, w: 3.4, h: 0.9, fontSize: 44, bold: true, color: SAKURA, align: "center", valign: "middle" });
   T(s, "比例 y＝ax", { x: 9.35, y: 3.85, w: 3.4, h: 0.5, fontSize: 20, color: GRAY, align: "center" });
-  T(s, "0.138m", { x: 9.35, y: 4.35, w: 3.4, h: 0.9, fontSize: 44, bold: true, color: GRAY, align: "center", valign: "middle" });
-  T(s, "数値を根拠に「みなす」", { x: 0.8, y: 6.25, w: 11.7, h: 0.5, fontSize: 22, bold: true, color: FOREST, align: "center" });
+  T(s, "0.108m", { x: 9.35, y: 4.35, w: 3.4, h: 0.9, fontSize: 44, bold: true, color: GRAY, align: "center", valign: "middle" });
+  T(s, "データ：2021年の授業での実測10組（新田・山本 2021）。ずれ＝二乗平均平方根。比例はずれが最小のa≒0.39で比較（発表者が計算）", { x: 0.8, y: 6.75, w: 11.9, h: 0.3, fontSize: 10, color: GRAY });
+  T(s, "数値を根拠に「みなす」", { x: 0.8, y: 6.2, w: 11.7, h: 0.5, fontSize: 22, bold: true, color: FOREST, align: "center" });
 
   // 22 AIの答えを検証
   s = slide("AIの答えを、データで確かめる", null, "【0:40】そして、生徒にこう問います。「ある生成AIは、振り子の長さは周期に比例すると答えた。本当か。」AIの答えをうのみにせず、データで確かめる。これからの時代に必要な力だと思っています。この教材のプログラムもAIが作ったものですが、使う前に数学的に正しいかを確かめるのは、人間です。");
@@ -416,11 +419,11 @@ function slide(title, sec, notesText) {
   }
   T(s, "それぞれについて、根拠 → 言えること → まだ言えないこと", { x: 0.8, y: 5.85, w: 11.7, h: 0.7, fontSize: 24, bold: true, color: FOREST, align: "center" });
 
-  s = slide("根拠から、言えること・まだ言えないこと", "考察", "【1:30】一つ目、継承です。中心発問、実物の振り子を測る体験、関数とみなすという本質は、教師の判断で残すことができました。数学的にも、振り子ラボの係数は理論値0.248、2021年の実測では約0.258と、差は約4％です。y＝0.25x²のずれは0.025m、比例は0.138mで、y＝ax²とみなす根拠を数値で示せました。ここは、今回の事例について言えることです。"
+  s = slide("根拠から、言えること・まだ言えないこと", "考察", "【1:30】一つ目、継承です。中心発問、実物の振り子を測る体験、関数とみなすという本質は、教師の判断で残すことができました。数学的にも、振り子ラボの係数は理論値0.248、2021年の実測では約0.258と、差は約4％です。y＝0.25x²のずれは0.025m、比例は0.108mで、y＝ax²とみなす根拠を数値で示せました。ここは、今回の事例について言えることです。"
     + "二つ目、負担軽減です。統計の収集とグラフ、ブラウザで動く教材、スライドと原稿の下書きを、AIが担いました。ただし、時間はまだ測っていません。ですから「軽減できた」とは、まだ言えません。"
     + "三つ目、見方・考え方です。数値で比べる場面、AIの答えを確かめる場面を、教材として設計することはできました。ただし、生徒での効果はまだ確かめていません。");
   const hdr2 = (t, col) => ({ text: t, options: { bold: true, color: WHITE, fill: { color: col }, fontSize: 16, valign: "middle", align: "center" } });
-  const ev = [["① 継承", "中心発問・実物の体験・「みなす」を残せた\na：理論0.248／実測約0.258（差約4%）\nずれ：y=0.25x² 0.025m／比例 0.138m", "事例として言える", FOREST],
+  const ev = [["① 継承", "中心発問・実物の体験・「みなす」を残せた\na：理論0.248／実測約0.258（差約4%）\nずれ：y=0.25x² 0.025m／比例 0.108m", "事例として言える", FOREST],
               ["② 負担軽減", "統計収集とグラフ・Web教材・スライドと原稿の下書きをAIが担った\n一方で、確認・修正の時間も必要だった", "見通しはある\n（時間は未測定）", AI],
               ["③ 見方・考え方", "数値で比べる場面・AIの答えを検証する場面・段階的ヒントを、教材として設計できた", "設計はできた\n（生徒では未検証）", SAKURA]];
   const tb = [[hdr2("要素", FOREST), hdr2("根拠（事実）", FOREST), hdr2("現時点で言えること", SAKURA)]];
@@ -513,11 +516,22 @@ function slide(title, sec, notesText) {
 
   // ===== 補足 =====
   pres.addSection({ title: "補足" }); _sec = "補足";
-  s = slide("補足① 統計データの出典", "補足", "【補足・質疑用】統計の出典と詳細です。");
-  T(s, bl(["中学校 受験者数 H25 62,998人 → R7 36,621人／採用者数 H12 2,673人 → R7 10,168人", "山口県 中学校数学（R7）受験37人・採用17人・2.2倍", "教師不足（R3始業日）中学校868人（0.40%）※全国調査はこの1回", "文部科学省「令和7年度公立学校教員採用選考試験の実施状況等」参考資料1", "文部科学省「教員勤務実態調査（令和4年度）集計【確定値】」", "文部科学省「『教師不足』に関する実態調査」（令和4年1月）"]), { x: 0.8, y: 1.5, w: 11.9, h: 4.5, fontSize: 18, paraSpaceAfter: 10 });
-  T(s, "受験者数の推移であり、教員総数の推移ではない", { x: 0.8, y: 6.1, w: 11.9, h: 0.5, fontSize: 18, bold: true, color: SAKURA });
+  s = slide("補足① データの出典一覧", "補足", "【補足・質疑用】本発表で使ったデータの出典です。数値はすべて原典で確認しました（2026年11月24日）。発表者が計算・作成した値は、その旨を明記しています。");
+  { const H = t => ({ text: t, options: { bold: true, color: WHITE, fill: { color: FOREST }, fontSize: 11, align: "center", valign: "middle" } });
+    const R = [
+      ["採用倍率・受験者数（全国）\n山口県 中学校数学 37人・17人・2.2倍", "文部科学省「令和7年度（令和6年度実施）公立学校教員採用選考試験の実施状況について」参考資料1 第7表 p.9／第2表-1・第9表-1（2025年12月25日公表）", "mext.go.jp/content/20261001-kyoikushokuin-000046447_2.pdf"],
+      ["在校等時間 11:32→11:01\n授業準備 1:26→1:23（83分）", "文部科学省「教員勤務実態調査（令和4年度）集計【確定値】」p.1・p.2（中学校教諭・平日・10・11月）", "mext.go.jp/content/20240404-mxt_zaimu01-100003067-1.pdf"],
+      ["AI使用 17.4%（OECD 36.3%）\n役立つ 73.1%・59.1% ほか", "文部科学省・国立教育政策研究所「OECD国際教員指導環境調査（TALIS）2024報告書のポイント」p.7（2025年10月公表）", "mext.go.jp/b_menu/toukei/data/Others/20251006-ope_dev02-2.pdf"],
+      ["校務での生成AI活用\n76.7→58.9→16.3%、98%", "中教審 初等中等教育分科会 デジタル学習基盤特別委員会（第10回、2026年6月30日）資料1 p.12", "mext.go.jp/content/20260630-mxt_shuukyo01-000050664_2.pdf"],
+      ["教師不足 中学校868人（0.40%）\n※全国調査はこの1回のみ", "文部科学省「『教師不足』に関する実態調査」p.4（令和3年度始業日時点、2022年1月公表）", "mext.go.jp/content/20220128-mxt_kyoikujinzai01-000020293-1.pdf"],
+      ["桜：下関 2月の平均気温\nさくらの開花日", "気象庁「過去の気象データ検索」下関（月ごとの値）／「さくらの開花日」（生物季節観測）", "data.jma.go.jp/stats/etrn/\ndata.jma.go.jp/sakura/data/sakura003_06.html"],
+      ["振り子の実測データ10組", "新田正幸・山本剛（2021）第103回全国算数・数学教育研究（埼玉）大会 発表資料・授業記録", "（筆者の授業記録）"],
+    ];
+    s.addTable([[H("使ったデータ"), H("出典（発行・資料名・該当箇所・公表）"), H("URL（https://）")]].concat(R.map(r => r.map((v, ci) => ({ text: v, options: { fontSize: ci === 2 ? 9 : 10.5, bold: ci === 0, color: INK, valign: "middle" } })))),
+      { x: 0.6, y: 1.25, w: 12.1, colW: [3.2, 5.6, 3.3], rowH: 0.6, border: { type: "solid", pt: 0.75, color: "C9D3C5" }, fill: { color: "FFFFFF" }, margin: 0.05 }); }
+  T(s, "受験者数の推移は、教員総数の推移ではない。計算値（変化の割合・y＝0.83r・ずれ等）と仮の数値（B＝W÷(N×E)）は発表者によるもの。", { x: 0.6, y: 6.6, w: 12.1, h: 0.35, fontSize: 11, bold: true, color: SAKURA });
   s = slide("補足② 振り子の式の根拠", "補足", "【補足・質疑用】振り子の式の根拠と、2021年の実測データです。");
-  T(s, [{ text: "T＝2π√(L/g)  →  L＝(g/4π²)T²", options: { bold: true, fontSize: 28, color: FOREST, breakLine: true } }, { text: "g/4π² ≒ 0.248　周期2秒 → 約0.99m", options: { fontSize: 22, breakLine: true } }, { text: "ふれはばが小さいときの近似（30°で周期は約1.7%長い）", options: { fontSize: 18, color: GRAY } }], { x: 0.8, y: 1.5, w: 6.0, h: 3.0, paraSpaceAfter: 10 });
+  T(s, [{ text: "T＝2π√(L/g)  →  L＝(g/4π²)T²", options: { bold: true, fontSize: 28, color: FOREST, breakLine: true } }, { text: "g/4π² ≒ 0.248　周期2秒 → 約0.99m", options: { fontSize: 22, breakLine: true } }, { text: "ふれはばが小さいときの近似（30°で周期は約1.7%長い）", options: { fontSize: 18, color: GRAY, breakLine: true } }, { text: "式：単振り子の周期の公式（g＝9.8 m/s²）\nデータ：2021年の授業での実測（新田・山本 2021）\n実測の a≒0.258 は最小二乗法で発表者が計算", options: { fontSize: 14, color: GRAY } }], { x: 0.8, y: 1.5, w: 6.0, h: 4.6, paraSpaceAfter: 10 });
   const hdr = (t, col) => ({ text: t, options: { bold: true, color: WHITE, fill: { color: col }, fontSize: 15, valign: "middle", align: "center" } });
   const d21 = [[0.65, 0.10], [0.90, 0.19], [1.01, 0.27], [1.08, 0.31], [1.14, 0.38], [1.39, 0.50], [1.59, 0.64], [1.70, 0.72], [1.72, 0.78], [1.81, 0.84]];
   s.addTable([[hdr("周期x（秒）", FOREST), hdr("長さy（m）", FOREST), hdr("y÷x²", SAKURA)]].concat(d21.map(([x, y]) => [x.toFixed(2), y.toFixed(2), (y / x / x).toFixed(3)].map(v => ({ text: v, options: { align: "center" } })))), { x: 7.2, y: 1.45, w: 5.5, colW: [1.85, 1.85, 1.8], fontSize: 15, rowH: 0.44, color: INK, valign: "middle", border: { type: "solid", pt: 1, color: HEX.white }, fill: { color: "F7F9F6" } });
