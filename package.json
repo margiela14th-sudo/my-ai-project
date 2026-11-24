@@ -1,0 +1,38 @@
+{
+  "name": "online-fukutannin",
+  "version": "1.0.0",
+  "description": "オンライン副担任 — 小中学校・特別支援の授業づくりを支える学習指導案生成アプリ",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "start": "tsx src/server.ts",
+    "dev": "tsx watch src/server.ts",
+    "test": "vitest run",
+    "lint": "tsc --noEmit",
+    "build": "tsc -p tsconfig.build.json"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/margiela14th-sudo/my-ai-project.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/margiela14th-sudo/my-ai-project/issues"
+  },
+  "homepage": "https://github.com/margiela14th-sudo/my-ai-project#readme",
+  "dependencies": {
+    "@anthropic-ai/sdk": "^1.13.0",
+    "marked": "^18.3.0"
+  },
+  "devDependencies": {
+    "@types/node": "^26.6.6",
+    "tsx": "^4.23.15",
+    "typescript": "^7.0.2",
+    "vitest": "^5.1.1"
+  },
+  "type": "module",
+  "private": true
+}

@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>オンライン副担任</title>
+  <link rel="stylesheet" href="/style.css" />
+</head>
+<body>
+  <header class="topbar">
+    <h1>オンライン副担任 <small>授業づくりアシスタント</small></h1>
+    <button type="button" id="openSettings" class="ghost">設定</button>
+  </header>
+
+  <main class="layout">
+    <form id="lessonForm" class="panel" novalidate>
+      <h2>授業の条件</h2>
+
+      <fieldset class="row">
+        <label>校種
+          <select name="schoolLevel" required>
+            <option value="elementary">小学校</option>
+            <option value="juniorHigh">中学校</option>
+          </select>
+        </label>
+        <label>学年
+          <select name="grade" required></select>
+        </label>
+      </fieldset>
+
+      <label>学級
+        <select name="classSetting" required></select>
+      </label>
+
+      <div id="specialBox" hidden>
+        <p class="label">障害種（複数可）</p>
+        <div id="disabilityList" class="checks"></div>
+        <label>知的障害の各教科の段階（任意）
+          <input name="intellectualStage" placeholder="例：小学部2段階" />
+        </label>
+      </div>
+
+      <label>教科
+        <select name="subject" required></select>
+      </label>
+
+      <label>単元名・題材名 <span class="req">必須</span>
+        <input name="unitName" required placeholder="例：わり算の筆算を考えよう" />
+      </label>
+
+      <fieldset class="row">
+        <label>本時（何時間目）
+          <input name="lessonNumber" type="number" min="1" placeholder="例 3" />
+        </label>
+        <label>単元の総時数
+          <input name="totalLessons" type="number" min="1" placeholder="例 10" />
+        </label>
+        <label>1時間（分）
+          <input name="minutes" type="number" min="10" placeholder="小45・中50" />
+        </label>
+      </fieldset>
+
+      <p class="label">指導案の種類</p>
+      <div id="planTypes" class="cards"></div>
+
+      <label>本時で扱いたいこと（任意）
+        <textarea name="lessonFocus" rows="2" placeholder="例：2位数÷1位数で、商が2桁になる筆算の仕方"></textarea>
+      </label>
+
+      <label>児童生徒の実態（任意・<strong>名前は仮名で</strong>）
+        <textarea name="studentProfile" rows="3" placeholder="例：28名。九九は概ね定着しているが、Aさんは7の段に不安がある。"></textarea>
+      </label>
+
+      <label>個別の配慮・支援で考えたいこと（任意）
+        <textarea name="supportNotes" rows="2"></textarea>
+      </label>
+
+      <details>
+        <summary>そのほかの条件</summary>
+        <label>使用教科書（任意）<input name="textbook" placeholder="例：〇〇出版 4年上" /></label>
+        <label>研究主題（研究授業のとき）<input name="researchTheme" /></label>
+        <label>先生からの要望<textarea name="extraRequests" rows="2" placeholder="例：タブレットで考えを共有する場面を入れたい"></textarea></label>
+      </details>
+
+      <p class="note">児童生徒の実名・住所・病名など個人が特定できる情報は入力しないでください。</p>
+
+      <p id="formError" class="error" role="alert" hidden></p>
+      <div class="actions">
+        <button type="submit" id="generateBtn">指導案をつくる</button>
+        <button type="button" id="stopBtn" class="ghost" hidden>止める</button>
+      </div>
+    </form>
+
+    <section class="panel output">
+      <div class="output-head">
+        <h2>指導案</h2>
+        <div class="tools">
+          <button type="button" id="copyBtn" class="ghost" disabled>コピー</button>
+          <button type="button" id="downloadBtn" class="ghost" disabled>保存（.md）</button>
+          <button type="button" id="printBtn" class="ghost" disabled>印刷</button>
+        </div>
+      </div>
+      <p id="status" class="status" aria-live="polite">左の条件を入れて「指導案をつくる」を押してください。</p>
+      <article id="result" class="doc"></article>
+    </section>
+  </main>
+
+  <dialog id="settings">
+    <form method="dialog" id="settingsForm">
+      <h2>設定</h2>
+      <p>Anthropic の APIキーを入力してください。キーはこのパソコンの中にだけ保存されます。</p>
+      <p id="keyState" class="status"></p>
+      <label>APIキー<input name="apiKey" type="password" autocomplete="off" placeholder="sk-ant-..." /></label>
+      <p id="settingsError" class="error" hidden></p>
+      <div class="actions">
+        <button type="submit" value="save">保存</button>
+        <button type="button" id="closeSettings" class="ghost">閉じる</button>
+      </div>
+    </form>
+  </dialog>
+
+  <script type="module" src="/app.js"></script>
+</body>
+</html>
