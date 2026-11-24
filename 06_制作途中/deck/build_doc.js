@@ -32,7 +32,7 @@ async function build() {
     } else if (b.t === "h2") {
       children.push(new Paragraph({ heading: HeadingLevel.HEADING_2, children: [run(b.text, { got: true })] }));
     } else if (b.t === "li") {
-      if (b.mark === "・") children.push(new Paragraph({ numbering: { reference: "bul", level: 0 }, children: [run(b.text)] }));
+      if (b.mark === "・") children.push(new Paragraph({ numbering: { reference: "bul", level: 0 }, spacing: { after: 80 }, children: [run(b.text)] }));
       else children.push(new Paragraph({ indent: { left: 360, hanging: 360 }, spacing: { after: 60 }, children: [run(b.text, { size: b.mark === "◆" ? 19 : 22 })] }));
     } else if (b.t === "table") {
       const tw = b.widths.reduce((a, c) => a + c, 0), cw = b.widths.map(w => Math.round(w / tw * W));
@@ -50,6 +50,11 @@ async function build() {
       const wpx = Math.round(b.w * 3.78), hpx = Math.round(wpx * meta.height / meta.width);
       children.push(new Paragraph({ alignment: AlignmentType.CENTER, spacing: { before: 120, after: 40, line: 240, lineRule: LineRuleType.AUTO }, keepNext: true, children: [new ImageRun({ type: "png", data: buf, transformation: { width: wpx, height: hpx }, altText: { title: b.cap, description: b.cap, name: "fig" + i } })] }));
       children.push(new Paragraph({ alignment: AlignmentType.CENTER, spacing: { after: 200 }, children: [run(b.cap, { got: true, size: 17, color: COL.gray })] }));
+    } else if (b.t === "callout") {
+      const fill = b.col === "forest" ? COL.tint : COL.sakuraTint, col = b.col === "forest" ? COL.forest : COL.sakura;
+      children.push(new Paragraph({ shading: { type: ShadingType.CLEAR, color: "auto", fill }, border: { top: border1(fill), bottom: border1(fill), left: border1(fill), right: border1(fill) }, spacing: { before: 120, after: 200, line: 360, lineRule: LineRuleType.AUTO }, indent: { left: 160, right: 160 }, children: [run(b.text, { got: true, bold: true, size: 23, color: col })] }));
+    } else if (b.t === "formula") {
+      children.push(new Paragraph({ alignment: AlignmentType.CENTER, spacing: { before: 120, after: 160 }, children: [run(b.text, { got: true, bold: true, size: 34, color: COL.forest })] }));
     } else if (b.t === "p") {
       const t = b.text;
       if (t.startsWith("従来の数学科授業実践における")) {           // 研究仮説：囲み
@@ -59,7 +64,7 @@ async function build() {
       } else {
         const label = t.match(/^(期待される効果（未検証）：|研究の限界：|今後の検証：)/);
         const kids = label ? [run(label[1], { got: true, bold: true, color: COL.forest }), run(t.slice(label[1].length))] : [run(t)];
-        children.push(new Paragraph({ indent: { firstLine: label ? 0 : 220 }, children: kids }));
+        children.push(new Paragraph({ children: kids }));
       }
     }
   }
@@ -67,7 +72,7 @@ async function build() {
   const doc = new Document({
     creator: "新田正幸", title: title,
     styles: {
-      default: { document: { run: { font: { name: MIN, eastAsia: MIN }, size: 22, color: COL.ink }, paragraph: { spacing: { after: 100, line: 320, lineRule: LineRuleType.AUTO }, alignment: AlignmentType.BOTH } } },
+      default: { document: { run: { font: { name: MIN, eastAsia: MIN }, size: 22, color: COL.ink }, paragraph: { spacing: { after: 160, line: 380, lineRule: LineRuleType.AUTO }, alignment: AlignmentType.BOTH } } },
       paragraphStyles: [
         { id: "Heading1", name: "Heading 1", basedOn: "Normal", next: "Normal", quickFormat: true, run: { font: { name: GOT, eastAsia: GOT }, size: 26, bold: true, color: COL.forest },
           paragraph: { spacing: { before: 320, after: 140 }, keepNext: true, keepLines: true, outlineLevel: 0, shading: { type: ShadingType.CLEAR, color: "auto", fill: COL.tint }, indent: { left: 60, right: 60 }, border: { top: border1(COL.tint), bottom: border1(COL.tint), left: border1(COL.tint), right: border1(COL.tint) } } },
