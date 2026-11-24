@@ -466,6 +466,42 @@ function slide(title, sec, notesText) {
   card(s, 0.8, 5.0, 11.9, 1.5, HEX.sakuraTint);
   T(s, [{ text: "時間削減率（%）＝（改善前 − 改善後）÷ 改善前 × 100\n", options: { fontSize: 22, bold: true, color: SAKURA } }, { text: "教師：準備時間・負担感（TALISと同じ項目）／生徒：到達率・説明・振り返り", options: { fontSize: 17 } }], { x: 0.8, y: 5.0, w: 11.9, h: 1.5, align: "center", valign: "middle" });
 
+  // ===== 第8版 追加：提案4 授業づくりの超自動化／提案5 振り返りの自動化（構想。ノートは set_notes.py で上書き） =====
+  s = slide("提案4　授業づくりの「超自動化」", "考察", "提案4（ノートは script.json）");
+  const fl = [[fa.FaChalkboardTeacher, HEX.sakura, "sakuraTint", "教師", "入れる", "土台と意図\n（授業記録・ねらい）"],
+              [fa.FaRobot, HEX.ai, "aiTint", "Claude Code", "作る", "日々の授業案\n学習指導案（文字）\n板書型指導案・教材"],
+              [fa.FaCheckDouble, HEX.ai, "aiTint", "Codex", "確かめる", "数値・数学・誤りを\n別のAIで二重チェック"],
+              [fa.FaChalkboardTeacher, HEX.sakura, "sakuraTint", "教師", "決める", "吟味して\n残す・変える・削る"]];
+  for (let i = 0; i < 4; i++) {
+    const [ic, col, tint, who, verb, det] = fl[i], x = 0.8 + i * 3.08;
+    card(s, x, 1.45, 2.65, 3.55, HEX[tint]);
+    await iconCircle(s, ic, x + 0.88, 1.6, 0.9, col);
+    T(s, who, { x, y: 2.55, w: 2.65, h: 0.4, fontSize: 16, bold: true, color: col, align: "center" });
+    T(s, verb, { x, y: 2.95, w: 2.65, h: 0.6, fontSize: 28, bold: true, align: "center", valign: "middle" });
+    T(s, det, { x: x + 0.1, y: 3.6, w: 2.45, h: 1.3, fontSize: 15, align: "center", valign: "middle" });
+    if (i < 3) T(s, "▶", { x: x + 2.65, y: 2.95, w: 0.43, h: 0.6, fontSize: 20, color: GRAY, align: "center", valign: "middle" });
+  }
+  T(s, "作る・確かめるはAI、決めるのは教師", { x: 0.8, y: 5.2, w: 11.9, h: 0.8, fontSize: 30, bold: true, color: FOREST, align: "center", valign: "middle" });
+  T(s, "現状：作る手順（型）と2つのAIの連携の設定は作成済み、指導案の見本を試作。日々の運用と時間の測定はこれから（構想）", { x: 0.8, y: 6.15, w: 11.9, h: 0.4, fontSize: 13, color: GRAY, align: "center" });
+
+  s = slide("提案5　振り返りの自動化サイクル", "考察", "提案5（ノートは script.json）");
+  const rf = [[fa.FaPenFancy, HEX.forest, "生徒が書く", "毎時間の振り返りを\nフォームで入力\n→ スプレッドシートへ"],
+              [fa.FaUserSecret, HEX.ai, "匿名化", "氏名・成績を外して\nからAIへ渡す"],
+              [fa.FaChartBar, HEX.ai, "AIが分析", "つまずき・見方考え方\nよく出た言葉を整理"],
+              [fa.FaChalkboardTeacher, HEX.sakura, "教師が確かめ\n加筆する", "一人一人への\nコメントを読み、直す"],
+              [fa.FaReply, HEX.forest, "返却・次時へ", "生徒に返す\n次の授業案に生かす"]];
+  for (let i = 0; i < 5; i++) {
+    const [ic, col, h, det] = rf[i], cx = 1.75 + i * 2.45;
+    await iconCircle(s, ic, cx - 0.55, 1.55, 1.1, col);
+    if (i < 4) s.addShape(pres.shapes.LINE, { x: cx + 0.65, y: 2.1, w: 1.15, h: 0, line: { color: HEX.gray, width: 2, endArrowType: "triangle" } });
+    T(s, h, { x: cx - 1.15, y: 2.8, w: 2.3, h: 0.85, fontSize: 20, bold: true, color: col, align: "center", valign: "middle" });
+    T(s, det, { x: cx - 1.15, y: 3.7, w: 2.3, h: 1.1, fontSize: 14, align: "center" });
+  }
+  card(s, 0.8, 4.95, 11.9, 0.55, TINT);
+  T(s, "分析結果は、提案4の「次の授業案づくり」に入れる（毎時間まわるサイクル）", { x: 0.8, y: 4.95, w: 11.9, h: 0.55, fontSize: 17, bold: true, color: FOREST, align: "center", valign: "middle" });
+  T(s, "毎時間の振り返りを、次の1時間に生かす", { x: 0.8, y: 5.6, w: 11.9, h: 0.7, fontSize: 28, bold: true, color: SAKURA, align: "center", valign: "middle" });
+  T(s, "構想段階（実践・効果の測定はこれから）。外部のAIには匿名化したデータだけを渡し、返却前に必ず教師が読む", { x: 0.8, y: 6.35, w: 11.9, h: 0.4, fontSize: 13, color: GRAY, align: "center" });
+
   s = slide("結論：AIの価値は、使う人の土台で決まる", "考察", "【1:00】ここまでをまとめると、結論はこうです。授業の質は、土台とAIのかけ算だと考えています。土台とは、自分の授業の記録、うまくいったことも失敗したことも含めた、一次情報です。土台がゼロなら、AIをどれだけかけても、ゼロです。AIをただ使うだけでは、薄っぺらいものしかできず、AIに使われるだけになってしまいます。私自身、薄っぺらいかもしれません。それでも、14年間の授業があったから、AIにアレンジを頼むことができました。だからこそ、現場の先生方には、自分の土台とともに、生成AIの活用を進めてほしいと思っています。");
   T(s, "授業の質 ＝ 土台 × AI", { x: 0.8, y: 1.4, w: 11.9, h: 1.3, fontSize: 56, bold: true, color: FOREST, align: "center", valign: "middle" });
   card(s, 0.8, 2.9, 5.75, 2.35, TINT);
