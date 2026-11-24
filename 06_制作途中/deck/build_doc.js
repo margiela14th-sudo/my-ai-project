@@ -26,7 +26,7 @@ const BOX = (lines, col = "forest") => {
   const fill = col === "forest" ? C.tint : C.sakuraTint, c = col === "forest" ? C.forest : C.sakura;
   lines.forEach((t, i) => kids.push(new Paragraph({ shading: { type: ShadingType.CLEAR, color: "auto", fill }, border: { top: bd(c, 6), bottom: bd(c, 6), left: bd(c, 6), right: bd(c, 6) },
     indent: { left: 80, right: 80 }, spacing: { before: i === 0 ? 100 : 0, after: i === lines.length - 1 ? 140 : 0, line: 300, lineRule: LineRuleType.AUTO },
-    children: [r(t, { got: true, bold: true, size: 20, color: i === 0 && lines.length > 1 ? c : C.ink })] })));
+    children: [r(t, { got: i === 0 && lines.length > 1, bold: true, size: 20, color: i === 0 && lines.length > 1 ? c : C.ink })] })));
 };
 const FORMULA = t => kids.push(new Paragraph({ alignment: AlignmentType.CENTER, spacing: { before: 80, after: 100 }, children: [r(t, { got: true, bold: true, size: 30, color: C.forest })] }));
 async function FIG(file, cap, widthMm = 80) {
