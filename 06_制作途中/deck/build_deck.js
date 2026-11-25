@@ -134,25 +134,25 @@ function slide(title, sec, notesText) {
 
   // 2 AIで作った
   s = slide("この発表資料について", "はじめに", "【0:40】はじめに、お伝えしておきたいことがあります。今回の発表資料は、構成もスライドも原稿も、そして後でお見せする教材も、すべて生成AIを活用して作りました。賛否両論あると思います。ただ、中身には、私がこの14年間、授業で大切にしてきた思いと、その蓄積を載せたつもりです。AIを使う前の資料も、そのまま残してお見せします。どう受け取るかは、皆さんの受け取り方次第です。");
-  T(s, [{ text: "この発表資料は、\n" }, { text: "すべて生成AIで", options: { color: SAKURA } }, { text: "作りました。" }], { x: 0.8, y: 1.5, w: 11.7, h: 2.4, fontSize: 44, bold: true, valign: "middle" });
+  T(s, [{ text: "生成AIを使えば、\n" }, { text: "このような資料が作れる時代", options: { color: SAKURA } }, { text: "です。" }], { x: 0.8, y: 1.5, w: 11.7, h: 2.4, fontSize: 42, bold: true, valign: "middle" });
   await iconCircle(s, fa.FaRobot, 0.8, 4.35, 0.9, HEX.ai);
-  T(s, "形にしたのは AI", { x: 1.9, y: 4.35, w: 4.4, h: 0.9, fontSize: 24, bold: true, color: AI, valign: "middle" });
+  T(s, "使っても、使わなくてもいい", { x: 1.9, y: 4.35, w: 4.6, h: 0.9, fontSize: 22, bold: true, color: AI, valign: "middle" });
   await iconCircle(s, gi.GiPlantSeed, 6.6, 4.35, 0.9, HEX.forest);
-  T(s, "中身は 14年間の授業", { x: 7.7, y: 4.35, w: 5.0, h: 0.9, fontSize: 24, bold: true, color: FOREST, valign: "middle" });
-  T(s, "賛否両論あると思います。受け取り方は、皆さんにお任せします。", { x: 0.8, y: 5.75, w: 11.7, h: 0.6, fontSize: 20, italic: true, color: GRAY });
+  T(s, "ただ、学びは止めない", { x: 7.7, y: 4.35, w: 5.0, h: 0.9, fontSize: 24, bold: true, color: FOREST, valign: "middle" });
+  T(s, "この資料も生成AIで作りました（中身は14年間の授業）。自慢ではなく、今の時代を共有するためです。", { x: 0.8, y: 5.75, w: 11.7, h: 0.6, fontSize: 20, italic: true, color: GRAY });
 
   // 3 二つの問題意識
   s = slide("今日、皆さんと考えたい二つの問い", "はじめに", "【0:50】今日の発表には、二つの問題意識があります。一つは、教員不足という社会的な問題です。なぜ数学の研究協議会でこれを取り上げるのか。それは、授業の質を支える教師の時間が、この問題と切り離せないと考えるからです。もう一つは、学校現場へのAIの活用、とくに授業づくりにどう生かすかという問題です。二つは別々の問題ですが、「教師の時間」と「授業の質」というところで重なり合っていると感じています。");
   s.addShape(pres.shapes.OVAL, { x: 0.9, y: 1.35, w: 6.75, h: 4.6, fill: { color: HEX.forest, transparency: 82 }, line: { color: HEX.forest, width: 2 } });
   s.addShape(pres.shapes.OVAL, { x: 5.65, y: 1.35, w: 6.75, h: 4.6, fill: { color: HEX.ai, transparency: 82 }, line: { color: HEX.ai, width: 2 } });
-  T(s, [{ text: "問い①\n", options: { fontSize: 24, color: FOREST } }, { text: "教員不足を、\nどう解消\nするか" }], { x: 1.5, y: 2.1, w: 4.0, h: 2.8, fontSize: 32, bold: true, valign: "middle" });
+  T(s, [{ text: "問い①\n", options: { fontSize: 24, color: FOREST } }, { text: "教員の\n魅力とは、\n何か" }], { x: 1.5, y: 2.1, w: 4.0, h: 2.8, fontSize: 32, bold: true, valign: "middle" });
   T(s, [{ text: "問い②\n", options: { fontSize: 24, color: AI } }, { text: "学び続ける\nために、AIと\n共存する" }], { x: 7.8, y: 2.1, w: 4.0, h: 2.8, fontSize: 32, bold: true, valign: "middle", align: "right" });
-  T(s, "教師の\n時間と\n授業の質", { x: 5.7, y: 2.45, w: 1.9, h: 2.3, fontSize: 22, bold: true, color: SAKURA, align: "center", valign: "middle" });
-  T(s, "二つは「教師の時間と授業の質」でつながっている", { x: 0.8, y: 6.1, w: 11.7, h: 0.6, fontSize: 22, bold: true, color: FOREST, align: "center" });
+  T(s, "学び\n続ける\n教師", { x: 5.7, y: 2.45, w: 1.9, h: 2.3, fontSize: 22, bold: true, color: SAKURA, align: "center", valign: "middle" });
+  T(s, "教員不足という大きな問題を、「教員の魅力」に絞って考えたい", { x: 0.8, y: 6.1, w: 11.7, h: 0.6, fontSize: 22, bold: true, color: FOREST, align: "center" });
 
   // 4 答えではなく問い
   s = slide("今日の発表の流れ", "はじめに", "【0:40】今日の発表の流れです。まず、二つの問題を提起します。一つ目は教員不足、二つ目は学校でのAIの活用です。どちらも、関数やデータで数値を見ていきます。次に、私の過去の数学の授業を、AIを使う前と使った後で比べます。実証まではできていませんが、どんな可能性があり、どんな利点と欠点があるのかを考えます。そして最後に、研究仮説から考察し、結論として、AIの価値を決めるのは使う人の質だ、というところまでお話しします。どちらの問題にも一つの答えを示すつもりはありません。最後に、皆さんと指導助言の先生にご意見をいただけたらと思っています。");
-  const flow = [[fa.FaUsers, HEX.forest, "第1章", "教員不足を\n数値で見る\n（問い①の背景）"], [fa.FaLaptopCode, HEX.ai, "第2章", "教員のAI活用を\n数値で見る\n（問い②の背景）"], [fa.FaSyncAlt, HEX.moss, "第3・4章", "自分の授業で\n試してみた\n（AIの前と後）"], [fa.FaSearch, HEX.gray, "第5章", "考察と提案\n言えること・\nまだ言えないこと"], [gi.GiPlantSeed, HEX.sakura, "第6章", "結論と\n二つの問い"]];
+  const flow = [[fa.FaUsers, HEX.forest, "第1章", "教員不足を\n数値で見る\n（問い①の入口）"], [fa.FaLaptopCode, HEX.ai, "第2章", "教員のAI活用を\n数値で見る\n（問い②の背景）"], [fa.FaSyncAlt, HEX.moss, "第3・4章", "自分の授業で\n試してみた\n（AIの前と後）"], [fa.FaSearch, HEX.gray, "第5章", "考察と提案\n言えること・\nまだ言えないこと"], [gi.GiPlantSeed, HEX.sakura, "第6章", "結論と\n二つの問い"]];
   for (let i = 0; i < 5; i++) {
     const [ic, col, h, t] = flow[i], x = 0.8 + i * 2.42, last = i === 4;
     card(s, x, 1.6, 2.15, 3.6, last ? HEX.sakuraTint : TINT);
@@ -187,7 +187,7 @@ function slide(title, sec, notesText) {
   T(s, [{ text: "2015 平行四辺形 ／ 2017 複合図 ／ 2021 振り子　→　" }, { text: "2026 AIでアレンジ", options: { color: SAKURA } }], { x: 0.8, y: 5.75, w: 11.7, h: 0.8, fontSize: 21, bold: true, align: "center", valign: "middle" });
 
   // ===== 第1章 =====
-  divider("第1章", "教員不足を、数値で見る", "問い①の背景　関数・データの目で", "【0:10】一つ目の問題意識、教員不足です。ここは、関数的な表現やデータの活用の視点で、数値を少し見てみたいと思いました。資料として載せておく意味合いですので、ご覧ください。", ["新しい手段を学びながら、授業を改善してきた", "その授業を支える「教師の数と時間」は、いまどうなっているか"]);
+  divider("第1章", "教員不足を、数値で見る", "問い①の背景　関数・データの目で", "【0:10】一つ目の問題意識、教員不足です。ここは、関数的な表現やデータの活用の視点で、数値を少し見てみたいと思いました。資料として載せておく意味合いですので、ご覧ください。", ["新しい手段を学びながら、授業を改善してきた", "教員のなり手と時間は、いまどうなっているか（教員の魅力を考える入口）"]);
 
   // 7 採用倍率
   s = slide("中学校の教員採用倍率", "問い①の背景", "【0:40】中学校の教員採用の倍率は、平成12年度の17.9倍から、令和7年度は3.6倍まで下がり、過去最低です。ただし、これは受験者数の推移で、教員の総数が減っているという意味ではありません。採用者数が増えたことも影響しています。ちなみに、山口県の中学校数学は、令和7年度、2.2倍でした。");
@@ -521,7 +521,7 @@ function slide(title, sec, notesText) {
   T(s, "だからこそ、土台とともに、生成AIの活用を進めたい", { x: 0.8, y: 5.5, w: 11.9, h: 0.9, fontSize: 30, bold: true, color: SAKURA, align: "center", valign: "middle" });
 
   // ===== 第4章 問いかけ =====
-  divider("第6章", "二つの問い", "教員不足の解消と、学び続けるためのAIとの共存", "第6章", ["授業の質＝土台×AI。土台を育てるのは、学び続けること", "今日の話を一本の線でつなぎ、二つの問いを皆さんと考えたい"]);
+  divider("第6章", "二つの問い", "教員の魅力と、学び続けるためのAIとの共存", "第6章", ["授業の質＝土台×AI。土台を育てるのは、学び続けること", "教員の魅力とは何か。学び続けるために、AIとどう共存するか"]);
 
   // 第9版 追加：今日の話を一本の線で
   s = slide("今日の話を、一本の線で", null, "一本の線");
@@ -537,12 +537,25 @@ function slide(title, sec, notesText) {
   T(s, [{ text: "だから、" }, { text: "学び続けるために、AIと共存する", options: { color: SAKURA } }], { x: 0.8, y: 5.3, w: 11.9, h: 0.8, fontSize: 32, bold: true, align: "center", valign: "middle" });
   T(s, "AIが時間と気づきを生む → 教師が学ぶ → 土台が育つ → AIをよりよく使える（めざす循環。効果の検証はこれから）", { x: 0.8, y: 6.15, w: 11.9, h: 0.4, fontSize: 14, color: GRAY, align: "center" });
 
+  // 第10版 追加：時短は目的ではない
+  s = slide("時短は、目的ではない", null, "時短");
+  card(s, 0.8, 1.5, 5.75, 3.3, TINT);
+  await iconCircle(s, fa.FaCoins, 1.1, 1.75, 0.95, HEX.gray);
+  T(s, [{ text: "お金を得る仕事の効率\n", options: { fontSize: 22, bold: true, color: GRAY } }, { text: "速く・安く・多く", options: { fontSize: 20 } }], { x: 2.25, y: 1.75, w: 4.2, h: 0.95, valign: "middle" });
+  T(s, "教育は、同じ物差しでは\n測れない", { x: 1.1, y: 3.0, w: 5.2, h: 1.6, fontSize: 26, bold: true, valign: "middle" });
+  card(s, 6.95, 1.5, 5.75, 3.3, HEX.sakuraTint);
+  await iconCircle(s, fa.FaBookOpen, 7.25, 1.75, 0.95, HEX.sakura);
+  T(s, [{ text: "生まれた時間は\n", options: { fontSize: 22, bold: true, color: SAKURA } }, { text: "どこに使うか", options: { fontSize: 20 } }], { x: 8.4, y: 1.75, w: 4.2, h: 0.95, valign: "middle" });
+  T(s, "学ぶこと、\n子どもに向き合うことへ", { x: 7.25, y: 3.0, w: 5.2, h: 1.6, fontSize: 26, bold: true, valign: "middle" });
+  T(s, "楽をするための効率化ではない。学びを止めないためのAI", { x: 0.8, y: 5.1, w: 11.9, h: 0.8, fontSize: 28, bold: true, color: FOREST, align: "center", valign: "middle" });
+  T(s, "時短が叫ばれる今、本当にこのままでいいのか（発表者の問題意識）", { x: 0.8, y: 5.95, w: 11.9, h: 0.5, fontSize: 18, color: GRAY, align: "center" });
+
   // 26 問い①
   s = slide("問い①", null, "【0:40】ここで、皆さんに問いかけたいことがあります。一つ目。教員不足という社会の問題に対して、学校や私たち教師にできること、すべきことは何でしょうか。教育の質を守るために、教師の時間を、どう守ればよいでしょうか。");
   await iconCircle(s, fa.FaUsers, 0.8, 1.6, 1.2, HEX.forest);
-  T(s, "B ＝ W ÷（N × E）　N：社会・行政　W：学校の組織　E：一人一人", { x: 2.25, y: 1.6, w: 10.4, h: 1.2, fontSize: 22, bold: true, color: FOREST, valign: "middle" });
-  T(s, "教員不足を、\nどう解消するか。", { x: 0.8, y: 3.0, w: 11.7, h: 2.6, fontSize: 46, bold: true, valign: "middle" });
-  T(s, "教育の質を守るために、学校や教師にできること・すべきことは？", { x: 0.8, y: 5.75, w: 11.7, h: 0.7, fontSize: 24, color: GRAY });
+  T(s, "教員不足を、なり手の「数」ではなく「魅力」から考える", { x: 2.25, y: 1.6, w: 10.4, h: 1.2, fontSize: 26, bold: true, color: FOREST, valign: "middle" });
+  T(s, "教員の魅力とは、\n何か。", { x: 0.8, y: 3.0, w: 11.7, h: 2.6, fontSize: 46, bold: true, valign: "middle" });
+  T(s, "学び続ける姿は、その答えの一つにならないか（発表者の考え）", { x: 0.8, y: 5.75, w: 11.7, h: 0.7, fontSize: 24, color: GRAY });
 
   // 25 AIと人間
   s = slide("学び続けるための、AIとの共存", null, "【0:50】AIは、案を出すこと、作業、プログラムを書くことはとても速いです。でも、何を残すかを決めること、生徒の表情を見て問い返すこと、授業に思いを込めることは、人間にしかできません。AIと人間、それぞれの得意なことを生かして、共存していくことが大切だと考えています。");
