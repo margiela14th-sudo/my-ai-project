@@ -52,6 +52,8 @@ for i, (slide, x) in enumerate(zip(prs.slides, S), 1):
         title = texts[1] if i == 1 and len(texts) > 1 else (texts[0] if texts else "")
     title = title.replace("\n", "")
     md += [f"## {i}　{title}", f"**{head}**", "", x["say"]]
+    if x.get("next"):
+        md += ["", f"→ **つなぎ：** {x['next']}"]
     if x["more"]:
         md += ["", f"> 時間があれば：{x['more']}"]
     if x["do"]:
@@ -59,12 +61,14 @@ for i, (slide, x) in enumerate(zip(prs.slides, S), 1):
     md.append("")
 prs.save(PPTX)
 
-chars = sum(len(x["say"]) for x in S if x["t"])
+chars = sum(len(x["say"]) + len(x.get("next", "")) for x in S if x["t"])
 header = [
-    "# 発表原稿（第8版：PowerPointの発表者ノートと同一）",
+    "# 発表原稿（第9版：PowerPointの発表者ノートと同一）",
     "",
-    f"全{len(S)}枚（本編{sum(1 for x in S if x['t'])}枚＋補足）。「話すこと」だけを読むと 目安 {mmss(total)}（{chars}字）。",
+    f"全{len(S)}枚（本編{sum(1 for x in S if x['t'])}枚＋補足）。「話すこと」と「つなぎ」を読むと 目安 {mmss(total)}（{chars}字）。",
     "「時間があれば」は、時間に余裕があるときだけ足す。スライドの文字をそのまま読むのではなく、1枚に1つのことを自分の言葉で伝える。",
+    "今日の軸：問い①教員不足をどう解消するか／問い②（主張）学び続けるために、AIとの共存は不可欠。結論：授業の質＝土台×AI、土台を育てるのは学び続けること。",
+    "章扉（第1〜6章）は「ここまで」「この章で」を読み、前後をつなぐ。",
     "出典は各スライド下部と「補足① データの出典一覧」に記載。",
     "",
 ]
