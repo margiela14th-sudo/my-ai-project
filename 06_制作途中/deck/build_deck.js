@@ -268,7 +268,10 @@ function slide(title, sec, notesText) {
   s.addChart(pres.charts.BAR, [{ name: "全く活用していない学校", labels: ["令和5年度", "令和6年度", "令和7年度"], values: [76.7, 58.9, 16.3] }, { name: "教職員の半数以上が活用している学校", labels: ["令和5年度", "令和6年度", "令和7年度"], values: [1.2, 2.7, 17.1] }],
     Object.assign({}, chartText, { x: 0.8, y: 1.45, w: 7.6, h: 4.9, barDir: "col", barGapWidthPct: 50, chartColors: [HEX.gray, HEX.sakura], showValue: true, dataLabelPosition: "outEnd", dataLabelFormatCode: "0.0", dataLabelFontSize: 15, dataLabelColor: HEX.ink, valAxisMinVal: 0, valAxisMaxVal: 90, showLegend: true, legendPos: "b", legendFontSize: 14, legendFontFace: "+mn-lt", catAxisLabelFontSize: 15 }));
   card(s, 8.8, 1.55, 3.95, 4.7, HEX.sakuraTint);
-  T(s, [{ text: "教職員の半数以上が\n活用した学校の\n", options: { fontSize: 18, bold: true } }, { text: "98%", options: { fontSize: 66, bold: true, color: SAKURA } }, { text: "\nが働き方の改善に\n効果があったと回答", options: { fontSize: 18, bold: true } }], { x: 8.8, y: 1.55, w: 3.95, h: 4.7, align: "center", valign: "middle" });
+  T(s, [{ text: "教職員の半数以上が\n活用した学校の\n", options: { fontSize: 18, bold: true } }, { text: "98%", options: { fontSize: 66, bold: true, color: SAKURA } }, { text: "\nが働き方の改善に\n効果があったと回答", options: { fontSize: 18, bold: true } }], { x: 8.8, y: 1.55, w: 3.95, h: 3.75, align: "center", valign: "middle" });
+  // 第11版：会場への問いかけ（小さく）
+  s.addShape(pres.shapes.ROUNDED_RECTANGLE, { x: 9.0, y: 5.35, w: 3.55, h: 0.75, fill: { color: WHITE }, line: { color: HEX.sakura, width: 1.25 }, rectRadius: 0.1 });
+  T(s, [{ text: "会場の皆さんへ", options: { bold: true, color: SAKURA, align: "center", breakLine: true } }, { text: "使っていますか？ 何に？ どう感じますか？", options: { align: "center" } }], { x: 9.0, y: 5.35, w: 3.55, h: 0.75, fontSize: 11.5, align: "center", valign: "middle" });
   T(s, "出典：中央教育審議会 デジタル学習基盤特別委員会（第10回、2026年6月30日）資料1 p.12「校務DXチェックリスト 自己点検結果［確定値］」。「半数以上」＝「半分以上」＋「ほぼ全員」（発表者が合算）", { x: 0.8, y: 6.45, w: 12, h: 0.4, fontSize: 11, color: GRAY });
 
   s = slide("活用の余地を、関数で見る", "問い②の背景", "【0:50】では、授業づくりでAIを使うと、どれくらいの余地があるのか。関数で考えてみます。中学校の先生の授業準備は、1日83分です。このうちAIで短縮できる割合をr％とすると、1日に短縮できる時間yは、y＝0.83rという比例の式で表せます。10％なら1日8.3分、仮に年間200日とすると約28時間です。ただし、これは仮定のモデルで、実際にどれだけ短縮できるかは、これから確かめる必要があります。");
