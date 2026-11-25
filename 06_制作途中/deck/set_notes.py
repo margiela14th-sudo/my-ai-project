@@ -4,6 +4,14 @@ script.json は1スライド1要素：t=目安秒数、say=話すこと（15分�
 """
 import json, os
 from pptx import Presentation
+from pptx.util import Pt
+from pptx.dml.color import RGBColor
+import re
+
+INK, GRAY, BLUE, GREEN = RGBColor(0x1E, 0x2A, 0x22), RGBColor(0x6B, 0x7A, 0x70), RGBColor(0x3E, 0x7C, 0xB1), RGBColor(0x2C, 0x5F, 0x2D)
+
+def sentences(t):
+    return [u for u in re.findall(r"[^。？]+[。？]?", t) if u.strip()]
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.abspath(os.path.join(HERE, "..", ".."))
@@ -22,12 +30,22 @@ cum, md = 0, []
 for i, (slide, x) in enumerate(zip(prs.slides, S), 1):
     cum += x["t"]
     head = f"【{i}/{len(S)}】目安 {mmss(x['t'])}（累計 {mmss(cum)}）" if x["t"] else f"【{i}/{len(S)}】補足（質疑用）"
-    parts = [head, "", "▶ 話すこと", x["say"]]
+    # 発表者モードで読みやすく：話すことは大きく・一文ずつ改行、つなぎは色付き、補足は小さく
+    tf = slide.notes_slide.notes_text_frame
+    tf.clear()
+    lines = [(head, 14, True, GRAY)]
+    lines += [(t, 24, True, INK) for t in sentences(x["say"])]
+    if x.get("next"):
+        lines += [("→ " + t, 20, True, BLUE) for t in sentences(x["next"])]
     if x["more"]:
-        parts += ["", "▷ 時間があれば", x["more"]]
+        lines += [("（時間があれば）" + x["more"], 14, False, GRAY)]
     if x["do"]:
-        parts += ["", "● 動き・注意", x["do"]]
-    slide.notes_slide.notes_text_frame.text = "\n".join(parts)
+        lines += [("● " + x["do"], 14, False, GREEN)]
+    for k, (text, size, bold, color) in enumerate(lines):
+        para = tf.paragraphs[0] if k == 0 else tf.add_paragraph()
+        para.space_after = Pt(6)
+        r = para.add_run(); r.text = text
+        r.font.size = Pt(size); r.font.bold = bold; r.font.color.rgb = color
     title = slide.shapes.title.text if slide.shapes.title is not None and slide.shapes.title.has_text_frame else ""
     if not title:
         texts = [sh.text_frame.text for sh in slide.shapes if sh.has_text_frame and sh.text_frame.text.strip()]
