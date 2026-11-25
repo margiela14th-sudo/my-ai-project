@@ -95,12 +95,21 @@ function tag(s, text, col) {
 const bl = (arr, o = {}) => arr.map((t, j) => ({ text: t, options: Object.assign({ bullet: true, breakLine: j < arr.length - 1 }, o) }));
 const N = [];               // ノート（スライド順）
 const note = t => N.push(t);
-function divider(num, title, sub, notesText) {
+// 章扉＝つなぎのスライド：「ここまで」と「この章で」を必ず示す（第9版）
+function divider(num, title, sub, notesText, bridge) {
   pres.addSection({ title: num + " " + title }); _sec = num + " " + title;
   const s = pres.addSlide({ masterName: "DARK", sectionTitle: _sec }); s.addNotes(notesText);
-  T(s, num, { x: 0.9, y: 2.0, w: 6, h: 1.0, fontSize: 28, bold: true, color: MOSS });
-  T(s, title, { x: 0.9, y: 2.9, w: 11.5, h: 1.3, fontSize: 48, bold: true, color: WHITE, valign: "middle" });
-  if (sub) T(s, sub, { x: 0.9, y: 4.3, w: 11.5, h: 0.7, fontSize: 22, color: "E5EEDF" });
+  T(s, num, { x: 0.9, y: 0.9, w: 6, h: 0.7, fontSize: 26, bold: true, color: MOSS });
+  T(s, title, { x: 0.9, y: 1.6, w: 11.5, h: 1.2, fontSize: 44, bold: true, color: WHITE, valign: "middle" });
+  if (sub) T(s, sub, { x: 0.9, y: 2.85, w: 11.5, h: 0.6, fontSize: 22, color: "E5EEDF" });
+  if (bridge) {
+    s.addShape(pres.shapes.ROUNDED_RECTANGLE, { x: 0.9, y: 3.9, w: 11.55, h: 2.6, fill: { color: "3B7A3C" }, line: { color: "3B7A3C" }, rectRadius: 0.15 });
+    const rows = [["ここまで", bridge[0], "E5EEDF"], ["この章で", bridge[1], "F4B6C6"]];
+    rows.forEach(([lab, txt, col], k) => {
+      T(s, lab, { x: 1.2, y: 4.1 + k * 1.15, w: 1.7, h: 0.95, fontSize: 18, bold: true, color: "CFE3C0", valign: "middle" });
+      T(s, txt, { x: 2.95, y: 4.1 + k * 1.15, w: 9.3, h: 0.95, fontSize: 22, bold: true, color: col, valign: "middle" });
+    });
+  }
   return s;
 }
 function slide(title, sec, notesText) {
@@ -133,26 +142,26 @@ function slide(title, sec, notesText) {
   T(s, "賛否両論あると思います。受け取り方は、皆さんにお任せします。", { x: 0.8, y: 5.75, w: 11.7, h: 0.6, fontSize: 20, italic: true, color: GRAY });
 
   // 3 二つの問題意識
-  s = slide("二つの問題意識", "はじめに", "【0:50】今日の発表には、二つの問題意識があります。一つは、教員不足という社会的な問題です。なぜ数学の研究協議会でこれを取り上げるのか。それは、授業の質を支える教師の時間が、この問題と切り離せないと考えるからです。もう一つは、学校現場へのAIの活用、とくに授業づくりにどう生かすかという問題です。二つは別々の問題ですが、「教師の時間」と「授業の質」というところで重なり合っていると感じています。");
+  s = slide("今日、皆さんと考えたい二つの問い", "はじめに", "【0:50】今日の発表には、二つの問題意識があります。一つは、教員不足という社会的な問題です。なぜ数学の研究協議会でこれを取り上げるのか。それは、授業の質を支える教師の時間が、この問題と切り離せないと考えるからです。もう一つは、学校現場へのAIの活用、とくに授業づくりにどう生かすかという問題です。二つは別々の問題ですが、「教師の時間」と「授業の質」というところで重なり合っていると感じています。");
   s.addShape(pres.shapes.OVAL, { x: 0.9, y: 1.35, w: 6.75, h: 4.6, fill: { color: HEX.forest, transparency: 82 }, line: { color: HEX.forest, width: 2 } });
   s.addShape(pres.shapes.OVAL, { x: 5.65, y: 1.35, w: 6.75, h: 4.6, fill: { color: HEX.ai, transparency: 82 }, line: { color: HEX.ai, width: 2 } });
-  T(s, [{ text: "①\n", options: { fontSize: 26, color: FOREST } }, { text: "教員不足" }], { x: 1.6, y: 2.3, w: 3.8, h: 2.4, fontSize: 36, bold: true, valign: "middle" });
-  T(s, [{ text: "②\n", options: { fontSize: 26, color: AI } }, { text: "学校への\nAI活用" }], { x: 7.9, y: 2.3, w: 3.8, h: 2.4, fontSize: 36, bold: true, valign: "middle", align: "right" });
+  T(s, [{ text: "問い①\n", options: { fontSize: 24, color: FOREST } }, { text: "教員不足を、\nどう解消\nするか" }], { x: 1.5, y: 2.1, w: 4.0, h: 2.8, fontSize: 32, bold: true, valign: "middle" });
+  T(s, [{ text: "問い②\n", options: { fontSize: 24, color: AI } }, { text: "学び続ける\nために、AIと\n共存する" }], { x: 7.8, y: 2.1, w: 4.0, h: 2.8, fontSize: 32, bold: true, valign: "middle", align: "right" });
   T(s, "教師の\n時間と\n授業の質", { x: 5.7, y: 2.45, w: 1.9, h: 2.3, fontSize: 22, bold: true, color: SAKURA, align: "center", valign: "middle" });
-  T(s, "独立しているが、つながっている", { x: 0.8, y: 6.1, w: 11.7, h: 0.6, fontSize: 22, bold: true, color: FOREST, align: "center" });
+  T(s, "二つは「教師の時間と授業の質」でつながっている", { x: 0.8, y: 6.1, w: 11.7, h: 0.6, fontSize: 22, bold: true, color: FOREST, align: "center" });
 
   // 4 答えではなく問い
   s = slide("今日の発表の流れ", "はじめに", "【0:40】今日の発表の流れです。まず、二つの問題を提起します。一つ目は教員不足、二つ目は学校でのAIの活用です。どちらも、関数やデータで数値を見ていきます。次に、私の過去の数学の授業を、AIを使う前と使った後で比べます。実証まではできていませんが、どんな可能性があり、どんな利点と欠点があるのかを考えます。そして最後に、研究仮説から考察し、結論として、AIの価値を決めるのは使う人の質だ、というところまでお話しします。どちらの問題にも一つの答えを示すつもりはありません。最後に、皆さんと指導助言の先生にご意見をいただけたらと思っています。");
-  const flow = [[fa.FaUsers, HEX.forest, "問題提起①", "教員不足を\n数値で見る"], [fa.FaLaptopCode, HEX.ai, "問題提起②", "教員のAI活用を\n数値で見る"], [fa.FaSyncAlt, HEX.moss, "比較", "AIを使う前と\n使った後"], [fa.FaSearch, HEX.gray, "考察", "仮説から\n言えること"], [gi.GiPlantSeed, HEX.sakura, "結論", "AIの価値は\n使う人の質"]];
+  const flow = [[fa.FaUsers, HEX.forest, "第1章", "教員不足を\n数値で見る\n（問い①の背景）"], [fa.FaLaptopCode, HEX.ai, "第2章", "教員のAI活用を\n数値で見る\n（問い②の背景）"], [fa.FaSyncAlt, HEX.moss, "第3・4章", "自分の授業で\n試してみた\n（AIの前と後）"], [fa.FaSearch, HEX.gray, "第5章", "考察と提案\n言えること・\nまだ言えないこと"], [gi.GiPlantSeed, HEX.sakura, "第6章", "結論と\n二つの問い"]];
   for (let i = 0; i < 5; i++) {
     const [ic, col, h, t] = flow[i], x = 0.8 + i * 2.42, last = i === 4;
     card(s, x, 1.6, 2.15, 3.6, last ? HEX.sakuraTint : TINT);
     await iconCircle(s, ic, x + 0.6, 1.85, 0.95, col);
     T(s, h, { x, y: 2.95, w: 2.15, h: 0.5, fontSize: 18, bold: true, color: last ? SAKURA : INK, align: "center" });
-    T(s, t, { x, y: 3.5, w: 2.15, h: 1.3, fontSize: 17, align: "center", valign: "middle" });
+    T(s, t, { x, y: 3.45, w: 2.15, h: 1.6, fontSize: 16, align: "center", valign: "middle" });
     if (i < 4) s.addImage({ data: await icon(fa.FaArrowRight, HEX.gray), x: x + 2.17, y: 3.2, w: 0.23, h: 0.25 });
   }
-  T(s, [{ text: "一つの答えではなく、" }, { text: "問い", options: { color: SAKURA } }, { text: "を共有したい（最後にご意見をいただきます）" }], { x: 0.8, y: 5.55, w: 11.9, h: 0.8, fontSize: 24, bold: true, align: "center", valign: "middle" });
+  T(s, [{ text: "結論：" }, { text: "授業の質 ＝ 土台 × AI", options: { color: SAKURA } }, { text: "　土台を育てるのは、学び続けること" }], { x: 0.8, y: 5.55, w: 11.9, h: 0.8, fontSize: 24, bold: true, align: "center", valign: "middle" });
 
   // 5 14年間の歩み
   s = slide("14年間の歩み", "はじめに", "【0:40】少しだけ、これまでの歩みを振り返ります。2015年の北海道大会では平行四辺形の証明、2017年の和歌山大会では複合図、2018年の東京大会ではお掃除ロボットの授業を発表しました。2021年は振り子とGeoGebra、2022年はジグソー法、2023年は教師の手立てです。振り返ると、どれも「良い授業を、新しい手段で改善する」ことでした。今回、その手段が生成AIです。");
@@ -164,7 +173,7 @@ function slide(title, sec, notesText) {
     s.addShape(pres.shapes.OVAL, { x: cx - 0.3, y: 2.9, w: 0.6, h: 0.6, fill: { color: col }, line: { color: WHITE, width: 3 } });
     T(s, tl[i][1], { x: cx - 0.8, y: 3.8, w: 1.6, h: 0.9, fontSize: 17, bold: true, align: "center" });
   }
-  T(s, [{ text: "良い授業を、" }, { text: "新しい手段", options: { color: SAKURA } }, { text: "で改善してきた" }], { x: 0.8, y: 5.3, w: 11.7, h: 0.9, fontSize: 30, bold: true, align: "center", valign: "middle" });
+  T(s, [{ text: "新しい手段を" }, { text: "学び", options: { color: SAKURA } }, { text: "、授業を改善し続けてきた" }], { x: 0.8, y: 5.3, w: 11.7, h: 0.9, fontSize: 30, bold: true, align: "center", valign: "middle" });
 
   // 5b ずっと続けてきたこと：原問題をアレンジ
   s = slide("ずっと続けてきたこと：原問題をアレンジする", "はじめに", "【0:50】そして、14年間ずっと続けてきたことがあります。それは、教科書の原問題をアレンジすることです。これは2015年の北海道大会の発表スライドです。左が教科書にある命題、右が、生徒が仮定を意識できるようにアレンジした教材です。2017年の複合図も、2021年の振り子も、いつも原問題をアレンジして授業をつくってきました。今回は、そのアレンジを、AIと一緒にやってみました。");
@@ -178,10 +187,10 @@ function slide(title, sec, notesText) {
   T(s, [{ text: "2015 平行四辺形 ／ 2017 複合図 ／ 2021 振り子　→　" }, { text: "2026 AIでアレンジ", options: { color: SAKURA } }], { x: 0.8, y: 5.75, w: 11.7, h: 0.8, fontSize: 21, bold: true, align: "center", valign: "middle" });
 
   // ===== 第1章 =====
-  divider("問題意識 ①", "教員不足を、数値で見る", "関数・データの活用の視点から", "【0:10】一つ目の問題意識、教員不足です。ここは、関数的な表現やデータの活用の視点で、数値を少し見てみたいと思いました。資料として載せておく意味合いですので、ご覧ください。");
+  divider("第1章", "教員不足を、数値で見る", "問い①の背景　関数・データの目で", "【0:10】一つ目の問題意識、教員不足です。ここは、関数的な表現やデータの活用の視点で、数値を少し見てみたいと思いました。資料として載せておく意味合いですので、ご覧ください。", ["新しい手段を学びながら、授業を改善してきた", "その授業を支える「教師の数と時間」は、いまどうなっているか"]);
 
   // 7 採用倍率
-  s = slide("中学校の教員採用倍率", "問題意識①", "【0:40】中学校の教員採用の倍率は、平成12年度の17.9倍から、令和7年度は3.6倍まで下がり、過去最低です。ただし、これは受験者数の推移で、教員の総数が減っているという意味ではありません。採用者数が増えたことも影響しています。ちなみに、山口県の中学校数学は、令和7年度、2.2倍でした。");
+  s = slide("中学校の教員採用倍率", "問い①の背景", "【0:40】中学校の教員採用の倍率は、平成12年度の17.9倍から、令和7年度は3.6倍まで下がり、過去最低です。ただし、これは受験者数の推移で、教員の総数が減っているという意味ではありません。採用者数が増えたことも影響しています。ちなみに、山口県の中学校数学は、令和7年度、2.2倍でした。");
   T(s, "17.9倍", { x: 0.8, y: 1.6, w: 4.6, h: 1.4, fontSize: 72, bold: true, color: GRAY, valign: "middle" });
   T(s, "平成12年度", { x: 0.8, y: 3.0, w: 4.6, h: 0.5, fontSize: 20, color: GRAY });
   s.addImage({ data: await icon(fa.FaArrowDown, HEX.sakura), x: 1.9, y: 3.6, w: 0.7, h: 0.7 });
@@ -195,7 +204,7 @@ function slide(title, sec, notesText) {
   T(s, "出典：文部科学省「令和7年度（令和6年度実施）公立学校教員採用選考試験の実施状況について」参考資料1 第7表 p.9（2025年12月25日公表）　※採用倍率＝受験者数÷採用者数。受験者数の推移であり、教員総数の推移ではない", { x: 0.8, y: 6.45, w: 12, h: 0.4, fontSize: 11, color: GRAY });
 
   // 7b 一次関数とみなす
-  s = slide("受験者数を、一次関数とみなすと", "問題意識①", "【0:50】ここを数学の目で見てみます。令和元年から7年の中学校の受験者数は、ほぼ一直線に減っています。一次関数とみなすと、変化の割合は、1年あたり約マイナス2,095人、およそ2,100人です。2年生で学ぶ「変化の割合」が、そのまま今の学校の課題を読み解く道具になります。ただし、このまま減り続けると決めつけることはできません。データから何が言えて、何が言えないかを考えることも、数学の大切な見方だと思います。");
+  s = slide("受験者数を、一次関数とみなすと", "問い①の背景", "【0:50】ここを数学の目で見てみます。令和元年から7年の中学校の受験者数は、ほぼ一直線に減っています。一次関数とみなすと、変化の割合は、1年あたり約マイナス2,095人、およそ2,100人です。2年生で学ぶ「変化の割合」が、そのまま今の学校の課題を読み解く道具になります。ただし、このまま減り続けると決めつけることはできません。データから何が言えて、何が言えないかを考えることも、数学の大切な見方だと思います。");
   { const yrs = [2019, 2020, 2021, 2022, 2023, 2024, 2025], obs = [49190, 45763, 44105, 42587, 40960, 39273, 36621];
     const fitv = yrs.map(x => Math.round(49190 - 2094.8 * (x - 2019)));
     s.addChart(pres.charts.LINE, [{ name: "受験者数（実際）", labels: ["R1", "R2", "R3", "R4", "R5", "R6", "R7"], values: obs }, { name: "一次関数とみなした直線", labels: ["R1", "R2", "R3", "R4", "R5", "R6", "R7"], values: fitv }],
@@ -207,7 +216,7 @@ function slide(title, sec, notesText) {
   T(s, "データ：文部科学省「令和7年度（令和6年度実施）公立学校教員採用選考試験の実施状況について」参考資料1 第7表 p.9（2025年12月25日公表）の中学校受験者数。変化の割合・直線は発表者が計算。※今後も同じ割合で減るとは限らない", { x: 0.8, y: 6.45, w: 12, h: 0.4, fontSize: 11, color: GRAY });
 
   // 8 授業準備の時間
-  s = slide("授業準備の時間は、変わっていない", "問題意識①", "【0:40】勤務の実態です。文部科学省の調査では、中学校の先生の平日の在校時間は、11時間32分から11時間1分へと、31分減りました。でも、授業準備の時間は、1時間26分から1時間23分。ほとんど変わっていません。");
+  s = slide("授業準備の時間は、変わっていない", "問い①の背景", "【0:40】勤務の実態です。文部科学省の調査では、中学校の先生の平日の在校時間は、11時間32分から11時間1分へと、31分減りました。でも、授業準備の時間は、1時間26分から1時間23分。ほとんど変わっていません。");
   card(s, 0.8, 1.55, 5.6, 4.2, TINT);
   T(s, "平日の在校等時間", { x: 0.8, y: 1.85, w: 5.6, h: 0.6, fontSize: 22, bold: true, align: "center" });
   T(s, "11:32 → 11:01", { x: 0.8, y: 2.6, w: 5.6, h: 1.2, fontSize: 48, bold: true, color: FOREST, align: "center", valign: "middle" });
@@ -219,7 +228,7 @@ function slide(title, sec, notesText) {
   T(s, "中学校教諭・平日1日当たり（10・11月、平成28年度 → 令和4年度）\n出典：文部科学省「教員勤務実態調査（令和4年度）集計【確定値】」p.1・p.2（2024年4月公表）", { x: 0.8, y: 6.1, w: 12, h: 0.4, fontSize: 11, color: GRAY });
 
   // 9 B=W/(NE)
-  s = slide("数学で考えてみる", "問題意識①", "【0:50】この問題を数学で考えると、教員1人当たりの業務時間Bは、業務量Wを、教員数Nと業務効率Eの積でわったもの、と表せます。もちろん、仮定に基づく簡単なモデルです。Nを増やすことは、社会や行政の課題。Wを減らすことは、学校という組織の課題。そしてEを高めることは、私たち一人一人が、授業づくりの中で考えられることです。");
+  s = slide("数学で考えてみる", "問い①の背景", "【0:50】この問題を数学で考えると、教員1人当たりの業務時間Bは、業務量Wを、教員数Nと業務効率Eの積でわったもの、と表せます。もちろん、仮定に基づく簡単なモデルです。Nを増やすことは、社会や行政の課題。Wを減らすことは、学校という組織の課題。そしてEを高めることは、私たち一人一人が、授業づくりの中で考えられることです。");
   T(s, "B ＝ W ÷（N × E）", { x: 0.8, y: 1.4, w: 11.7, h: 1.4, fontSize: 60, bold: true, color: FOREST, align: "center", valign: "middle" });
   const lv = [[fa.FaUsers, HEX.gray, "N を増やす", "社会・行政"], [fa.FaCut, HEX.moss, "W を減らす", "学校の組織"], [fa.FaChalkboardTeacher, HEX.sakura, "E を高める", "一人一人の授業づくり"]];
   for (let i = 0; i < 3; i++) {
@@ -232,7 +241,7 @@ function slide(title, sec, notesText) {
   T(s, "B：1人当たりの業務時間　W：業務量　N：教員数　E：業務効率（従来を1）　※仮定に基づく簡易モデル", { x: 0.8, y: 6.15, w: 12, h: 0.4, fontSize: 13, color: GRAY, align: "center" });
 
   // 10 シミュレーション
-  s = slide("どれも、同じ「8時間」にできる", "問題意識①", "【0:40】仮の数値で計算してみます。教員20人、業務量200時間なら、1人10時間。教員を25人にしても、業務量を160時間にしても、効率を125％にしても、どれも8時間です。面白いのは、教員を25％増やしても、Bは20％しか減らないこと。反比例だからです。そしてEは、ここで二つ目の問題意識、AIの活用とつながります。");
+  s = slide("どれも、同じ「8時間」にできる", "問い①の背景", "【0:40】仮の数値で計算してみます。教員20人、業務量200時間なら、1人10時間。教員を25人にしても、業務量を160時間にしても、効率を125％にしても、どれも8時間です。面白いのは、教員を25％増やしても、Bは20％しか減らないこと。反比例だからです。そしてEは、ここで二つ目の問題意識、AIの活用とつながります。");
   s.addChart(pres.charts.BAR, [{ name: "B", labels: ["現状", "N を増やす", "W を減らす", "E を高める"], values: [10, 8, 8, 8] }], Object.assign({}, chartText, {
     x: 0.8, y: 1.4, w: 7.2, h: 4.9, barDir: "col", showTitle: false, chartColors: [HEX.gray, HEX.moss, HEX.moss, HEX.sakura], showValue: true, dataLabelPosition: "outEnd", dataLabelFormatCode: "0", dataLabelFontSize: 22, dataLabelColor: HEX.ink, valAxisMinVal: 0, valAxisMaxVal: 12, barGapWidthPct: 55, catAxisLabelFontSize: 16, valAxisHidden: true, valGridLine: { style: "none" } }));
   T(s, "1人当たりの業務時間（時間）", { x: 0.8, y: 6.3, w: 7.2, h: 0.4, fontSize: 13, color: GRAY, align: "center" });
@@ -243,9 +252,9 @@ function slide(title, sec, notesText) {
   T(s, [{ text: "E を高めるのは\n", options: { fontSize: 20 } }, { text: "AI活用とつながる", options: { fontSize: 28, bold: true, color: SAKURA } }], { x: 8.4, y: 4.05, w: 4.35, h: 2.2, align: "center", valign: "middle" });
 
   // ===== 問題意識② =====
-  divider("問題意識 ②", "教員のAI活用を、数値で見る", "重要度と、これからの活用の余地", "【0:10】二つ目の問題意識、学校現場へのAIの活用です。これも数値で見てみます。");
+  divider("第2章", "教員のAI活用を、数値で見る", "問い②の背景　期待と、活用の余地", "第2章", ["教員は増えにくく、授業準備の時間も変わらない。カギは一人一人の効率 E", "E を高める手段として、AIはどこまで使われているか"]);
 
-  s = slide("授業でのAI使用：日本はOECD平均の約半分", "問題意識②", "【0:50】OECDの国際教員指導環境調査、TALIS 2024の結果です。過去1年間に授業などでAIを使った中学校の先生は、日本は17.4％。OECD平均の36.3％の約半分です。一方で、AIは事務的な業務の自動化に役立つと考える先生は73.1％、授業計画の作成や改善に役立つと考える先生は59.1％と、どちらもOECD平均より高くなっています。期待はあるのに、まだ使えていない。ここに、活用の余地があると考えました。");
+  s = slide("授業でのAI使用：日本はOECD平均の約半分", "問い②の背景", "【0:50】OECDの国際教員指導環境調査、TALIS 2024の結果です。過去1年間に授業などでAIを使った中学校の先生は、日本は17.4％。OECD平均の36.3％の約半分です。一方で、AIは事務的な業務の自動化に役立つと考える先生は73.1％、授業計画の作成や改善に役立つと考える先生は59.1％と、どちらもOECD平均より高くなっています。期待はあるのに、まだ使えていない。ここに、活用の余地があると考えました。");
   T(s, "17.4%", { x: 0.8, y: 1.55, w: 4.2, h: 1.3, fontSize: 72, bold: true, color: SAKURA, valign: "middle" });
   T(s, "日本（中学校）", { x: 0.8, y: 2.85, w: 4.2, h: 0.5, fontSize: 20, bold: true, color: SAKURA });
   T(s, "36.3%", { x: 0.8, y: 3.55, w: 4.2, h: 1.0, fontSize: 48, bold: true, color: GRAY, valign: "middle" });
@@ -255,14 +264,14 @@ function slide(title, sec, notesText) {
     Object.assign({}, chartText, { x: 5.4, y: 1.45, w: 7.4, h: 4.9, barDir: "bar", showTitle: true, title: "AIについての考え方（「当てはまる」の割合、%）", chartColors: [HEX.sakura, HEX.gray], showValue: true, dataLabelPosition: "outEnd", dataLabelFormatCode: "0.0", dataLabelFontSize: 13, dataLabelColor: HEX.ink, valAxisMinVal: 0, valAxisMaxVal: 100, valAxisHidden: true, valGridLine: { style: "none" }, catAxisLabelFontSize: 14, showLegend: true, legendPos: "b", legendFontSize: 13, legendFontFace: "+mn-lt", barGapWidthPct: 60 }));
   T(s, "出典：文部科学省・国立教育政策研究所「OECD国際教員指導環境調査（TALIS）2024報告書のポイント」p.7（2025年10月公表）。調査は2024年2〜3月、日本の中学校教員3,558名", { x: 0.8, y: 6.45, w: 12, h: 0.4, fontSize: 11, color: GRAY });
 
-  s = slide("校務での生成AI活用は、この3年で急速に広がった", "問題意識②", "【0:40】文部科学省の調査では、校務で生成AIを全く活用していない学校は、令和5年度の76.7％から、令和7年度には16.3％まで減りました。教職員の半数以上が活用している学校も、1.2％から17.1％に増えています。そして、活用した学校の98％が、働き方の改善に効果があったと感じています。AIは、もう特別なものではなくなりつつあります。");
+  s = slide("校務での生成AI活用は、この3年で急速に広がった", "問い②の背景", "【0:40】文部科学省の調査では、校務で生成AIを全く活用していない学校は、令和5年度の76.7％から、令和7年度には16.3％まで減りました。教職員の半数以上が活用している学校も、1.2％から17.1％に増えています。そして、活用した学校の98％が、働き方の改善に効果があったと感じています。AIは、もう特別なものではなくなりつつあります。");
   s.addChart(pres.charts.BAR, [{ name: "全く活用していない学校", labels: ["令和5年度", "令和6年度", "令和7年度"], values: [76.7, 58.9, 16.3] }, { name: "教職員の半数以上が活用している学校", labels: ["令和5年度", "令和6年度", "令和7年度"], values: [1.2, 2.7, 17.1] }],
     Object.assign({}, chartText, { x: 0.8, y: 1.45, w: 7.6, h: 4.9, barDir: "col", barGapWidthPct: 50, chartColors: [HEX.gray, HEX.sakura], showValue: true, dataLabelPosition: "outEnd", dataLabelFormatCode: "0.0", dataLabelFontSize: 15, dataLabelColor: HEX.ink, valAxisMinVal: 0, valAxisMaxVal: 90, showLegend: true, legendPos: "b", legendFontSize: 14, legendFontFace: "+mn-lt", catAxisLabelFontSize: 15 }));
   card(s, 8.8, 1.55, 3.95, 4.7, HEX.sakuraTint);
   T(s, [{ text: "教職員の半数以上が\n活用した学校の\n", options: { fontSize: 18, bold: true } }, { text: "98%", options: { fontSize: 66, bold: true, color: SAKURA } }, { text: "\nが働き方の改善に\n効果があったと回答", options: { fontSize: 18, bold: true } }], { x: 8.8, y: 1.55, w: 3.95, h: 4.7, align: "center", valign: "middle" });
   T(s, "出典：中央教育審議会 デジタル学習基盤特別委員会（第10回、2026年6月30日）資料1 p.12「校務DXチェックリスト 自己点検結果［確定値］」。「半数以上」＝「半分以上」＋「ほぼ全員」（発表者が合算）", { x: 0.8, y: 6.45, w: 12, h: 0.4, fontSize: 11, color: GRAY });
 
-  s = slide("活用の余地を、関数で見る", "問題意識②", "【0:50】では、授業づくりでAIを使うと、どれくらいの余地があるのか。関数で考えてみます。中学校の先生の授業準備は、1日83分です。このうちAIで短縮できる割合をr％とすると、1日に短縮できる時間yは、y＝0.83rという比例の式で表せます。10％なら1日8.3分、仮に年間200日とすると約28時間です。ただし、これは仮定のモデルで、実際にどれだけ短縮できるかは、これから確かめる必要があります。");
+  s = slide("活用の余地を、関数で見る", "問い②の背景", "【0:50】では、授業づくりでAIを使うと、どれくらいの余地があるのか。関数で考えてみます。中学校の先生の授業準備は、1日83分です。このうちAIで短縮できる割合をr％とすると、1日に短縮できる時間yは、y＝0.83rという比例の式で表せます。10％なら1日8.3分、仮に年間200日とすると約28時間です。ただし、これは仮定のモデルで、実際にどれだけ短縮できるかは、これから確かめる必要があります。");
   T(s, "y ＝ 0.83 r", { x: 0.8, y: 1.45, w: 6.0, h: 1.2, fontSize: 54, bold: true, color: FOREST, valign: "middle" });
   T(s, "y：1日に短縮できる時間（分）\nr：AIで短縮できる割合（％）\n授業準備 83分／日（中学校教諭・平日、令和4年度）\n出典：文部科学省「教員勤務実態調査（令和4年度）」p.2", { x: 0.8, y: 2.7, w: 6.0, h: 1.7, fontSize: 14 });
   s.addChart(pres.charts.LINE, [{ name: "短縮時間（分/日）", labels: ["0%", "5%", "10%", "15%", "20%", "25%", "30%"], values: [0, 4.15, 8.3, 12.45, 16.6, 20.75, 24.9] }],
@@ -272,7 +281,7 @@ function slide(title, sec, notesText) {
   T(s, "※ r と年間200日は発表者の仮定。実際の短縮時間は未測定であり、今後の検証で確かめる。", { x: 7.0, y: 5.7, w: 5.8, h: 0.6, fontSize: 13, color: GRAY });
 
   // ===== 第2章 AIを使う前 =====
-  divider("第2章", "AIを使う前の、私の授業", "実物をそのままお見せします", "【0:10】ここで、AIを使う前の姿を、そのままお見せします。");
+  divider("第3章", "AIを使う前の、私の授業", "実物をそのままお見せします", "第3章", ["AIへの期待は大きいが、授業ではまだ使えていない", "では、自分の授業で試す。まず、AIを使う前の姿から"]);
 
   // 12 これまでの発表資料
   s = slide("これまでの発表資料（実物）", null, "【0:50】左は2015年の発表スライドで、板書の写真を貼り、授業の流れを説明していました。真ん中は2021年の全国大会の発表スライドです。GeoGebraの画面を貼り付け、関数を一つずつ取り出して比べていました。右はその授業の板書計画です。スライドも、板書計画も、ワークシートも、すべて自分の手で一枚ずつ作ってきました。これが、AIを使う前の私の実態です。");
@@ -317,7 +326,7 @@ function slide(title, sec, notesText) {
 
   T(s, "桜のデータ：気象庁「過去の気象データ検索」下関 2月の平均気温／「さくらの開花日」下関（2015年：7.5℃、開花3月25日）", { x: 0.8, y: 6.5, w: 11.7, h: 0.35, fontSize: 11, color: GRAY });
   // ===== 第3章 AIでアレンジ =====
-  divider("第3章", "AIで、アレンジしてみた", "AI LESSON REMAKE", "【0:10】では、これらの授業を、AIを使ってどうアレンジしたかです。");
+  divider("第4章", "AIで、アレンジしてみた", "AI LESSON REMAKE", "第4章", ["土台となる授業はあるが、教材は毎年、自分の手で作り直していた", "その授業を、AIでどうアレンジしたか"]);
 
   // 17 7ステップ
   s = slide("AI LESSON REMAKE（7つのステップ）", null, "【0:50】手順を7つのステップにまとめました。過去の資料をAIに入れ、良かった点と課題を整理し、AIに改善案を出させます。大事なのはステップ5と6です。数学的に正しいか、生徒にとって価値があるかを判断し、何を残して何を変えるかを決めるのは、教師です。ここはAIに任せません。");
@@ -406,7 +415,7 @@ function slide(title, sec, notesText) {
   }
 
   // ===== 考察 =====
-  divider("第4章", "考察：研究仮説から何が言えるか", "根拠をもとに、言えること・まだ言えないこと", "【0:10】ここで、研究仮説に立ち返り、何が言えて、何がまだ言えないのかを整理します。");
+  divider("第5章", "考察と提案", "研究仮説から、言えること・まだ言えないこと", "第5章", ["AIで変えたのは手段。授業の本質は変えなかった", "研究仮説から何が言えるか。そして、何を提案するか"]);
 
   s = slide("研究仮説を、三つの要素に分けて検討する", "考察", "【0:40】研究仮説を三つの要素に分けました。一つ目は、数学的な価値や指導意図を継承できるか。二つ目は、授業準備の負担を軽減できるか。三つ目は、生徒の数学的な見方・考え方を働かせる授業につながるか。それぞれについて、根拠をもとに考えます。");
   const hy = [[fa.FaLock, HEX.forest, "①", "数学的な価値・\n指導意図の継承"], [fa.FaHourglassHalf, HEX.ai, "②", "授業準備の\n負担軽減"], [fa.FaLightbulb, HEX.sakura, "③", "数学的な見方・\n考え方を働かせる"]];
@@ -512,11 +521,32 @@ function slide(title, sec, notesText) {
   T(s, "だからこそ、土台とともに、生成AIの活用を進めたい", { x: 0.8, y: 5.5, w: 11.9, h: 0.9, fontSize: 30, bold: true, color: SAKURA, align: "center", valign: "middle" });
 
   // ===== 第4章 問いかけ =====
-  divider("第5章", "AIと、どう共存するか", "皆さまへの問い", "【0:10】最後の章です。AIと一緒に資料を作ってみて、感じたことがあります。");
+  divider("第6章", "二つの問い", "教員不足の解消と、学び続けるためのAIとの共存", "第6章", ["授業の質＝土台×AI。土台を育てるのは、学び続けること", "今日の話を一本の線でつなぎ、二つの問いを皆さんと考えたい"]);
+
+  // 第9版 追加：今日の話を一本の線で
+  s = slide("今日の話を、一本の線で", null, "一本の線");
+  const ln = [[fa.FaUsers, HEX.forest, "教員不足", "人（N）は\nすぐには増えない"], [fa.FaChartLine, HEX.forest, "効率 E", "一人一人の\n授業づくりを\n変える"], [fa.FaRobot, HEX.ai, "AI", "手段として\n作業・整理を担う"], [gi.GiPlantSeed, HEX.sakura, "土台 × AI", "質を決めるのは\n自分の授業の蓄積"], [fa.FaBookOpen, HEX.sakura, "学び続ける", "土台を育て、\nAIを確かめる力"]];
+  for (let i = 0; i < 5; i++) {
+    const [ic, col, h, t] = ln[i], x = 0.8 + i * 2.42;
+    card(s, x, 1.5, 2.15, 3.55, i >= 3 ? HEX.sakuraTint : (i === 2 ? HEX.aiTint : TINT));
+    await iconCircle(s, ic, x + 0.6, 1.7, 0.95, col);
+    T(s, h, { x, y: 2.8, w: 2.15, h: 0.55, fontSize: 21, bold: true, color: col, align: "center", valign: "middle" });
+    T(s, t, { x, y: 3.4, w: 2.15, h: 1.5, fontSize: 16, align: "center", valign: "middle" });
+    if (i < 4) s.addImage({ data: await icon(fa.FaArrowRight, HEX.gray), x: x + 2.17, y: 3.15, w: 0.23, h: 0.25 });
+  }
+  T(s, [{ text: "だから、" }, { text: "学び続けるために、AIと共存する", options: { color: SAKURA } }], { x: 0.8, y: 5.3, w: 11.9, h: 0.8, fontSize: 32, bold: true, align: "center", valign: "middle" });
+  T(s, "AIが時間と気づきを生む → 教師が学ぶ → 土台が育つ → AIをよりよく使える（めざす循環。効果の検証はこれから）", { x: 0.8, y: 6.15, w: 11.9, h: 0.4, fontSize: 14, color: GRAY, align: "center" });
+
+  // 26 問い①
+  s = slide("問い①", null, "【0:40】ここで、皆さんに問いかけたいことがあります。一つ目。教員不足という社会の問題に対して、学校や私たち教師にできること、すべきことは何でしょうか。教育の質を守るために、教師の時間を、どう守ればよいでしょうか。");
+  await iconCircle(s, fa.FaUsers, 0.8, 1.6, 1.2, HEX.forest);
+  T(s, "B ＝ W ÷（N × E）　N：社会・行政　W：学校の組織　E：一人一人", { x: 2.25, y: 1.6, w: 10.4, h: 1.2, fontSize: 22, bold: true, color: FOREST, valign: "middle" });
+  T(s, "教員不足を、\nどう解消するか。", { x: 0.8, y: 3.0, w: 11.7, h: 2.6, fontSize: 46, bold: true, valign: "middle" });
+  T(s, "教育の質を守るために、学校や教師にできること・すべきことは？", { x: 0.8, y: 5.75, w: 11.7, h: 0.7, fontSize: 24, color: GRAY });
 
   // 25 AIと人間
-  s = slide("AIと人間、それぞれの役割", null, "【0:50】AIは、案を出すこと、作業、プログラムを書くことはとても速いです。でも、何を残すかを決めること、生徒の表情を見て問い返すこと、授業に思いを込めることは、人間にしかできません。AIと人間、それぞれの得意なことを生かして、共存していくことが大切だと考えています。");
-  const co = [[fa.FaRobot, HEX.ai, "aiTint", "AIが得意", ["案を出す", "作業・整理", "プログラム"]], [fa.FaChalkboardTeacher, HEX.sakura, "sakuraTint", "人間にしかできない", ["何を残すか決める", "生徒を見て問い返す", "思いを込める"]]];
+  s = slide("学び続けるための、AIとの共存", null, "【0:50】AIは、案を出すこと、作業、プログラムを書くことはとても速いです。でも、何を残すかを決めること、生徒の表情を見て問い返すこと、授業に思いを込めることは、人間にしかできません。AIと人間、それぞれの得意なことを生かして、共存していくことが大切だと考えています。");
+  const co = [[fa.FaRobot, HEX.ai, "aiTint", "AIに任せる", ["作業・下書き・整理", "過去の授業の良い点・課題", "振り返りの分析"]], [fa.FaChalkboardTeacher, HEX.sakura, "sakuraTint", "人間が担う", ["確かめる・決める", "生徒を見て問い返す", "思いを込める"]]];
   for (let i = 0; i < 2; i++) {
     const [ic, col, tint, h, li] = co[i], x = 0.8 + i * 6.05;
     card(s, x, 1.55, 5.7, 3.8, HEX[tint]);
@@ -524,21 +554,14 @@ function slide(title, sec, notesText) {
     T(s, h, { x: x + 1.55, y: 1.8, w: 4.0, h: 1.0, fontSize: 28, bold: true, color: col, valign: "middle" });
     T(s, bl(li), { x: x + 0.6, y: 3.05, w: 5.0, h: 2.1, fontSize: 24, paraSpaceAfter: 6 });
   }
-  T(s, "土台があってこそ、AIでアレンジできる", { x: 0.8, y: 5.7, w: 11.7, h: 0.8, fontSize: 28, bold: true, color: FOREST, align: "center" });
-
-  // 26 問い①
-  s = slide("問い①", null, "【0:40】ここで、皆さんに問いかけたいことがあります。一つ目。教員不足という社会の問題に対して、学校や私たち教師にできること、すべきことは何でしょうか。教育の質を守るために、教師の時間を、どう守ればよいでしょうか。");
-  await iconCircle(s, fa.FaUsers, 0.8, 1.6, 1.2, HEX.forest);
-  T(s, "教員不足という社会の問題", { x: 2.25, y: 1.6, w: 10.4, h: 1.2, fontSize: 28, bold: true, color: FOREST, valign: "middle" });
-  T(s, "教育の質を守るために、\n教師の時間を、どう守るか。", { x: 0.8, y: 3.0, w: 11.7, h: 2.6, fontSize: 46, bold: true, valign: "middle" });
-  T(s, "学校や教師に、できること・すべきことは？", { x: 0.8, y: 5.75, w: 11.7, h: 0.7, fontSize: 24, color: GRAY });
+  T(s, "任せて生まれた時間と気づきを、学び続けることに", { x: 0.8, y: 5.7, w: 11.7, h: 0.8, fontSize: 28, bold: true, color: FOREST, align: "center" });
 
   // 27 問い②
-  s = slide("問い②", null, "【0:40】二つ目。学校現場、とくに授業づくりに、AIをどう取り入れればよいでしょうか。何をAIに任せ、何を人間が担うべきでしょうか。今日お見せしたのは、一つの試みにすぎません。リメイクした授業はまだ実践しておらず、効果も測っていません。だからこそ、一つの答えではなく、これからへの示唆を、皆さんと指導助言の先生からいただけたらと思っています。");
+  s = slide("問い②（主張）", null, "【0:40】二つ目。学校現場、とくに授業づくりに、AIをどう取り入れればよいでしょうか。何をAIに任せ、何を人間が担うべきでしょうか。今日お見せしたのは、一つの試みにすぎません。リメイクした授業はまだ実践しておらず、効果も測っていません。だからこそ、一つの答えではなく、これからへの示唆を、皆さんと指導助言の先生からいただけたらと思っています。");
   await iconCircle(s, fa.FaLaptopCode, 0.8, 1.6, 1.2, HEX.ai);
-  T(s, "学校現場へのAI活用・授業づくり", { x: 2.25, y: 1.6, w: 10.4, h: 1.2, fontSize: 28, bold: true, color: AI, valign: "middle" });
-  T(s, "何をAIに任せ、\n何を人間が担うべきか。", { x: 0.8, y: 3.0, w: 11.7, h: 2.6, fontSize: 46, bold: true, valign: "middle" });
-  T(s, "一つの答えではなく、これからへの示唆をいただきたい", { x: 0.8, y: 5.75, w: 11.7, h: 0.7, fontSize: 24, color: SAKURA, bold: true });
+  T(s, "これから教師が学び続けるために", { x: 2.25, y: 1.6, w: 10.4, h: 1.2, fontSize: 28, bold: true, color: AI, valign: "middle" });
+  T(s, "AIとの共存は、\n不可欠である。", { x: 0.8, y: 3.0, w: 11.7, h: 2.6, fontSize: 46, bold: true, valign: "middle" });
+  T(s, "では、何をAIに任せ、何を人間が担うか。ご示唆をいただきたい", { x: 0.8, y: 5.75, w: 11.7, h: 0.7, fontSize: 24, color: SAKURA, bold: true });
 
   // 28 おわりに
   s = pres.addSlide({ masterName: "DARK", sectionTitle: _sec });
