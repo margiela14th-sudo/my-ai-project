@@ -553,6 +553,19 @@ function slide(title, sec, notesText) {
   T(s, "楽をするための効率化ではない。学びを止めないためのAI", { x: 0.8, y: 5.1, w: 11.9, h: 0.8, fontSize: 28, bold: true, color: FOREST, align: "center", valign: "middle" });
   T(s, "時短が叫ばれる今、本当にこのままでいいのか（発表者の問題意識）", { x: 0.8, y: 5.95, w: 11.9, h: 0.5, fontSize: 18, color: GRAY, align: "center" });
 
+  // 第12版 追加：ある数学の先生との対話から（解決の一つの方向）
+  s = slide("ある数学の先生との対話から", null, "対話");
+  card(s, 0.8, 1.45, 5.75, 3.95, TINT);
+  await iconCircle(s, fa.FaBalanceScale, 1.1, 1.65, 0.9, HEX.forest);
+  T(s, "解決の一つの方向", { x: 2.2, y: 1.65, w: 4.2, h: 0.9, fontSize: 22, bold: true, color: FOREST, valign: "middle" });
+  T(s, bl(["生徒数に対する教員の配置の「標準」をそろえる", "余裕のある学校も、ぎりぎりの学校もある", "標準に合う学校規模へ（統廃合も含めて）"]), { x: 1.15, y: 2.7, w: 5.2, h: 2.6, fontSize: 20, paraSpaceAfter: 14 });
+  card(s, 6.95, 1.45, 5.75, 3.95, HEX.sakuraTint);
+  await iconCircle(s, fa.FaBookOpen, 7.25, 1.65, 0.9, HEX.sakura);
+  T(s, "そこから見えること", { x: 8.35, y: 1.65, w: 4.2, h: 0.9, fontSize: 22, bold: true, color: SAKURA, valign: "middle" });
+  T(s, bl(["多忙感・疲弊が、学ぶ姿勢の衰えにつながっていないか", "学び続ける先生も、もちろんいる", "学び続ける教員の姿は、形を変えてきている"]), { x: 7.3, y: 2.7, w: 5.2, h: 2.6, fontSize: 20, paraSpaceAfter: 14 });
+  T(s, "これも一つの着地点。では、ほかにはどうでしょうか。", { x: 0.8, y: 5.6, w: 11.9, h: 0.7, fontSize: 28, bold: true, color: FOREST, align: "center", valign: "middle" });
+  T(s, "※ 発表者と先輩の数学教員との対話（2026年11月）から。一つの見方であり、数値での裏付けは示していない", { x: 0.8, y: 6.35, w: 11.9, h: 0.4, fontSize: 13, color: GRAY, align: "center" });
+
   // 26 問い①
   s = slide("問い①", null, "【0:40】ここで、皆さんに問いかけたいことがあります。一つ目。教員不足という社会の問題に対して、学校や私たち教師にできること、すべきことは何でしょうか。教育の質を守るために、教師の時間を、どう守ればよいでしょうか。");
   await iconCircle(s, fa.FaUsers, 0.8, 1.6, 1.2, HEX.forest);
