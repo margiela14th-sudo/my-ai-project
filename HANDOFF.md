@@ -13,6 +13,7 @@
   - 研究資料 https://drive.google.com/file/d/19IMGAUdeXYBAmOKnPmft9oArogHGffOE/view
   - 質疑と回答（配布用） https://drive.google.com/file/d/1Qw0zDx1zfeyAB9jYUkIThDQym1l_EWWZ/view
 - ドライブのスライドPDFは、QRコードを入れる前の版（最後のスライド以外は同じ）。ツールでは中身を差し替えられないため、必要なら先生がドライブで「新しいバージョンをアップロード」すればリンクは変わらない。
+- 4つ目のQR：フォルダ「振り子ラボ（HTML教材）と授業リメイク用プロンプト」https://drive.google.com/drive/folders/1axs85Wq9dOt3K2333c_FMYj1zvFvKF-D （振り子ラボ.html・振り子ラボ_使い方.pdf・授業リメイク用プロンプト.pdf、すべて閲覧のみで共有）。使い方の原稿は 05_数学教材/振り子ラボ_使い方.md。QRは4つとも読み取り確認済み。
 - 想定質疑応答_配布用.docx／.pdf を追加（発表者向けの注意書きと★を除いた版。build_qa.js public）。
 
 ## 想定質疑応答（発表者用）を別ファイルで作成（2026-11-26 Claude Code）

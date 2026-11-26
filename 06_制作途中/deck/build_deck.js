@@ -613,15 +613,15 @@ function slide(title, sec, notesText) {
   T(s, "ご清聴ありがとうございました。", { x: 0.7, y: 5.75, w: 5.9, h: 0.7, fontSize: 24, bold: true, color: WHITE });
   T(s, "資料はこちらから", { x: 6.95, y: 0.75, w: 5.8, h: 0.6, fontSize: 24, bold: true, color: "F4B6C6", align: "center", valign: "middle" });
   T(s, "必要な方は、写真を撮ってお使いください", { x: 6.95, y: 1.35, w: 5.8, h: 0.45, fontSize: 15, color: "E5EEDF", align: "center", valign: "middle" });
-  const qrs = [["slides", "発表スライド"], ["paper", "研究資料"], ["qa", "質疑と回答"]];
-  for (let k = 0; k < 3; k++) {
-    const x = 6.95 + k * 1.97;
-    s.addShape(pres.shapes.ROUNDED_RECTANGLE, { x, y: 2.0, w: 1.86, h: 2.6, fill: { color: WHITE }, line: { color: WHITE }, rectRadius: 0.1 });
-    s.addImage({ path: path.join(__dirname, "qr", qrs[k][0] + ".png"), x: x + 0.13, y: 2.1, w: 1.6, h: 1.6 });
-    T(s, qrs[k][1], { x, y: 3.78, w: 1.86, h: 0.45, fontSize: 15, bold: true, color: HEX.forest, align: "center", valign: "middle" });
-    T(s, "PDF", { x, y: 4.18, w: 1.86, h: 0.3, fontSize: 11, color: HEX.gray, align: "center", valign: "middle" });
+  const qrs = [["slides", "発表\nスライド", "PDF"], ["paper", "研究\n資料", "PDF"], ["qa", "質疑と\n回答", "PDF"], ["lab", "振り子\nラボ", "HTML\n使い方\nプロンプト"]];
+  for (let k = 0; k < 4; k++) {
+    const x = 6.95 + (k % 2) * 2.95, y = 1.95 + Math.floor(k / 2) * 2.3;
+    s.addShape(pres.shapes.ROUNDED_RECTANGLE, { x, y, w: 2.85, h: 2.15, fill: { color: WHITE }, line: { color: WHITE }, rectRadius: 0.1 });
+    s.addImage({ path: path.join(__dirname, "qr", qrs[k][0] + ".png"), x: x + 0.1, y: y + 0.1, w: 1.85, h: 1.85 });
+    T(s, qrs[k][1], { x: x + 1.95, y: y + 0.2, w: 0.88, h: 1.0, fontSize: 13, bold: true, color: HEX.forest, align: "center", valign: "middle" });
+    T(s, qrs[k][2], { x: x + 1.95, y: y + 1.2, w: 0.88, h: 0.8, fontSize: 9, color: HEX.gray, align: "center", valign: "middle" });
   }
-  T(s, "Googleドライブの共有リンク（閲覧のみ）", { x: 6.95, y: 4.75, w: 5.8, h: 0.35, fontSize: 12, color: "CFE3C0", align: "center" });
+  T(s, "Googleドライブの共有リンク（閲覧のみ）", { x: 6.95, y: 6.55, w: 5.8, h: 0.35, fontSize: 12, color: "CFE3C0", align: "center" });
 
   // ===== 補足 =====
   pres.addSection({ title: "補足" }); _sec = "補足";
