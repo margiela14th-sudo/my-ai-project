@@ -479,6 +479,15 @@ function slide(title, sec, notesText) {
   T(s, [{ text: "時間削減率（%）＝（改善前 − 改善後）÷ 改善前 × 100\n", options: { fontSize: 22, bold: true, color: SAKURA } }, { text: "教師：準備時間・負担感（TALISと同じ項目）／生徒：到達率・説明・振り返り", options: { fontSize: 17 } }], { x: 0.8, y: 5.0, w: 11.9, h: 1.5, align: "center", valign: "middle" });
 
   // ===== 第8版 追加：提案4 授業づくりの超自動化／提案5 振り返りの自動化（構想。ノートは set_notes.py で上書き） =====
+  // 第13版 追加：AIを使う前の板書型指導案（2019・手作業）
+  s = slide("以前は、板書型指導案も手作業で", "考察", "板書型");
+  tag(s, "AI活用前", HEX.gray);
+  fit(s, path.join(IMG, "2019_板書型指導案_手作業.png"), 1264, 893, 0.8, 1.4, 7.6, 5.4);
+  card(s, 8.75, 1.6, 4.0, 4.3, TINT);
+  const ce = o => Object.assign({ align: "center", breakLine: true }, o);
+  T(s, [{ text: "2019年", options: ce({ fontSize: 20, bold: true, color: FOREST }) }, { text: "数学教育サマーフェスタ", options: ce({ fontSize: 17 }) }, { text: "持参資料", options: ce({ fontSize: 17 }) }, { text: " ", options: ce({ fontSize: 12 }) }, { text: "1枚ずつ、手で", options: ce({ fontSize: 26, bold: true }) }, { text: "休日の勉強会に持って行き、", options: ce({ fontSize: 16, color: GRAY }) }, { text: "学んできた", options: { fontSize: 16, color: GRAY, align: "center" } }], { x: 8.75, y: 1.6, w: 4.0, h: 4.3, align: "center", valign: "middle" });
+  T(s, "※ Word原本を変換して表示したため、図の一部の位置がずれている", { x: 8.75, y: 6.05, w: 4.0, h: 0.5, fontSize: 11, color: GRAY });
+
   s = slide("提案4　授業づくりの「超自動化」", "考察", "提案4（ノートは script.json）");
   const fl = [[fa.FaChalkboardTeacher, HEX.sakura, "sakuraTint", "教師", "入れる", "土台と意図\n（授業記録・ねらい）"],
               [fa.FaRobot, HEX.ai, "aiTint", "Claude Code", "作る", "日々の授業案\n学習指導案（文字）\n板書型指導案・教材"],
