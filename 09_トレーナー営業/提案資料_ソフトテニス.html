@@ -1,248 +1,138 @@
-<!doctype html>
-<html lang="ja"><head><meta charset="utf-8"><title>フォロワーシップコーチ提案</title>
-<style>
+<!doctype html><html lang="ja"><head><meta charset="utf-8"><title>フォロワーシップコーチ提案</title><style>
 @page{size:1280px 720px;margin:0}
-:root{--navy:#0f2340;--ink:#1d2433;--sub:#5a6476;--ball:#c8e63c;--ballD:#7a9a00;--line:#d9dee7;--bg:#f6f7f9;--warn:#b54708}
+:root{--navy:#0f2340;--ink:#1d2433;--sub:#5a6476;--acc:#c8e63c;--accD:#6f8c00;--line:#d9dee7;--bg:#f4f6f9;--ctl:#a9b3c3}
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:"IPAPGothic","IPAGothic",sans-serif;color:var(--ink)}
-.s{width:1280px;height:720px;position:relative;overflow:hidden;page-break-after:always;background:#fff;padding:56px 72px 48px}
+.s{width:1280px;height:720px;position:relative;overflow:hidden;page-break-after:always;background:#fff;padding:52px 72px 44px}
 .s:last-child{page-break-after:auto}
-.k{font-size:18px;color:var(--ballD);font-weight:bold;letter-spacing:.08em}
-h1{font-size:40px;line-height:1.3;margin:6px 0 26px;color:var(--navy)}
-h1 em{font-style:normal;background:linear-gradient(transparent 62%,var(--ball) 62%)}
-p,li{font-size:22px;line-height:1.65}
-ul{padding-left:1.2em}
-.n{position:absolute;right:40px;bottom:22px;font-size:14px;color:var(--sub)}
-.note{position:absolute;left:72px;bottom:22px;right:120px;font-size:13px;color:var(--sub);line-height:1.5}
+.k{font-size:18px;color:var(--accD);font-weight:bold;letter-spacing:.08em}
+h1{font-size:38px;line-height:1.3;margin:6px 0 22px;color:var(--navy)}
+h1 em{font-style:normal;background:linear-gradient(transparent 62%,var(--acc) 62%)}
+p,li{font-size:21px;line-height:1.6}
+.n{position:absolute;right:40px;bottom:20px;font-size:14px;color:var(--sub)}
+.note{position:absolute;left:72px;bottom:20px;right:120px;font-size:13px;color:var(--sub);line-height:1.5}
 .dark{background:var(--navy);color:#fff}.dark h1{color:#fff}.dark .n{color:#9fb0c8}
-.g2{display:grid;grid-template-columns:1fr 1fr;gap:28px}
-.g3{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
-.card{background:var(--bg);border-radius:14px;padding:22px 24px;border-top:6px solid var(--ball)}
-.card h3{font-size:24px;color:var(--navy);margin-bottom:10px}
-.card p,.card li{font-size:19px;line-height:1.6}
-.big{font-size:64px;font-weight:bold;color:var(--navy);line-height:1}
+.row{display:flex;gap:28px;align-items:stretch}
+.card{background:var(--bg);border-radius:14px;padding:20px 24px}
+.card h3{font-size:22px;color:var(--navy);margin-bottom:8px}
+.card p{font-size:18px;line-height:1.55}
+.stat{font-size:84px;font-weight:bold;color:var(--navy);line-height:1;letter-spacing:-.02em}
+.stat small{font-size:30px}
+.lbl{font-size:17px;color:var(--sub);margin-top:6px;line-height:1.4}
+.tag{display:inline-block;font-size:14px;padding:3px 12px;border-radius:99px;background:var(--navy);color:#fff;margin-right:6px;vertical-align:middle}
+.tag.a{background:var(--acc);color:var(--navy)}
 table{border-collapse:collapse;width:100%}
-th,td{border-bottom:1px solid var(--line);padding:10px 12px;text-align:left;font-size:17px;line-height:1.45;vertical-align:top}
-th{background:var(--navy);color:#fff;font-size:16px}
-.tag{display:inline-block;font-size:14px;padding:2px 10px;border-radius:99px;background:#eef3d6;color:#4d6100;margin-right:6px}
-.warn{color:var(--warn);font-weight:bold}
-.flow{display:flex;align-items:stretch;gap:0}
-.flow div{flex:1;background:var(--bg);padding:18px;font-size:19px;line-height:1.5;border-radius:10px;position:relative}
-.flow b{display:block;color:var(--navy);font-size:21px;margin-bottom:6px}
-.arr{flex:0 0 36px!important;background:none!important;display:flex;align-items:center;justify-content:center;font-size:30px;color:var(--ballD)}
-.price{text-align:center}.price .big{font-size:44px;margin:10px 0 4px}.price small{font-size:15px;color:var(--sub)}
-.ref li{font-size:14.5px;line-height:1.5;margin-bottom:6px}
-</style></head><body>
-
-<!-- 1 表紙 -->
-<section class="s dark">
- <div style="position:absolute;right:-120px;top:-120px;width:520px;height:520px;border-radius:50%;background:var(--ball);opacity:.9"></div>
- <div style="position:absolute;right:60px;top:140px;width:400px;height:400px;border-radius:50%;border:3px solid #fff;opacity:.35"></div>
- <p class="k" style="color:var(--ball);margin-top:90px">ソフトテニス部 指導者の方へ ／ ご提案資料</p>
- <h1 style="font-size:56px;margin-top:18px">勝負の0.3秒を鍛える<br>「脳 × 感覚 × リズム」トレーニング</h1>
- <p style="font-size:26px">最強のNo.2 ― フォロワーシップコーチ導入のご提案</p>
- <p style="position:absolute;left:72px;bottom:60px;font-size:20px;color:#c7d2e3">2026年12月19日　｜　フォロワーシップコーチ　〇〇 〇〇</p>
+th,td{border-bottom:1px solid var(--line);padding:9px 12px;text-align:left;font-size:17px;line-height:1.45;vertical-align:top}
+th{background:var(--navy);color:#fff;font-size:15px}
+.ref li{font-size:13.5px;line-height:1.45;margin-bottom:5px}
+.honest{border-left:6px solid var(--acc);background:var(--bg);padding:10px 16px;font-size:16px;line-height:1.5;border-radius:0 10px 10px 0}
+svg text{font-family:"IPAPGothic","IPAGothic",sans-serif}
+</style></head><body><section class="s dark">
+<svg style="position:absolute;left:0;top:0" width="1280" height="720">
+ <polygon points="700,720 1280,720 1280,360 960,360" fill="#16305a"/>
+ <line x1="960" y1="360" x2="700" y2="720" stroke="#fff" stroke-opacity=".35" stroke-width="3"/>
+ <line x1="1120" y1="360" x2="1100" y2="720" stroke="#fff" stroke-opacity=".35" stroke-width="3"/>
+ <line x1="880" y1="470" x2="1280" y2="470" stroke="#fff" stroke-opacity=".6" stroke-width="5"/>
+ <line x1="820" y1="140" x2="980" y2="260" stroke="#c8e63c" stroke-opacity=".55" stroke-width="2"/><line x1="980" y1="260" x2="1120" y2="170" stroke="#c8e63c" stroke-opacity=".55" stroke-width="2"/><line x1="980" y1="260" x2="1040" y2="420" stroke="#c8e63c" stroke-opacity=".55" stroke-width="2"/><line x1="1040" y1="420" x2="880" y2="470" stroke="#c8e63c" stroke-opacity=".55" stroke-width="2"/><line x1="880" y1="470" x2="820" y2="140" stroke="#c8e63c" stroke-opacity=".55" stroke-width="2"/><line x1="1040" y1="420" x2="1200" y2="520" stroke="#c8e63c" stroke-opacity=".55" stroke-width="2"/><line x1="1120" y1="170" x2="1200" y2="330" stroke="#c8e63c" stroke-opacity=".55" stroke-width="2"/><line x1="1200" y1="330" x2="1040" y2="420" stroke="#c8e63c" stroke-opacity=".55" stroke-width="2"/><line x1="880" y1="470" x2="960" y2="600" stroke="#c8e63c" stroke-opacity=".55" stroke-width="2"/><line x1="960" y1="600" x2="1200" y2="520" stroke="#c8e63c" stroke-opacity=".55" stroke-width="2"/><circle cx="820" cy="140" r="9" fill="#c8e63c"/><circle cx="980" cy="260" r="14" fill="#c8e63c"/><circle cx="1120" cy="170" r="8" fill="#c8e63c"/><circle cx="1040" cy="420" r="12" fill="#c8e63c"/><circle cx="880" cy="470" r="9" fill="#c8e63c"/><circle cx="1200" cy="520" r="8" fill="#c8e63c"/><circle cx="1200" cy="330" r="10" fill="#c8e63c"/><circle cx="960" cy="600" r="7" fill="#c8e63c"/>
+ <circle cx="1060" cy="300" r="40" fill="#c8e63c"/><path d="M1028 280 Q1060 300 1028 325 M1092 275 Q1060 300 1092 322" stroke="#0f2340" stroke-width="3" fill="none"/>
+</svg>
+<div style="position:relative;margin-top:96px;max-width:720px">
+ <p class="k" style="color:#c8e63c">ソフトテニス部 指導者の方へ ／ ご提案資料</p>
+ <h1 style="font-size:58px;margin-top:16px">勝負の<span style="color:#c8e63c">0.39秒</span>を<br>鍛えるトレーニング</h1>
+ <p style="font-size:25px">脳 × 感覚 × リズム ― 最強のNo.2「フォロワーシップコーチ」</p>
+</div>
+<p style="position:absolute;left:72px;bottom:56px;font-size:19px;color:#c7d2e3">2026年12月19日　｜　フォロワーシップコーチ　〇〇 〇〇</p>
 </section>
-
-<!-- 2 課題 -->
-<section class="s">
- <p class="k">現場の課題</p>
- <h1>「練習ではできるのに、<em>競った場面で判断が遅れる</em>」</h1>
- <div class="g2">
-  <div class="card"><h3>前衛の勝負は 0.2〜0.4秒</h3>
-   <p>ソフトテニスのボレー動作を計測した研究では、筋の反応が約230ミリ秒、インパクトまで約390ミリ秒と報告されています（畠山）。考えてから動くのでは間に合わない時間です。</p></div>
-  <div class="card"><h3>技術の差より「処理の差」</h3>
-   <p>県上位・全国レベルでは技術差が小さくなります。最後に差がつくのは、<b>見る → 判断する → 動く</b> を、緊張の中でも崩さずに回せるかどうかです。</p></div>
- </div>
- <p style="margin-top:26px">技術指導は監督の領域。私が担うのは、その技術を<b>本番で出し切るための土台</b>です。</p>
- <p class="note">出典：畠山「ソフトテニスのスキル分析」北翔大学紀要（反応時間の値は同論文の計測例）</p>
- <span class="n">2</span>
-</section>
-
-<!-- 3 フォロワーシップコーチ -->
-<section class="s">
- <p class="k">私の立ち位置</p>
- <h1>主役は監督と選手。私は<em>最強のNo.2</em>です</h1>
- <div class="g3">
-  <div class="card"><h3>方針は変えない</h3><p>チームの戦術・技術指導には口を出しません。監督の目標から逆算して、必要な土台づくりだけを担当します。</p></div>
-  <div class="card"><h3>練習時間を奪わない</h3><p>1回20〜30分のウォームアップ枠、または冬季の補強枠で実施。ラケット・ボールを使う競技特化型です。</p></div>
-  <div class="card"><h3>数字で報告する</h3><p>開始時・6週・12週に測定し、変化をレポートで提出。「やってよかったか」を監督が判断できる形にします。</p></div>
- </div>
- <p style="margin-top:28px">目標：<b>インターハイ出場・上位進出を本気で目指す選手の「判断の土台」を引き上げること</b></p>
- <span class="n">3</span>
-</section>
-
-<!-- 4 2つの柱 -->
-<section class="s">
- <p class="k">トレーニングの2本柱</p>
- <h1>脳への刺激と、身体のリズムを組み合わせる</h1>
- <div class="g2">
-  <div class="card"><h3>① ライフキネティック</h3>
-   <ul><li>ドイツ発の「運動 × 認知」トレーニング</li><li>視覚・認知・協調運動の課題を同時に与える</li><li>同じ課題は覚えたら次へ（慣れる前に変える）</li><li>ねらい：注意の切り替え、周辺視、判断の速さ</li></ul></div>
-  <div class="card"><h3>② スポーツリズムトレーニング</h3>
-   <ul><li>音楽・拍に合わせて身体を動かすプログラム</li><li>協調性・バランス・反応の速さ・集中力がねらい</li><li>フットワークとスプリットステップのタイミングに直結</li><li>ねらい：動き出しの「間」をそろえる</li></ul></div>
- </div>
- <p class="note">※「ライフキネティック」「スポーツリズムトレーニング」は各団体のプログラム名です。指導は各団体の資格・ガイドラインに沿って行います。</p>
- <span class="n">4</span>
-</section>
-
-<!-- 5 考え方 -->
-<section class="s">
- <p class="k">考え方（トレーニングの設計思想）</p>
- <h1>わざと<em>「処理が追いつかない」</em>状態をつくり、適応させる</h1>
- <div class="flow">
-  <div><b>① 複数の感覚を同時に</b>色・数字のコール（聴覚）、2色ボール（視覚）、利き手と逆の操作（触覚・運動）</div>
-  <div class="arr">→</div>
-  <div><b>② 混乱・渋滞が起きる</b>頭が追いつかない、ミスが出る。この「できない状態」が練習の中心</div>
-  <div class="arr">→</div>
-  <div><b>③ 適応する</b>繰り返すうちに処理が速く・正確になる。できたら課題を変える</div>
-  <div class="arr">→</div>
-  <div><b>④ 本番の複雑さに強く</b>相手・ボール・ペア・声援が同時に入る試合場面でも判断を保つ</div>
- </div>
- <p style="margin-top:30px">試合のプレッシャー下では情報が一度に押し寄せます。<b>普段から「少し多すぎる情報」を処理する練習</b>をしておく、という発想です。</p>
- <p class="note">※脳の中で何が起きているか（神経のつながりの変化など）は研究途上です。本提案では、測定できる「反応・判断・動き」の変化で効果を確認します。</p>
- <span class="n">5</span>
-</section>
-
-<!-- 6 エビデンス LK -->
-<section class="s">
- <p class="k">エビデンス ①　ライフキネティック</p>
- <h1>競技選手を対象にした<em>ランダム化比較試験</em>で効果が報告</h1>
- <table>
-  <tr><th style="width:22%">研究</th><th style="width:26%">対象・方法</th><th>報告された結果</th></tr>
-  <tr><td>フェンシング<br><span class="tag">RCT</span>2025年</td><td>小学生年代の競技者22名<br>週2回×60分×8週</td><td>ストループ課題（注意・抑制）、アジリティ、垂直跳びが向上。対照群は有意な変化なし</td></tr>
-  <tr><td>バドミントン<br><span class="tag">RCT</span>2026年</td><td>ジュニア〜中級選手 分析40名<br>通常練習＋LK 約6週</td><td>集中力・作業記憶とサービス（ショート/ロング）のパフォーマンスが向上</td></tr>
- </table>
- <p style="margin-top:22px;font-size:20px">ラケット競技（バドミントン）で<b>競技動作そのもの</b>の改善が報告されている点が、ソフトテニスへの応用の根拠です。</p>
- <p class="note">正直にお伝えすること：どちらも参加者20〜40名規模の小さな研究で、ソフトテニス・高校生を対象にした研究はまだありません。だからこそ、貴校での測定で確かめながら進めます。</p>
- <span class="n">6</span>
-</section>
-
-<!-- 7 エビデンス 知覚認知 -->
-<section class="s">
- <p class="k">エビデンス ②　認知・知覚トレーニング全般</p>
- <h1>効果はある。ただし<em>「競技に近い形」</em>でないと移りにくい</h1>
- <div class="g2">
-  <div class="card"><h3>メタ分析（22研究）</h3>
-   <p>知覚・認知トレーニングは予測・判断を改善。効果量は実験室テストで <b>1.51</b>、コート上のパフォーマンスで <b>0.65</b>（Zhu ほか, 2024）。</p>
-   <p style="margin-top:8px">→ コート上でも中程度の効果。ただし実験室ほどは移らない。</p></div>
-  <div class="card"><h3>批判的な立場の研究</h3>
-   <p>競技と無関係な一般的な脳トレが、競技力に「遠く転移」する根拠は乏しい（Fransen, 2024）。</p>
-   <p style="margin-top:8px">→ 机上の脳トレやタブレット課題だけでは不十分。</p></div>
- </div>
- <p style="margin-top:24px"><b>だから本プログラムは、ラケット・ボール・フットワーク・ペアの声を必ず組み込む「ソフトテニス特化型」で設計します。</b></p>
- <span class="n">7</span>
-</section>
-
-<!-- 8 エビデンス リズム -->
-<section class="s">
- <p class="k">エビデンス ③　リズムトレーニング</p>
- <h1>タイミングの正確さ・アジリティの改善が報告</h1>
- <table>
-  <tr><th style="width:24%">研究</th><th style="width:28%">対象・方法</th><th>報告された結果</th></tr>
-  <tr><td>サッカー<br><span class="tag">ランダム割付</span>2018年</td><td>エリート・準エリート選手<br>メトロノーム同期トレーニング12回</td><td>ステップ課題の正確さ・速さが向上（下肢の動作そのものの変化は見られず）</td></tr>
-  <tr><td>サッカー<br>2025年</td><td>小学生選手<br>リズムジャンプ 週1回×8週</td><td>8拍のリズム再現能力とアジリティが向上</td></tr>
-  <tr><td>横浜市の取り組み</td><td>市内公立小学校で<br>スポーツリズムトレーニング普及</td><td>児童の運動能力向上とけが予防の効果を評価（津田ほか）</td></tr>
- </table>
- <p class="note">正直にお伝えすること：リズムトレーニングの競技者対象の研究はまだ少数です。スプリットステップの「間」やフットワークの測定で、効果を個別に確認します。</p>
- <span class="n">8</span>
-</section>
-
-<!-- 9 メニュー例 -->
-<section class="s">
- <p class="k">ソフトテニス版メニュー（例）</p>
- <h1>コートで、ラケットを持って行う</h1>
- <table>
-  <tr><th style="width:24%">ねらい</th><th>メニュー例</th><th style="width:14%">主に</th></tr>
-  <tr><td>判断の切り替え</td><td>コーチが色をコール → 色に応じてボレーの方向を変える（赤＝ストレート／青＝クロス）。途中でルールを逆にする</td><td>前衛</td></tr>
-  <tr><td>周辺視・注意配分</td><td>正面のボールを見たまま、横で上がる指の本数を答えながらラリー</td><td>前衛・後衛</td></tr>
-  <tr><td>動き出しの「間」</td><td>メトロノーム・音楽の拍に合わせたスプリットステップ → 不規則な拍に切り替え</td><td>前衛・後衛</td></tr>
-  <tr><td>情報の渋滞への適応</td><td>2色ボールのジャグリング＋数字コール＋ステップを同時に。できたら1つ変える</td><td>全員</td></tr>
-  <tr><td>ペアの連携</td><td>ペアで交互にコール・リズムを合わせるフットワーク（声のタイミングをそろえる）</td><td>ペア</td></tr>
- </table>
- <p class="note">1回20〜30分。監督の練習計画に合わせて、ウォームアップ枠・冬季補強枠に組み込みます。</p>
- <span class="n">9</span>
-</section>
-
-<!-- 10 測定 -->
-<section class="s">
- <p class="k">結果へのコミット ＝ 測って、見せる</p>
- <h1>「良くなった気がする」で終わらせない</h1>
- <div class="g2">
-  <div>
-   <table>
-    <tr><th>測定項目</th><th style="width:40%">方法</th></tr>
-    <tr><td>選択反応時間</td><td>色・方向の光刺激への反応（アプリ）</td></tr>
-    <tr><td>注意・抑制</td><td>ストループ課題</td></tr>
-    <tr><td>アジリティ</td><td>反復横跳び・サイドステップ</td></tr>
-    <tr><td>リズム再現</td><td>拍に合わせたステップの正確さ</td></tr>
-    <tr><td>競技指標</td><td>練習試合のポーチ・ボレー成功率</td></tr>
-    <tr><td>主観</td><td>試合時の緊張・集中の自己評価</td></tr>
-   </table>
-  </div>
-  <div>
-   <div class="card" style="margin-bottom:18px"><h3>測定のタイミング</h3><p><b>開始時 → 6週 → 12週</b><br>個人別・チーム全体のレポートを監督に提出</p></div>
-   <div class="card"><h3>お約束すること</h3><p>・測定と報告を必ず行う<br>・数値が伸びない項目はメニューを組み替える<br>・選手の個人データは学校外に出さない</p></div>
-  </div>
- </div>
- <p class="note">※勝敗・大会成績を保証するものではありません。成績は監督の指導と選手の努力の結果であり、私はその土台となる能力の変化を数字で示すことにコミットします。</p>
- <span class="n">10</span>
-</section>
-
-<!-- 11 料金 -->
-<section class="s">
- <p class="k">導入プランと料金（案）</p>
- <h1>4月から12週間で、変化を確かめてください</h1>
- <div class="g3">
-  <div class="card price"><h3>ライト</h3><p>月2回訪問（各90分）<br>測定3回・レポート</p><div class="big">¥30,000</div><small>／月（税込・交通費別）</small></div>
-  <div class="card price" style="border-top-color:var(--navy);box-shadow:0 0 0 3px var(--ball)"><h3>スタンダード（おすすめ）</h3><p>月4回訪問（各90分）<br>測定3回・レポート・自主練メニュー</p><div class="big">¥55,000</div><small>／月（税込・交通費別）</small></div>
-  <div class="card price"><h3>年間サポート</h3><p>スタンダード×12か月<br>大会前の個別調整を含む</p><div class="big">¥580,000</div><small>／年（月払い換算 約¥48,000）</small></div>
- </div>
- <p style="margin-top:24px;font-size:20px">12月〜3月：<b>無料トライアル6週＋初回・中間測定</b>。料金は2027年4月の契約開始から発生します。</p>
- <p class="note">※金額は提示用の案です。支払い元（後援会・保護者会・外部指導者の予算など）、訪問距離、人数に応じて調整します。</p>
- <span class="n">11</span>
-</section>
-
-<!-- 12 スケジュール -->
-<section class="s">
- <p class="k">導入スケジュール（例）</p>
- <h1>冬は<em>無料</em>で見ていただき、4月から本格導入</h1>
- <div class="flow">
-  <div><b>12月〜1月</b><span class="tag">無料</span><br>体験セッション<br>初回測定<br>メニュー設計</div><div class="arr">→</div>
-  <div><b>1月〜3月</b><span class="tag">無料</span><br>トライアル6週<br>6週で中間測定<br>結果をご報告</div><div class="arr">→</div>
-  <div><b>4月</b><span class="tag">契約開始</span><br>導入を判断・正式契約<br>ここから料金発生</div><div class="arr">→</div>
-  <div><b>5月〜7月</b>6週・12週で測定<br>大会前は短時間の調整</div><div class="arr">→</div>
-  <div style="background:var(--navy);color:#fff"><b style="color:var(--ball)">夏</b>インターハイ・<br>上位大会へ</div>
- </div>
- <p style="margin-top:30px">12月〜3月は<b>無料トライアル（6週）と中間測定</b>で、数字と選手の反応を見ていただきます。料金は<b>2027年4月の契約開始から</b>です。</p>
- <p class="note">※トライアルの結果を見て導入しない場合、費用は一切かかりません。契約後も12週の測定結果をもとに継続を判断できます。</p>
- <span class="n">12</span>
-</section>
-
-<!-- 13 参考文献 -->
-<section class="s">
- <p class="k">参考文献</p>
- <h1 style="font-size:32px">本資料で引用した研究</h1>
- <ol class="ref" style="padding-left:1.4em">
-  <li>Impact of life kinetik training on balance, agility, jumping, proprioception, and cognitive function in preadolescent recreational fencing athletes: a randomized controlled trial. BMC Sports Science, Medicine and Rehabilitation, 2025. https://pmc.ncbi.nlm.nih.gov/articles/PMC12145597/</li>
-  <li>Life Kinetics Training as a Multimodal Neurocognitive Intervention: Enhances Cognitive and Motor Performance in Badminton Athletes. Life, 16(5), 836, 2026. https://doi.org/10.3390/life16050836</li>
-  <li>Zhu ほか. Effects of Perceptual-Cognitive Training on Anticipation and Decision-Making Skills in Team Sports: A Systematic Review and Meta-Analysis. Behavioral Sciences, 14(10), 919, 2024. https://www.mdpi.com/2076-328X/14/10/919</li>
-  <li>Fransen. There is No Supporting Evidence for a Far Transfer of General Perceptual or Cognitive Training to Sports Performance. Sports Medicine, 2024. https://pmc.ncbi.nlm.nih.gov/articles/PMC11560981/</li>
-  <li>Rönnqvist ほか. Influences of Synchronized Metronome Training on Soccer Players' Timing Ability, Performance Accuracy, and Lower-Limb Kinematics. Frontiers in Psychology, 9, 2469, 2018. https://www.frontiersin.org/articles/10.3389/fpsyg.2018.02469/full</li>
-  <li>The Effects of Rhythm Jump Training on the Rhythmic Reproduction Ability in Jumping and Agility in Elementary School Soccer Players. Children, 2025. https://pmc.ncbi.nlm.nih.gov/articles/PMC11854900/</li>
-  <li>津田幸保ほか. 横浜市の全公立小学校におけるスポーツリズムトレーニング普及の取り組みに関する報告（CiNii収録・正式題名は原典で確認）. https://cir.nii.ac.jp/crid/1390851398293246336</li>
-  <li>畠山. ソフトテニスのスキル分析に関する論文. 北翔大学 機関リポジトリ（正式題名は原典で確認）. https://hokusho.repo.nii.ac.jp/record/1635/files/JHWC30115.pdf</li>
- </ol>
- <span class="n">13</span>
-</section>
-
-<!-- 14 クロージング -->
-<section class="s dark">
- <div style="position:absolute;left:-160px;bottom:-200px;width:520px;height:520px;border-radius:50%;background:var(--ball);opacity:.9"></div>
- <p class="k" style="color:var(--ball);margin-top:110px;margin-left:420px">次の一歩</p>
- <h1 style="font-size:48px;margin-left:420px">まずは60分、<br>選手の反応を見てください</h1>
- <p style="margin-left:420px;font-size:24px">無料体験セッション ＋ 初回測定<br>ご都合のよい練習日に伺います。</p>
- <p style="margin-left:420px;margin-top:40px;font-size:20px;color:#c7d2e3">フォロワーシップコーチ　〇〇 〇〇<br>連絡先：〇〇〇〇（メール／電話）</p>
- <span class="n">14</span>
-</section>
-</body></html>
+<section class="s "><p class="k">前衛の現実</p><h1>考えてから動いたら、<em>もう間に合わない</em></h1><div class="row" style="align-items:center;margin-bottom:6px"><div class="stat">0.39<small>秒</small></div>
+ <p style="font-size:22px">ソフトテニスのボレー動作を計測した研究では、反応からインパクトまで約0.39秒。<br>この一瞬の「見る→判断→動く」が勝敗を分けます。</p></div><svg width="1136" height="250" viewBox="0 0 1136 250">
+ <rect x="20" y="110" width="1080" height="34" rx="17" fill="#e6eaf0"/>
+ <rect x="20" y="110" width="1080" height="34" rx="17" fill="url(#g)"/>
+ <defs><linearGradient id="g"><stop offset="0" stop-color="#c8e63c" stop-opacity=".25"/><stop offset="1" stop-color="#0f2340"/></linearGradient></defs>
+ <g font-size="18" fill="#1d2433">
+  <line x1="20" y1="90" x2="20" y2="160" stroke="#0f2340" stroke-width="3"/><text x="20" y="80">相手が打つ</text>
+  <line x1="657" y1="90" x2="657" y2="170" stroke="#0f2340" stroke-width="3"/><text x="657" y="80" text-anchor="middle">約0.23秒</text><text x="657" y="196" text-anchor="middle" font-size="16" fill="#5a6476">筋肉が反応</text>
+  <line x1="740" y1="150" x2="740" y2="230" stroke="#0f2340" stroke-width="3"/><text x="740" y="222" text-anchor="start" dx="8" font-size="16" fill="#5a6476">約0.26秒 関節が動き出す</text>
+  <line x1="1100" y1="90" x2="1100" y2="170" stroke="#0f2340" stroke-width="3"/><text x="1100" y="80" text-anchor="end" font-weight="bold" font-size="22">約0.39秒 インパクト</text>
+ </g></svg><p class="note">出典：畠山（北翔大学）ソフトテニスのスキル分析に関する論文。値は同論文の計測例。同論文は、ボールがネットを通過するまでの時間の方が反応より短い場面があることも示しています。</p><span class="n">2</span></section>
+<section class="s "><p class="k">なぜ試合で崩れるのか</p><h1>試合では、<em>情報が一度に押し寄せる</em></h1><svg width="1136" height="390" viewBox="0 0 1136 390"><line x1="250" y1="190" x2="250.0" y2="50.0" stroke="#c3cad6" stroke-width="2"/><rect x="188.0" y="30.0" width="124" height="38" rx="19" fill="#eef1f5"/><text x="250.0" y="56.0" font-size="16" text-anchor="middle" fill="#0f2340">ボール</text><line x1="250" y1="190" x2="250.0" y2="330.0" stroke="#c3cad6" stroke-width="2"/><rect x="188.0" y="310.0" width="124" height="38" rx="19" fill="#eef1f5"/><text x="250.0" y="336.0" font-size="16" text-anchor="middle" fill="#0f2340">球出し</text><circle cx="250" cy="190" r="54" fill="#9aa6b8"/><text x="250" y="198" font-size="24" fill="#fff" text-anchor="middle" font-weight="bold">練習</text><line x1="840" y1="190" x2="840.0" y2="50.0" stroke="#c8e63c" stroke-width="4"/><rect x="778.0" y="30.0" width="124" height="38" rx="19" fill="#c8e63c"/><text x="840.0" y="56.0" font-size="16" text-anchor="middle" fill="#0f2340">相手前衛</text><line x1="840" y1="190" x2="956.6726188957804" y2="91.00505063388336" stroke="#c8e63c" stroke-width="4"/><rect x="894.6726188957804" y="71.00505063388336" width="124" height="38" rx="19" fill="#c8e63c"/><text x="956.6726188957804" y="97.00505063388336" font-size="16" text-anchor="middle" fill="#0f2340">相手後衛</text><line x1="840" y1="190" x2="1005.0" y2="190.0" stroke="#c8e63c" stroke-width="4"/><rect x="943.0" y="170.0" width="124" height="38" rx="19" fill="#c8e63c"/><text x="1005.0" y="196.0" font-size="16" text-anchor="middle" fill="#0f2340">ボール</text><line x1="840" y1="190" x2="956.6726188957804" y2="288.99494936611666" stroke="#c8e63c" stroke-width="4"/><rect x="894.6726188957804" y="268.99494936611666" width="124" height="38" rx="19" fill="#c8e63c"/><text x="956.6726188957804" y="294.99494936611666" font-size="16" text-anchor="middle" fill="#0f2340">ペアの声</text><line x1="840" y1="190" x2="840.0" y2="330.0" stroke="#c8e63c" stroke-width="4"/><rect x="778.0" y="310.0" width="124" height="38" rx="19" fill="#c8e63c"/><text x="840.0" y="336.0" font-size="16" text-anchor="middle" fill="#0f2340">スコア</text><line x1="840" y1="190" x2="723.3273811042196" y2="288.99494936611666" stroke="#c8e63c" stroke-width="4"/><rect x="661.3273811042196" y="268.99494936611666" width="124" height="38" rx="19" fill="#c8e63c"/><text x="723.3273811042196" y="294.99494936611666" font-size="16" text-anchor="middle" fill="#0f2340">応援・緊張</text><line x1="840" y1="190" x2="675.0" y2="190.00000000000003" stroke="#c8e63c" stroke-width="4"/><rect x="613.0" y="170.00000000000003" width="124" height="38" rx="19" fill="#c8e63c"/><text x="675.0" y="196.00000000000003" font-size="16" text-anchor="middle" fill="#0f2340">風・日差し</text><line x1="840" y1="190" x2="723.3273811042196" y2="91.00505063388336" stroke="#c8e63c" stroke-width="4"/><rect x="661.3273811042196" y="71.00505063388336" width="124" height="38" rx="19" fill="#c8e63c"/><text x="723.3273811042196" y="97.00505063388336" font-size="16" text-anchor="middle" fill="#0f2340">監督の指示</text><circle cx="840" cy="190" r="70" fill="#0f2340"/><text x="840" y="198" font-size="24" fill="#fff" text-anchor="middle" font-weight="bold">試合</text>
+ <text x="545" y="200" font-size="46" fill="#6f8c00" text-anchor="middle">→</text></svg><p class="note">技術の差が小さい県上位レベルほど、最後は「多すぎる情報の中で判断を崩さない力」で差がつきます。</p><span class="n">3</span></section>
+<section class="s "><p class="k">私の立ち位置</p><h1>主役は監督と選手。私は<em>最強のNo.2</em></h1><div class="row">
+ <div class="card" style="flex:1"><svg width="64" height="64" viewBox="0 0 64 64"><circle cx="32" cy="32" r="32" fill="#c8e63c"/><path d="M18 34l9 9 19-21" stroke="#0f2340" stroke-width="6" fill="none"/></svg><h3 style="margin-top:12px">方針は変えない</h3><p>戦術・技術指導には口を出しません。監督の目標から逆算して土台づくりだけを担当。</p></div>
+ <div class="card" style="flex:1"><svg width="64" height="64" viewBox="0 0 64 64"><circle cx="32" cy="32" r="32" fill="#c8e63c"/><circle cx="32" cy="32" r="16" stroke="#0f2340" stroke-width="5" fill="none"/><path d="M32 22v10l7 5" stroke="#0f2340" stroke-width="5" fill="none"/></svg><h3 style="margin-top:12px">練習時間を奪わない</h3><p>1回20〜30分。ウォームアップ枠や冬季の補強枠で、ラケットとボールを使って実施。</p></div>
+ <div class="card" style="flex:1"><svg width="64" height="64" viewBox="0 0 64 64"><circle cx="32" cy="32" r="32" fill="#c8e63c"/><rect x="16" y="34" width="8" height="14" fill="#0f2340"/><rect x="28" y="24" width="8" height="24" fill="#0f2340"/><rect x="40" y="16" width="8" height="32" fill="#0f2340"/></svg><h3 style="margin-top:12px">数字で報告する</h3><p>開始時・6週・12週に測定してレポート。続けるかは監督が数字で判断できます。</p></div>
+ </div><p style="margin-top:26px;font-size:22px">目標：<b>インターハイを本気で目指す選手の「判断の土台」を引き上げる</b></p><span class="n">4</span></section>
+<section class="s "><p class="k">トレーニングのしくみ</p><h1>わざと<em>「処理が追いつかない」</em>状態をつくる</h1><div class="row" style="align-items:center"><svg width="560" height="400" viewBox="0 0 560 400">
+<circle cx="280" cy="200" r="140" fill="none" stroke="#e1e5ec" stroke-width="28"/>
+<path d="M280 60 A140 140 0 1 1 140 200" fill="none" stroke="#c8e63c" stroke-width="28"/>
+<g font-size="19" font-weight="bold" fill="#0f2340" text-anchor="middle">
+<rect x="195" y="22" width="170" height="54" rx="27" fill="#0f2340"/><text x="280" y="56" fill="#fff">① 同時に刺激</text>
+<rect x="395" y="173" width="160" height="54" rx="27" fill="#0f2340"/><text x="475" y="207" fill="#fff">② 混乱・渋滞</text>
+<rect x="195" y="324" width="170" height="54" rx="27" fill="#0f2340"/><text x="280" y="358" fill="#fff">③ 適応する</text>
+<rect x="5" y="173" width="160" height="54" rx="27" fill="#c8e63c"/><text x="85" y="207">④ 課題を変える</text>
+<text x="280" y="196" font-size="24">慣れる前に</text><text x="280" y="228" font-size="24">次の課題へ</text></g></svg><div style="flex:1">
+ <div class="card" style="margin-bottom:14px"><h3>① ライフキネティック</h3><p>視覚・認知・協調運動の課題を同時に。色や数字のコール、2色ボール、利き手と逆の操作を組み合わせる。</p></div>
+ <div class="card"><h3>② スポーツリズムトレーニング</h3><p>拍に合わせて身体を動かし、スプリットステップや動き出しの「間」をそろえる。</p></div></div></div><p class="note">脳の中で起きている変化（神経のつながり等）は研究途上です。本提案では、測定できる「反応・判断・動き」の変化で効果を確認します。</p><span class="n">5</span></section>
+<section class="s "><p class="k">エビデンス ①　ライフキネティック × 競技者（ランダム化比較試験）</p><h1>8週間で、<em>判断もフットワークも速くなった</em></h1><div class="row" style="align-items:flex-end"><svg width="500" height="420" viewBox="0 0 500 420"><line x1="50" x2="490" y1="20.0" y2="20.0" stroke="#e3e7ee"/><text x="42" y="25.0" font-size="13" fill="#5a6476" text-anchor="end">30</text><line x1="50" x2="490" y1="107.5" y2="107.5" stroke="#e3e7ee"/><text x="42" y="112.5" font-size="13" fill="#5a6476" text-anchor="end">22</text><line x1="50" x2="490" y1="195.0" y2="195.0" stroke="#e3e7ee"/><text x="42" y="200.0" font-size="13" fill="#5a6476" text-anchor="end">15</text><line x1="50" x2="490" y1="282.5" y2="282.5" stroke="#e3e7ee"/><text x="42" y="287.5" font-size="13" fill="#5a6476" text-anchor="end">8</text><line x1="50" x2="490" y1="370.0" y2="370.0" stroke="#e3e7ee"/><text x="42" y="375.0" font-size="13" fill="#5a6476" text-anchor="end">0</text><rect x="56" y="56.98333333333335" width="101.5" height="313.01666666666665" rx="4" fill="#9aa6b8"/><text x="106.75" y="50.98333333333335" font-size="14" font-weight="bold" fill="#1d2433" text-anchor="middle">26.83</text><text x="106.75" y="388" font-size="12" fill="#5a6476" text-anchor="middle">前</text><rect x="157.5" y="84.28333333333336" width="101.5" height="285.71666666666664" rx="4" fill="#0f2340"/><text x="208.25" y="78.28333333333336" font-size="14" font-weight="bold" fill="#1d2433" text-anchor="middle">24.49</text><text x="208.25" y="388" font-size="12" fill="#5a6476" text-anchor="middle">後</text><text x="157.5" y="406" font-size="14" fill="#1d2433" text-anchor="middle">LK群</text><rect x="271.0" y="57.21666666666664" width="101.5" height="312.78333333333336" rx="4" fill="#e1e5ec"/><text x="321.75" y="51.21666666666664" font-size="14" font-weight="bold" fill="#1d2433" text-anchor="middle">26.81</text><text x="321.75" y="388" font-size="12" fill="#5a6476" text-anchor="middle">前</text><rect x="372.5" y="58.85000000000002" width="101.5" height="311.15" rx="4" fill="#c3cad6"/><text x="423.25" y="52.85000000000002" font-size="14" font-weight="bold" fill="#1d2433" text-anchor="middle">26.67</text><text x="423.25" y="388" font-size="12" fill="#5a6476" text-anchor="middle">後</text><text x="372.5" y="406" font-size="14" fill="#1d2433" text-anchor="middle">対照群</text><text x="265.0" y="16" font-size="15" font-weight="bold" fill="#0f2340" text-anchor="middle">ストループ課題（秒）</text></svg><svg width="260" height="420" viewBox="0 0 260 420"><line x1="50" x2="250" y1="20.0" y2="20.0" stroke="#e3e7ee"/><text x="42" y="25.0" font-size="13" fill="#5a6476" text-anchor="end">18</text><line x1="50" x2="250" y1="107.5" y2="107.5" stroke="#e3e7ee"/><text x="42" y="112.5" font-size="13" fill="#5a6476" text-anchor="end">14</text><line x1="50" x2="250" y1="195.0" y2="195.0" stroke="#e3e7ee"/><text x="42" y="200.0" font-size="13" fill="#5a6476" text-anchor="end">9</text><line x1="50" x2="250" y1="282.5" y2="282.5" stroke="#e3e7ee"/><text x="42" y="287.5" font-size="13" fill="#5a6476" text-anchor="end">4</text><line x1="50" x2="250" y1="370.0" y2="370.0" stroke="#e3e7ee"/><text x="42" y="375.0" font-size="13" fill="#5a6476" text-anchor="end">0</text><rect x="56" y="69.0" width="89.0" height="301.0" rx="4" fill="#9aa6b8"/><text x="100.5" y="63.0" font-size="14" font-weight="bold" fill="#1d2433" text-anchor="middle">15.48</text><text x="100.5" y="388" font-size="12" fill="#5a6476" text-anchor="middle">前</text><rect x="145.0" y="103.02777777777777" width="89.0" height="266.97222222222223" rx="4" fill="#0f2340"/><text x="189.5" y="97.02777777777777" font-size="14" font-weight="bold" fill="#1d2433" text-anchor="middle">13.73</text><text x="189.5" y="388" font-size="12" fill="#5a6476" text-anchor="middle">後</text><text x="145.0" y="406" font-size="14" fill="#1d2433" text-anchor="middle">LK群</text><text x="145.0" y="16" font-size="15" font-weight="bold" fill="#0f2340" text-anchor="middle">アジリティ（秒）</text></svg>
+ <div style="flex:1;padding-bottom:30px"><div class="stat">−11<small>%</small></div><p class="lbl">アジリティテストのタイム<br>（15.48秒 → 13.73秒）</p>
+ <div class="stat" style="margin-top:20px;font-size:64px">p&lt;0.001</div><p class="lbl">LK群はストループ・アジリティ・垂直跳びが向上。<br>対照群は有意な変化なし</p></div></div><p class="note">Yarayan ほか（2025）BMC Sports Science, Medicine and Rehabilitation。フェンシング競技者22名（平均11.6歳）、週2回×60分×8週。グラフの数値はプレプリント版（Research Square）の表の値で、最終版と異なる可能性があります。タイムは短いほど良い。</p><span class="n">6</span></section>
+<section class="s "><p class="k">エビデンス ②　ライフキネティック × ラケット競技</p><h1>バドミントンで<em>サービスの成績</em>まで向上</h1><div class="row" style="align-items:center">
+ <div style="width:380px"><div class="stat">6<small>週・18回</small></div><p class="lbl">通常練習にライフキネティックを追加<br>選手40名（ジュニア・中級）をランダムに割り付け</p>
+ <div style="margin-top:22px"><span class="tag a">集中力</span><span class="tag a">作業記憶</span><br><span class="tag a" style="margin-top:8px">ショートサービス</span><span class="tag a" style="margin-top:8px">ロングサービス</span></div>
+ <p class="lbl" style="margin-top:10px">すべて有意に向上（p&lt;0.001）</p></div>
+ <div style="flex:1"><p style="font-size:19px;margin-bottom:6px"><b>効果の大きさ（偏η²）</b>　線＝「大きい効果」の目安 0.14</p>
+ <svg width="640" height="78" viewBox="0 0 640 78"><text x="10" y="18" font-size="16" fill="#1d2433">集中力（グリッド課題）</text><rect x="10" y="28" width="620" height="24" rx="12" fill="#e6eaf0"/><rect x="10" y="28" width="496.0" height="24" rx="12" fill="#c8e63c"/><line x1="96.80000000000001" x2="96.80000000000001" y1="22" y2="58" stroke="#0f2340" stroke-width="2"/><text x="96.80000000000001" y="74" font-size="13" fill="#5a6476" text-anchor="middle">大きい効果の目安</text><text x="498.0" y="46" font-size="16" font-weight="bold" fill="#0f2340" text-anchor="end">0.8</text></svg>
+ <svg width="640" height="78" viewBox="0 0 640 78"><text x="10" y="18" font-size="16" fill="#1d2433">作業記憶（数字の記憶）</text><rect x="10" y="28" width="620" height="24" rx="12" fill="#e6eaf0"/><rect x="10" y="28" width="508.4" height="24" rx="12" fill="#c8e63c"/><line x1="96.80000000000001" x2="96.80000000000001" y1="22" y2="58" stroke="#0f2340" stroke-width="2"/><text x="96.80000000000001" y="74" font-size="13" fill="#5a6476" text-anchor="middle">大きい効果の目安</text><text x="510.4" y="46" font-size="16" font-weight="bold" fill="#0f2340" text-anchor="end">0.82</text></svg>
+ <div class="honest" style="margin-top:14px">ラケット競技で「競技動作そのもの」の改善が報告された点が、ソフトテニスに応用する根拠です。</div></div></div><p class="note">Life Kinetics Training as a Multimodal Neurocognitive Intervention…（Life, 16(5), 836, 2026）。偏η²の0.14は一般的な「大」の目安。ソフトテニス・高校生を対象にした研究はまだないため、貴校での測定で確かめながら進めます。</p><span class="n">7</span></section>
+<section class="s "><p class="k">エビデンス ③　22研究のメタ分析</p><h1>効果はある。だから<em>コートでやる</em></h1><div class="row" style="align-items:center"><svg width="680" height="280" viewBox="0 0 680 280"><line x1="222.22222222222223" x2="222.22222222222223" y1="22" y2="250" stroke="#9aa6b8" stroke-dasharray="4 4"/><text x="222.22222222222223" y="16" font-size="13" fill="#5a6476" text-anchor="middle">効果小 0.2</text><line x1="300.55555555555554" x2="300.55555555555554" y1="22" y2="250" stroke="#9aa6b8" stroke-dasharray="4 4"/><text x="300.55555555555554" y="16" font-size="13" fill="#5a6476" text-anchor="middle">効果中 0.5</text><line x1="378.8888888888889" x2="378.8888888888889" y1="22" y2="250" stroke="#9aa6b8" stroke-dasharray="4 4"/><text x="378.8888888888889" y="16" font-size="13" fill="#5a6476" text-anchor="middle">効果大 0.8</text><text x="158" y="92.5" font-size="17" fill="#1d2433" text-anchor="end">実験室のテスト</text><rect x="170" y="40.0" width="394.27777777777777" height="83.0" rx="6" fill="#0f2340"/><text x="574.2777777777778" y="90.5" font-size="26" font-weight="bold" fill="#0f2340">1.51</text><text x="158" y="197.5" font-size="17" fill="#1d2433" text-anchor="end">コート上の実戦</text><rect x="170" y="145.0" width="169.72222222222223" height="83.0" rx="6" fill="#c8e63c"/><text x="349.72222222222223" y="195.5" font-size="26" font-weight="bold" fill="#0f2340">0.65</text></svg>
+ <div style="flex:1"><div class="card" style="margin-bottom:14px"><h3>読み取れること</h3><p>知覚・認知トレーニングで予測・判断は改善。コート上でも「中程度以上」の効果。ただし実験室ほどは移らない。</p></div>
+ <div class="card"><h3>本プログラムの設計</h3><p>机やタブレットの脳トレではなく、<b>ラケット・ボール・ペアの声・フットワーク</b>を必ず入れる競技特化型。</p></div></div></div><p class="note">Zhu ほか（2024）Behavioral Sciences 14(10):919（団体競技の22研究・45の効果量）。数値は効果量。一般的な脳トレの競技への転移には否定的な見解もあります（Fransen, 2024, Sports Medicine）。</p><span class="n">8</span></section>
+<section class="s "><p class="k">エビデンス ④　リズム・タイミング</p><h1>タイミングが正確な選手ほど、<em>ステップが正確</em></h1><div class="row">
+ <div class="card" style="flex:1.1"><h3>エリート女子サッカー選手24名</h3>
+ <svg width="560" height="78" viewBox="0 0 560 78"><text x="10" y="18" font-size="16" fill="#1d2433">タイミング能力と正確なステップ数の相関（|r|）</text><rect x="10" y="28" width="540" height="24" rx="12" fill="#e6eaf0"/><rect x="10" y="28" width="318.59999999999997" height="24" rx="12" fill="#c8e63c"/><line x1="280.0" x2="280.0" y1="22" y2="58" stroke="#0f2340" stroke-width="2"/><text x="280.0" y="74" font-size="13" fill="#5a6476" text-anchor="middle">強い相関の目安 0.5</text><text x="320.59999999999997" y="46" font-size="16" font-weight="bold" fill="#0f2340" text-anchor="end">0.59</text></svg>
+ <p style="margin-top:8px">メトロノーム同期トレーニング（4週・12回）を行った群だけ、ステップ課題の正確さと速さが向上。</p></div>
+ <div style="flex:1;display:flex;flex-direction:column;gap:16px">
+ <div class="card"><h3>リズムジャンプ（小学生サッカー）</h3><p>週1回×8週で、8拍のリズム再現能力とアジリティが向上。</p></div>
+ <div class="card"><h3>横浜市の全公立小学校</h3><p>スポーツリズムトレーニングを普及し、運動能力向上とけが予防の効果を評価。</p></div></div></div><p class="note">Rönnqvist ほか（2018）Frontiers in Psychology 9:2469（相関は事後テストで r = −0.588、反応のずれが小さいほど正確なステップが多い）。リズムジャンプ研究：Children（2025）。横浜市：津田ほか（CiNii）。競技者を対象にしたリズム研究はまだ少数です。</p><span class="n">9</span></section>
+<section class="s "><p class="k">ソフトテニス版メニュー（例）</p><h1>コートで、<em>ラケットを持って</em>行う</h1><div class="row"><svg width="500" height="400" viewBox="0 0 500 400">
+<rect x="40" y="20" width="420" height="360" fill="#2c6e49" rx="6"/>
+<rect x="70" y="40" width="360" height="320" fill="none" stroke="#fff" stroke-width="3"/>
+<line x1="70" y1="200" x2="430" y2="200" stroke="#fff" stroke-width="6"/>
+<line x1="250" y1="110" x2="250" y2="290" stroke="#fff" stroke-width="3"/>
+<line x1="70" y1="110" x2="430" y2="110" stroke="#fff" stroke-width="3"/><line x1="70" y1="290" x2="430" y2="290" stroke="#fff" stroke-width="3"/>
+<circle cx="250" cy="70" r="16" fill="#fff"/><text x="250" y="76" font-size="15" text-anchor="middle" fill="#0f2340">C</text>
+<circle cx="210" cy="240" r="18" fill="#c8e63c"/><text x="210" y="246" font-size="15" text-anchor="middle" fill="#0f2340">前</text>
+<path d="M250 86 L214 220" stroke="#fff" stroke-dasharray="6 6" stroke-width="2"/>
+<path d="M210 222 L110 130" stroke="#e5484d" stroke-width="4" marker-end="url(#a)"/><path d="M210 222 L330 130" stroke="#3b82f6" stroke-width="4" marker-end="url(#a)"/>
+<defs><marker id="a" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0 0L10 5L0 10z" fill="#fff"/></marker></defs>
+<rect x="84" y="140" width="70" height="30" rx="15" fill="#e5484d"/><text x="119" y="161" font-size="15" text-anchor="middle" fill="#fff">赤＝右</text>
+<rect x="320" y="140" width="70" height="30" rx="15" fill="#3b82f6"/><text x="355" y="161" font-size="15" text-anchor="middle" fill="#fff">青＝左</text>
+<text x="250" y="396" font-size="15" text-anchor="middle" fill="#5a6476">例：色コールでボレーの方向を切り替える（途中でルールを逆に）</text></svg><div style="flex:1"><table>
+ <tr><th>ねらい</th><th>メニュー例</th></tr>
+ <tr><td>判断の切り替え</td><td>色コール→ボレーの方向を変える。慣れたらルールを逆にする</td></tr>
+ <tr><td>周辺視</td><td>ボールを見たまま、横で示す指の本数を答えながらラリー</td></tr>
+ <tr><td>動き出しの「間」</td><td>拍に合わせたスプリットステップ→不規則な拍へ</td></tr>
+ <tr><td>情報の渋滞</td><td>2色ボール＋数字コール＋ステップを同時に。できたら1つ変える</td></tr>
+ <tr><td>ペアの連携</td><td>交互のコールとリズムでフットワークをそろえる</td></tr></table></div></div><p class="note">1回20〜30分。監督の練習計画に合わせて組み込みます。</p><span class="n">10</span></section>
+<section class="s "><p class="k">結果へのコミット ＝ 測って、見せる</p><h1>12週後、このレポートを<em>数字で</em>お渡しします</h1><div class="row" style="gap:16px"><div class="card" style="padding:14px 16px"><p style="font-size:16px;font-weight:bold;color:#0f2340">選択反応時間</p><svg width="250" height="200"><rect x="40" y="40" width="44" height="130" rx="4" fill="none" stroke="#9aa6b8" stroke-dasharray="5 5"/><text x="62" y="192" font-size="13" text-anchor="middle" fill="#5a6476">開始</text><rect x="110" y="40" width="44" height="130" rx="4" fill="none" stroke="#9aa6b8" stroke-dasharray="5 5"/><text x="132" y="192" font-size="13" text-anchor="middle" fill="#5a6476">6週</text><rect x="180" y="40" width="44" height="130" rx="4" fill="none" stroke="#9aa6b8" stroke-dasharray="5 5"/><text x="202" y="192" font-size="13" text-anchor="middle" fill="#5a6476">12週</text><text x="125" y="115" font-size="14" text-anchor="middle" fill="#6f8c00">貴校の実測値</text></svg></div><div class="card" style="padding:14px 16px"><p style="font-size:16px;font-weight:bold;color:#0f2340">ストループ課題</p><svg width="250" height="200"><rect x="40" y="40" width="44" height="130" rx="4" fill="none" stroke="#9aa6b8" stroke-dasharray="5 5"/><text x="62" y="192" font-size="13" text-anchor="middle" fill="#5a6476">開始</text><rect x="110" y="40" width="44" height="130" rx="4" fill="none" stroke="#9aa6b8" stroke-dasharray="5 5"/><text x="132" y="192" font-size="13" text-anchor="middle" fill="#5a6476">6週</text><rect x="180" y="40" width="44" height="130" rx="4" fill="none" stroke="#9aa6b8" stroke-dasharray="5 5"/><text x="202" y="192" font-size="13" text-anchor="middle" fill="#5a6476">12週</text><text x="125" y="115" font-size="14" text-anchor="middle" fill="#6f8c00">貴校の実測値</text></svg></div><div class="card" style="padding:14px 16px"><p style="font-size:16px;font-weight:bold;color:#0f2340">アジリティ</p><svg width="250" height="200"><rect x="40" y="40" width="44" height="130" rx="4" fill="none" stroke="#9aa6b8" stroke-dasharray="5 5"/><text x="62" y="192" font-size="13" text-anchor="middle" fill="#5a6476">開始</text><rect x="110" y="40" width="44" height="130" rx="4" fill="none" stroke="#9aa6b8" stroke-dasharray="5 5"/><text x="132" y="192" font-size="13" text-anchor="middle" fill="#5a6476">6週</text><rect x="180" y="40" width="44" height="130" rx="4" fill="none" stroke="#9aa6b8" stroke-dasharray="5 5"/><text x="202" y="192" font-size="13" text-anchor="middle" fill="#5a6476">12週</text><text x="125" y="115" font-size="14" text-anchor="middle" fill="#6f8c00">貴校の実測値</text></svg></div><div class="card" style="padding:14px 16px"><p style="font-size:16px;font-weight:bold;color:#0f2340">ボレー・ポーチ成功率</p><svg width="250" height="200"><rect x="40" y="40" width="44" height="130" rx="4" fill="none" stroke="#9aa6b8" stroke-dasharray="5 5"/><text x="62" y="192" font-size="13" text-anchor="middle" fill="#5a6476">開始</text><rect x="110" y="40" width="44" height="130" rx="4" fill="none" stroke="#9aa6b8" stroke-dasharray="5 5"/><text x="132" y="192" font-size="13" text-anchor="middle" fill="#5a6476">6週</text><rect x="180" y="40" width="44" height="130" rx="4" fill="none" stroke="#9aa6b8" stroke-dasharray="5 5"/><text x="202" y="192" font-size="13" text-anchor="middle" fill="#5a6476">12週</text><text x="125" y="115" font-size="14" text-anchor="middle" fill="#6f8c00">貴校の実測値</text></svg></div></div>
+ <div class="row" style="margin-top:18px;gap:16px"><div class="honest" style="flex:1">測定：反応時間（アプリ）・ストループ・反復横跳び・リズム再現・練習試合のボレー成功率・緊張の自己評価</div>
+ <div class="honest" style="flex:1">約束：測定と報告を必ず行う／伸びない項目はメニューを組み替える／個人データは学校外に出さない</div></div><p class="note">レポートの見本（枠のみ）です。数値は実施後の実測値のみを記入します。勝敗・大会成績を保証するものではなく、土台となる能力の変化を数字で示すことにコミットします。</p><span class="n">11</span></section>
+<section class="s "><p class="k">導入スケジュール</p><h1>冬は<em>無料</em>で確かめ、4月から本格導入</h1><div style="height:10px;border-radius:5px;margin:0 0 16px;background:linear-gradient(90deg,#c3cad6 0%,#c3cad6 40%,#c8e63c 40%)"></div><div class="row" style="gap:14px"><div style="flex:1;background:var(--bg);color:var(--ink);border-radius:12px;padding:18px 16px;position:relative"><div style="font-size:22px;font-weight:bold;color:var(--navy);margin-bottom:6px">12月〜1月</div><span class="tag a">無料</span><div style="font-size:17px;line-height:1.5;margin-top:8px">体験セッション<br>初回測定・メニュー設計</div></div><div style="flex:1;background:var(--bg);color:var(--ink);border-radius:12px;padding:18px 16px;position:relative"><div style="font-size:22px;font-weight:bold;color:var(--navy);margin-bottom:6px">1月〜3月</div><span class="tag a">無料</span><div style="font-size:17px;line-height:1.5;margin-top:8px">トライアル6週<br>中間測定・結果のご報告</div></div><div style="flex:1;background:var(--bg);color:var(--ink);border-radius:12px;padding:18px 16px;position:relative"><div style="font-size:22px;font-weight:bold;color:var(--navy);margin-bottom:6px">4月</div><span class="tag a">契約開始</span><div style="font-size:17px;line-height:1.5;margin-top:8px">導入をご判断<br>ここから料金発生</div></div><div style="flex:1;background:var(--bg);color:var(--ink);border-radius:12px;padding:18px 16px;position:relative"><div style="font-size:22px;font-weight:bold;color:var(--navy);margin-bottom:6px">5月〜7月</div><div style="font-size:17px;line-height:1.5;margin-top:8px">6週・12週で測定<br>大会前は短時間の調整</div></div><div style="flex:1;background:var(--navy);color:#fff;border-radius:12px;padding:18px 16px;position:relative"><div style="font-size:22px;font-weight:bold;color:#c8e63c;margin-bottom:6px">夏</div><div style="font-size:17px;line-height:1.5;margin-top:8px">インターハイ・<br>上位大会へ</div></div></div><p style="margin-top:28px">トライアルの数字を見てから決められます。<b>導入しない場合、費用は一切かかりません。</b></p><span class="n">12</span></section>
+<section class="s "><p class="k">導入プラン（案）</p><h1>2027年4月からのプラン</h1><table style="margin-top:6px"><tr><th>プラン</th><th>内容</th><th style="width:22%">料金（税込・交通費別）</th></tr>
+ <tr><td><b>ライト</b></td><td>月2回訪問（各90分）・測定3回・レポート</td><td>月額 30,000円</td></tr>
+ <tr><td><b>スタンダード</b></td><td>月4回訪問（各90分）・測定3回・レポート・自主練メニュー</td><td>月額 55,000円</td></tr>
+ <tr><td><b>年間サポート</b></td><td>スタンダード×12か月・大会前の個別調整</td><td>年額 580,000円</td></tr></table>
+ <p style="margin-top:22px">12月〜3月の<b>無料トライアル6週＋初回・中間測定</b>の結果を見てからお選びいただけます。</p><p class="note">金額は案です。支払い元（後援会・保護者会など）、訪問距離、人数に応じて調整します。</p><span class="n">13</span></section>
+<section class="s "><p class="k">参考文献</p><h1>本資料で引用した研究</h1><ol class="ref" style="padding-left:1.4em">
+ <li>Yarayan ほか. Impact of life kinetik training on balance, agility, jumping, proprioception, and cognitive function in preadolescent recreational fencing athletes: a randomized controlled trial. BMC Sports Sci Med Rehabil, 17, 2025. https://pmc.ncbi.nlm.nih.gov/articles/PMC12145597/（グラフの値はプレプリント https://www.researchsquare.com/article/rs-5463104/v1）</li>
+ <li>Life Kinetics Training as a Multimodal Neurocognitive Intervention: Enhances Cognitive and Motor Performance in Badminton Athletes. Life, 16(5), 836, 2026. https://doi.org/10.3390/life16050836</li>
+ <li>Zhu ほか. Effects of Perceptual-Cognitive Training on Anticipation and Decision-Making Skills in Team Sports: A Systematic Review and Meta-Analysis. Behavioral Sciences, 14(10), 919, 2024. https://www.mdpi.com/2076-328X/14/10/919</li>
+ <li>Fransen. There is No Supporting Evidence for a Far Transfer of General Perceptual or Cognitive Training to Sports Performance. Sports Medicine, 2024. https://pmc.ncbi.nlm.nih.gov/articles/PMC11560981/</li>
+ <li>Rönnqvist ほか. Influences of Synchronized Metronome Training on Soccer Players' Timing Ability, Performance Accuracy, and Lower-Limb Kinematics. Frontiers in Psychology, 9, 2469, 2018. https://www.frontiersin.org/articles/10.3389/fpsyg.2018.02469/full</li>
+ <li>The Effects of Rhythm Jump Training on the Rhythmic Reproduction Ability in Jumping and Agility in Elementary School Soccer Players. Children, 2025. https://pmc.ncbi.nlm.nih.gov/articles/PMC11854900/</li>
+ <li>津田幸保ほか. 横浜市の全公立小学校におけるスポーツリズムトレーニング普及の取り組みに関する報告（正式題名は原典で確認）. https://cir.nii.ac.jp/crid/1390851398293246336</li>
+ <li>畠山. ソフトテニスのスキル分析に関する論文（正式題名は原典で確認）. 北翔大学. https://hokusho.repo.nii.ac.jp/record/1635/files/JHWC30115.pdf</li></ol><span class="n">14</span></section>
+<section class="s dark"><svg style="position:absolute;left:0;top:0" width="1280" height="720"><line x1="820" y1="140" x2="980" y2="260" stroke="#c8e63c" stroke-opacity=".55" stroke-width="2"/><line x1="980" y1="260" x2="1120" y2="170" stroke="#c8e63c" stroke-opacity=".55" stroke-width="2"/><line x1="980" y1="260" x2="1040" y2="420" stroke="#c8e63c" stroke-opacity=".55" stroke-width="2"/><line x1="1040" y1="420" x2="880" y2="470" stroke="#c8e63c" stroke-opacity=".55" stroke-width="2"/><line x1="880" y1="470" x2="820" y2="140" stroke="#c8e63c" stroke-opacity=".55" stroke-width="2"/><line x1="1040" y1="420" x2="1200" y2="520" stroke="#c8e63c" stroke-opacity=".55" stroke-width="2"/><line x1="1120" y1="170" x2="1200" y2="330" stroke="#c8e63c" stroke-opacity=".55" stroke-width="2"/><line x1="1200" y1="330" x2="1040" y2="420" stroke="#c8e63c" stroke-opacity=".55" stroke-width="2"/><line x1="880" y1="470" x2="960" y2="600" stroke="#c8e63c" stroke-opacity=".55" stroke-width="2"/><line x1="960" y1="600" x2="1200" y2="520" stroke="#c8e63c" stroke-opacity=".55" stroke-width="2"/><circle cx="820" cy="140" r="9" fill="#c8e63c"/><circle cx="980" cy="260" r="14" fill="#c8e63c"/><circle cx="1120" cy="170" r="8" fill="#c8e63c"/><circle cx="1040" cy="420" r="12" fill="#c8e63c"/><circle cx="880" cy="470" r="9" fill="#c8e63c"/><circle cx="1200" cy="520" r="8" fill="#c8e63c"/><circle cx="1200" cy="330" r="10" fill="#c8e63c"/><circle cx="960" cy="600" r="7" fill="#c8e63c"/></svg>
+<div style="position:relative;margin-top:150px;max-width:700px"><p class="k" style="color:#c8e63c">次の一歩</p>
+<h1 style="font-size:50px">まずは無料トライアルで、<br>選手の反応と数字を見てください</h1>
+<p style="font-size:22px">体験セッション → 6週トライアル → 中間測定</p>
+<p style="margin-top:36px;font-size:19px;color:#c7d2e3">フォロワーシップコーチ　〇〇 〇〇<br>連絡先：〇〇〇〇（メール／電話）</p></div></section></body></html>
