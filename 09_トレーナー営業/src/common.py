@@ -16,7 +16,7 @@ p,li{font-size:21px;line-height:1.6}
 .row{display:flex;gap:28px;align-items:stretch}
 .card{background:var(--bg);border-radius:14px;padding:20px 24px}
 .card h3{font-size:22px;color:var(--navy);margin-bottom:8px}
-.card p{font-size:18px;line-height:1.55}
+.card p{font-size:20px;line-height:1.7}
 .stat{font-size:84px;font-weight:bold;color:var(--navy);line-height:1;letter-spacing:-.02em}
 .stat small{font-size:30px}
 .lbl{font-size:17px;color:var(--sub);margin-top:6px;line-height:1.4}
@@ -34,7 +34,12 @@ def css(acc, accd):
     return CSS.replace("ACCD", accd).replace("ACC", acc)
 
 def page(title, acc, accd, slides):
+    import re, itertools
     body = "\n".join(slides)
+    c = itertools.count(1)
+    # ページ番号は並び順で振り直す（表紙・クロージングは番号なし）
+    body = "".join(re.sub(r'<span class="n">\d+</span>', lambda m: f'<span class="n">{i}</span>', sec) if 'class="n"' in sec else sec
+                   for i, sec in ((next(c), sec) for sec in re.split(r'(?=<section )', body)))
     return f'<!doctype html><html lang="ja"><head><meta charset="utf-8"><title>{title}</title><style>{css(acc,accd)}</style></head><body>{body}</body></html>'
 
 def slide(n, kicker, h1, inner, note="", cls=""):
@@ -122,3 +127,40 @@ def timeline(steps, acc):
                      f'<div style="font-size:17px;line-height:1.5;margin-top:8px">{body}</div></div>')
     bar = (f'<div style="height:10px;border-radius:5px;margin:0 0 16px;background:linear-gradient(90deg,#c3cad6 0%,#c3cad6 {100*2/n:.0f}%,{acc} {100*2/n:.0f}%)"></div>')
     return bar + '<div class="row" style="gap:14px">' + "".join(cells) + '</div>'
+
+
+def ai_slides(acc, accd, audio_uses, video_uses):
+    """録音・録画×AI分析の2枚。効果は未検証であることを明示する。"""
+    def dev(icon, name, sub, uses):
+        li = "".join(f"<li>{u}</li>" for u in uses)
+        return (f'<div class="card" style="flex:1"><div class="row" style="gap:14px;align-items:center">{icon}'
+                f'<div><h3 style="margin:0">{name}</h3><p class="lbl" style="margin:0">{sub}</p></div></div>'
+                f'<ul style="padding-left:1.2em;margin-top:14px;font-size:20px;line-height:1.8">{li}</ul></div>')
+    mic = f'<svg width="60" height="60" viewBox="0 0 60 60"><circle cx="30" cy="30" r="30" fill="{acc}"/><rect x="23" y="12" width="14" height="24" rx="7" fill="#0f2340"/><path d="M17 30q0 13 13 13t13-13M30 43v7" stroke="#0f2340" stroke-width="4" fill="none"/></svg>'
+    cam = f'<svg width="60" height="60" viewBox="0 0 60 60"><circle cx="30" cy="30" r="30" fill="{acc}"/><rect x="12" y="20" width="26" height="22" rx="4" fill="#0f2340"/><path d="M38 27l11-6v20l-11-6z" fill="#0f2340"/></svg>'
+    flow = "".join(
+        f'<div style="flex:1;text-align:center"><div style="background:{bg};color:{fg};border-radius:12px;padding:12px 8px;font-size:17px;font-weight:bold">{t}</div></div>'
+        + ('<div style="font-size:24px;color:%s;align-self:center">→</div>' % accd if i < 3 else "")
+        for i, (t, bg, fg) in enumerate([("録る", "var(--bg)", "var(--navy)"), ("匿名化", "var(--bg)", "var(--navy)"), ("AIで集計", "var(--bg)", "var(--navy)"), ("監督へレポート", "var(--navy)", "#fff")]))
+    s1 = slide(1, "測定の新しい手段（試験導入）", "声と映像を<em>AIで数字に</em>する",
+        f'<div class="row">{dev(mic, "音声：Plaud NotePin", "胸元につける小型の録音機", audio_uses)}{dev(cam, "映像：DJI のカメラ", "練習・試合を固定位置で撮影", video_uses)}</div>'
+        f'<div class="row" style="gap:10px;margin-top:18px">{flow}</div>',
+        "成果への効果はまだ分かりません。無料トライアルで試し、監督が「役に立つ」と判断した指標だけを本導入で使います。人の目での確認も必ず行います。")
+    s1 = s1.replace('<span class="n">0</span>', '<span class="n">1</span>')
+    steps = [("① 学校の許可", "校長・部の責任者に、目的・方法・保存期間を書面で説明"),
+             ("② 保護者・本人の同意", "同意書で個別に確認。同意しない生徒は撮影・録音の対象にしない"),
+             ("③ 撮影・録音の開始", "練習・試合のみ。更衣室や練習以外の場面は撮らない")]
+    st = "".join(f'<div class="card" style="flex:1;border-top:6px solid {acc}"><h3>{a}</h3><p>{b}</p></div>' for a, b in steps)
+    rules = ["目的は「選手の成長の測定」だけ。それ以外に使わない",
+             "映像・音声・数値を外部に公開・提供しない（SNS掲載もしない）",
+             "AIに渡す前に氏名を番号に置き換える。データを学習に使わない設定のサービスだけ使う",
+             "保存はパスワード付きの専用の場所に限定。契約終了後は期限を決めて削除",
+             "本人・保護者から求めがあれば、いつでもその生徒のデータを削除"]
+    rl = "".join(f'<li>{r}</li>' for r in rules)
+    s2 = slide(1, "データの取り扱いとお約束", "撮る前に、<em>許可と同意</em>をいただきます",
+        f'<div class="row" style="gap:16px">{st}</div>'
+        f'<div class="row" style="margin-top:18px"><div style="flex:1.6"><ul style="padding-left:1.2em">{"".join(f"<li style=\"font-size:20px;line-height:1.7\">{r}</li>" for r in rules)}</ul></div>'
+        f'<div class="card" style="flex:1;background:var(--navy);color:#fff"><h3 style="color:{acc}">元教員として</h3><p style="color:#fff">学校で生徒の個人情報を扱ってきた立場から、学校と同じ水準でデータを管理します。ルールは書面にして、学校・保護者にお渡しします。</p></div></div>',
+        "同意書・データ取り扱い方針のひな形は、学校の規程に合わせて事前にご確認いただきます。")
+    s2 = s2.replace('<span class="n">0</span>', '<span class="n">1</span>')
+    return [s1, s2]
