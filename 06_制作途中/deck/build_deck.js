@@ -604,12 +604,24 @@ function slide(title, sec, notesText) {
   // 28 おわりに
   s = pres.addSlide({ masterName: "DARK", sectionTitle: _sec });
   s.addNotes("【1:00】今回の発表には、いろいろな賛否があると思います。それでも、私の14年間分の蓄積を込めました。最後に、一番伝えたいことです。私たちの仕事は、最終的には、目の前の子どもたちのためにあります。いくらAIが入ってこようとも、どれだけ時間を短縮できようとも、一番大事なのは、それを使う人の誠実さと謙虚さです。だからこそ、使う人である私たち自身が、人間性を磨き続け、学び続けることが大切だと思います。私自身もそうありたいと思いますし、皆さんにも、ともに頑張っていただけたらと思います。ご清聴ありがとうございました。");
-  T(s, "目の前の子どもたちのことを、一番に。", { x: 0.8, y: 1.0, w: 11.7, h: 1.2, fontSize: 40, bold: true, color: WHITE, valign: "middle" });
-  T(s, "AIが入っても、時間を短縮できても、\n大事なのは、使う人の誠実さと謙虚さ。", { x: 0.8, y: 2.45, w: 11.7, h: 1.5, fontSize: 26, color: "E5EEDF", valign: "middle" });
-  s.addShape(pres.shapes.ROUNDED_RECTANGLE, { x: 0.8, y: 4.3, w: 11.7, h: 1.3, fill: { color: "3B7A3C" }, line: { color: "3B7A3C" }, rectRadius: 0.15 });
-  s.addImage({ data: await icon(gi.GiPlantSeed, "F4B6C6"), x: 1.15, y: 4.5, w: 0.9, h: 0.9 });
-  T(s, "人間性を磨き続ける。学び続ける。", { x: 2.3, y: 4.3, w: 10.0, h: 1.3, fontSize: 34, bold: true, color: "F4B6C6", valign: "middle" });
-  T(s, "ご清聴ありがとうございました。", { x: 0.8, y: 6.05, w: 11.7, h: 0.7, fontSize: 24, bold: true, color: WHITE });
+  // 第14版：左にメッセージ、右に資料のQRコード（スライド・研究資料・質疑と回答のPDF。Googleドライブの共有リンク）
+  T(s, "目の前の子どもたちのことを、\n一番に。", { x: 0.7, y: 0.6, w: 5.9, h: 1.7, fontSize: 32, bold: true, color: WHITE, valign: "middle" });
+  T(s, "AIが入っても、時間を短縮できても、\n大事なのは、使う人の誠実さと謙虚さ。", { x: 0.7, y: 2.4, w: 5.9, h: 1.2, fontSize: 18, color: "E5EEDF", valign: "middle" });
+  s.addShape(pres.shapes.ROUNDED_RECTANGLE, { x: 0.7, y: 3.85, w: 5.9, h: 1.5, fill: { color: "3B7A3C" }, line: { color: "3B7A3C" }, rectRadius: 0.15 });
+  s.addImage({ data: await icon(gi.GiPlantSeed, "F4B6C6"), x: 0.95, y: 4.2, w: 0.8, h: 0.8 });
+  T(s, "人間性を磨き続ける。\n学び続ける。", { x: 1.95, y: 3.85, w: 4.5, h: 1.5, fontSize: 26, bold: true, color: "F4B6C6", valign: "middle" });
+  T(s, "ご清聴ありがとうございました。", { x: 0.7, y: 5.75, w: 5.9, h: 0.7, fontSize: 24, bold: true, color: WHITE });
+  T(s, "資料はこちらから", { x: 6.95, y: 0.75, w: 5.8, h: 0.6, fontSize: 24, bold: true, color: "F4B6C6", align: "center", valign: "middle" });
+  T(s, "必要な方は、写真を撮ってお使いください", { x: 6.95, y: 1.35, w: 5.8, h: 0.45, fontSize: 15, color: "E5EEDF", align: "center", valign: "middle" });
+  const qrs = [["slides", "発表スライド"], ["paper", "研究資料"], ["qa", "質疑と回答"]];
+  for (let k = 0; k < 3; k++) {
+    const x = 6.95 + k * 1.97;
+    s.addShape(pres.shapes.ROUNDED_RECTANGLE, { x, y: 2.0, w: 1.86, h: 2.6, fill: { color: WHITE }, line: { color: WHITE }, rectRadius: 0.1 });
+    s.addImage({ path: path.join(__dirname, "qr", qrs[k][0] + ".png"), x: x + 0.13, y: 2.1, w: 1.6, h: 1.6 });
+    T(s, qrs[k][1], { x, y: 3.78, w: 1.86, h: 0.45, fontSize: 15, bold: true, color: HEX.forest, align: "center", valign: "middle" });
+    T(s, "PDF", { x, y: 4.18, w: 1.86, h: 0.3, fontSize: 11, color: HEX.gray, align: "center", valign: "middle" });
+  }
+  T(s, "Googleドライブの共有リンク（閲覧のみ）", { x: 6.95, y: 4.75, w: 5.8, h: 0.35, fontSize: 12, color: "CFE3C0", align: "center" });
 
   // ===== 補足 =====
   pres.addSection({ title: "補足" }); _sec = "補足";

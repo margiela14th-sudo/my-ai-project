@@ -7,6 +7,14 @@
 
 編集を始めるときにここへ記入し、終わったら消す。
 
+## 第14版：最後のスライドに資料のQRコード（2026-11-26 Claude Code）
+- Googleドライブ「県大会発表資料（共有用）」に3つのPDFを置き、リンクを知っている人が閲覧できる設定にした。スライド47にQRコード3つ（読み取り確認済み）。
+  - 発表スライド https://drive.google.com/file/d/1Je7E71BUzLRAH66s4AkUOFNhfciwoVS0/view
+  - 研究資料 https://drive.google.com/file/d/19IMGAUdeXYBAmOKnPmft9oArogHGffOE/view
+  - 質疑と回答（配布用） https://drive.google.com/file/d/1Qw0zDx1zfeyAB9jYUkIThDQym1l_EWWZ/view
+- ドライブのスライドPDFは、QRコードを入れる前の版（最後のスライド以外は同じ）。ツールでは中身を差し替えられないため、必要なら先生がドライブで「新しいバージョンをアップロード」すればリンクは変わらない。
+- 想定質疑応答_配布用.docx／.pdf を追加（発表者向けの注意書きと★を除いた版。build_qa.js public）。
+
 ## 想定質疑応答（発表者用）を別ファイルで作成（2026-11-26 Claude Code）
 - 07_完成資料/想定質疑応答_発表者用.docx／.pdf（5ページ・28問・★は特に出そうなもの）。中身は 06_制作途中/deck/qa.json、作成は build_qa.js。第13版のスライド番号と対応。セキュリティの回答を含む。
 
