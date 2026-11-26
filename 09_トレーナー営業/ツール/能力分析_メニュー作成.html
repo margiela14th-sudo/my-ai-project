@@ -1,0 +1,315 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>判断の診断・処方ツール</title>
+<style>
+:root{--navy:#0f2340;--acc:#c8e63c;--accD:#5c7500;--bg:#f4f6f9;--line:#d9dee7;--sub:#5a6476;--ink:#1d2433;--warn:#b54708;--card:#fff}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#121821;--card:#1a2230;--line:#2c3746;--sub:#9aa6b8;--ink:#e6eaf0;--navy:#dfe7f3;--accD:#c8e63c}}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Hiragino Sans","Yu Gothic","IPAPGothic",sans-serif;background:var(--bg);color:var(--ink);font-size:15px;line-height:1.6}
+header{background:#0f2340;color:#fff;padding:14px 16px}
+header h1{margin:0;font-size:20px}header p{margin:2px 0 0;font-size:13px;color:#c7d2e3}
+main{max-width:1180px;margin:0 auto;padding:16px}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
+.tabs button{border:0;border-radius:99px;padding:8px 16px;background:var(--card);color:var(--ink);cursor:pointer;font-size:14px}
+.tabs button.on{background:#0f2340;color:#fff}
+.card{background:var(--card);border-radius:12px;padding:16px;margin-bottom:12px;border:1px solid var(--line)}
+h2{font-size:17px;margin:0 0 10px;color:var(--navy)}h3{font-size:15px;margin:12px 0 6px;color:var(--navy)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:10px}
+label{display:block;font-size:13px;color:var(--sub)}
+input,select,textarea{width:100%;padding:7px 9px;border:1px solid var(--line);border-radius:8px;font-size:15px;background:var(--card);color:var(--ink)}
+.btn{border:0;border-radius:8px;padding:9px 16px;background:#0f2340;color:#fff;cursor:pointer;font-size:14px;margin:4px 6px 4px 0}
+.btn.sub{background:var(--card);color:var(--ink);border:1px solid var(--line)}
+.btn.warn{background:#fff1e6;color:var(--warn)}
+.lk{display:inline-block;min-width:30px;text-align:center;border-radius:99px;background:#0f2340;color:#fff;font-size:12px;padding:1px 6px;margin-right:4px}
+table{border-collapse:collapse;width:100%}
+th,td{border-bottom:1px solid var(--line);padding:6px 8px;text-align:left;font-size:14px;vertical-align:top}
+th{background:#0f2340;color:#fff;font-weight:normal}
+.wrap{overflow-x:auto}
+.bar{height:12px;border-radius:6px;background:var(--line);position:relative;min-width:120px}
+.bar i{position:absolute;left:0;top:0;bottom:0;border-radius:6px;background:var(--acc)}
+.bar i.low{background:#e5484d}
+.note{font-size:12.5px;color:var(--sub)}
+.pill{display:inline-block;border-radius:99px;padding:1px 10px;font-size:12.5px;background:#eef3d6;color:#3f5200;margin:2px 4px 2px 0}
+.pill.h{background:#fff1e6;color:var(--warn)}
+.res{display:grid;grid-template-columns:300px 1fr;gap:14px}
+@media (max-width:760px){.res{grid-template-columns:1fr}}
+.hidden{display:none}
+@media print{header,.tabs,.noprint{display:none}body{background:#fff}.card{border:0}}
+</style>
+</head>
+<body>
+<header><h1>判断の診断・処方ツール</h1><p>数値を入れる → 弱い輪と型を判定 → 競技別のメニューを作成（データはこの端末の中だけに保存）</p></header>
+<main>
+<div class="tabs noprint">
+ <button data-t="input" class="on">① 選手の入力</button>
+ <button data-t="team">② チーム一覧</button>
+ <button data-t="result">③ 診断と処方</button>
+ <button data-t="data">④ データ管理</button>
+ <button data-t="help">使い方</button>
+</div>
+
+<section id="t-input">
+ <div class="card"><h2>基本情報</h2>
+  <div class="grid">
+   <div><label>選手番号（氏名は入れない）</label><input id="f-id" placeholder="例：T01"></div>
+   <div><label>競技</label><select id="f-sport"><option value="tennis">ソフトテニス</option><option value="soccer">サッカー</option></select></div>
+   <div><label>ポジション</label><input id="f-pos" placeholder="前衛／後衛／FW／MF／DF など"></div>
+   <div><label>測定日</label><input id="f-date" type="date"></div>
+  </div>
+ </div>
+ <div class="card"><h2>判断の7つの輪のテスト <span class="note">（わかる項目だけでOK）</span></h2><div class="grid" id="cog"></div></div>
+ <div class="card"><h2>基礎体力</h2><div class="grid" id="phy"></div></div>
+ <div class="card"><h2>メモ</h2><textarea id="f-memo" rows="2" placeholder="けが・体調・監督からの要望など（個人が特定できる内容は書かない）"></textarea>
+  <div><button class="btn" id="save">保存して診断</button><button class="btn sub" id="clear">入力をクリア</button></div>
+  <p class="note" id="msg"></p></div>
+</section>
+
+<section id="t-team" class="hidden"><div class="card"><h2>チーム一覧（輪ごとのスコア：チーム内で50が平均）</h2><div class="wrap" id="teamTable"></div>
+ <p class="note">スコアは同じ競技の選手同士の比較です。3人未満のときは比較ができないため表示しません。番号をクリックすると診断と処方を表示します。</p></div></section>
+
+<section id="t-result" class="hidden"><div id="result"><div class="card">チーム一覧から選手を選んでください。</div></div></section>
+
+<section id="t-data" class="hidden">
+ <div class="card"><h2>データの書き出し・読み込み</h2>
+  <p>データはこのブラウザの中だけに保存されます。ブラウザの設定で消えることがあるので、定期的にCSVで書き出して保管してください。</p>
+  <button class="btn" id="exp">CSVで書き出す</button>
+  <label class="btn sub" style="display:inline-block">CSVを読み込む<input type="file" id="imp" accept=".csv" style="display:none"></label>
+  <button class="btn warn" id="wipe">すべて削除</button>
+  <p class="note" id="dmsg"></p></div>
+ <div class="card"><h2>処方の記録（当たり率をためる）</h2>
+  <p class="note">各選手の診断画面で「処方を記録」を押すと、ここにたまります。再測定で輪のスコアが上がったかどうかを、処方ごとに集計します。</p>
+  <div class="wrap" id="rxTable"></div></div>
+</section>
+
+<section id="t-help" class="hidden"><div class="card"><h2>使い方</h2>
+ <ol>
+  <li>①で選手番号とテストの数値を入れて保存します（空欄の項目は使いません）。</li>
+  <li>同じ競技の選手が3人以上そろうと、チーム内で比べたスコア（平均50）が出ます。</li>
+  <li>③で、いちばん低い輪・選手の型・おすすめの処方（段階1→2→3）と週の練習メニューを表示します。</li>
+  <li>6週・12週で再測定し、同じ番号で保存します。「処方を記録」しておくと、どの処方で輪が伸びたかが④で集計されます。</li>
+  <li>AIに相談するときは、③の「AI相談用の文章をコピー」を使います。番号と数値だけが入り、氏名は入りません。</li>
+ </ol>
+ <p class="note">判定の考え方：各項目をチーム内で標準化し（良い方向が高くなるように向きをそろえる）、輪ごとに平均してスコアにします。外部の基準値は使っていません。型の判定とメニューは「判断の診断と処方」プログラムの仮説にもとづくもので、効果はデータで確かめていく前提です。</p>
+</div></section>
+</main>
+
+<script>
+// ---- 項目の定義（dir: 1=高いほど良い, -1=低いほど良い） ----
+const COG = [
+ {k:"occ",  l:"L1", n:"遮断テスト正答率（%）", dir:1},
+ {k:"scan", l:"L2", n:"試合の確認行動（サ：首振り回数/10秒、ソ：前衛確認の割合%）", dir:1},
+ {k:"peri", l:"L3", n:"周辺視フィンガー正答率（%）", dir:1},
+ {k:"rt1",  l:"L4", n:"単純反応時間（ミリ秒）", dir:0},
+ {k:"rt4",  l:"L4", n:"4択反応時間（ミリ秒）", dir:0},
+ {k:"stroop",l:"L5",n:"ストループ干渉（秒：色名課題−色課題）", dir:-1},
+ {k:"nogo", l:"L5", n:"Go/No-Go 誤反応（回）", dir:-1},
+ {k:"sync", l:"L6", n:"メトロノーム同期のずれ（ミリ秒）", dir:-1},
+ {k:"pNorm",l:"L7", n:"通常場面の成功率（%）", dir:0},
+ {k:"pHigh",l:"L7", n:"重要場面の成功率（%）", dir:0}
+];
+const PHY = [
+ {k:"side", n:"反復横跳び（回）", dir:1, tag:"agility"},
+ {k:"sprint",n:"30m走（秒）", dir:-1, tag:"speed"},
+ {k:"jump", n:"立ち幅跳び（cm）", dir:1, tag:"power"},
+ {k:"shuttle",n:"20mシャトルラン（回）", dir:1, tag:"endurance"}
+];
+// 派生指標：選択の遅れ幅（4択−単純）、本番の落ち幅（通常−重要）
+const DERIVED = [
+ {k:"hick", l:"L4", dir:-1, f:p=>num(p.rt4)!=null&&num(p.rt1)!=null?num(p.rt4)-num(p.rt1):null, n:"選択の遅れ幅"},
+ {k:"drop", l:"L7", dir:-1, f:p=>num(p.pNorm)!=null&&num(p.pHigh)!=null?num(p.pNorm)-num(p.pHigh):null, n:"本番の落ち幅"}
+];
+const LINKS = {L1:"予測する",L2:"探す",L3:"同時に感じる",L4:"選ぶ",L5:"止める・切り替える",L6:"間を合わせる",L7:"本番で崩れない"};
+const RX = {
+ L1:{s1:"先読みカラー（色の並びの規則を読み、次の色を先に言う）",tennis:"面読みボレー（球出しの面が見えた瞬間にコースをコール→ボレー。見せる時間を短く）",soccer:"体の向き読み（パサーの踏み込み足が見えた瞬間に受ける方向を宣言）",s3:"ゲーム練習で、相手が打つ（蹴る）前に予測をコールさせる"},
+ L2:{s1:"背中ナンバー（合図で振り返って数字を読む）",tennis:"前衛チェック・ラリー（打つ前に相手前衛の位置をコール）",soccer:"スキャン・ナンバー（受ける前に背後の色・数字を答えてからトラップ）",s3:"ゲーム練習で、受ける前／打つ前の確認をコールで義務づける"},
+ L3:{s1:"周辺視フィンガー",tennis:"フィンガー・ラリー（ラリー中に横の指の本数を答える）",soccer:"周辺視ロンド（ボールを見たまま外側で上がった色のコーンへパス）",s3:"ゲーム練習で、外側からの声・合図に反応する条件を足す"},
+ L4:{s1:"2択→4択カラー（色と動きの対応を増やす）",tennis:"4コース・ボレー（コール色で4方向に打ち分け）",soccer:"ゲート4択パス（4色のゲートからコールされた所へ）",s3:"ゲーム練習で、選べるコース・パス先を増やすルールにする"},
+ L5:{s1:"逆ルール（慣れたルールを途中で反対にする）",tennis:"ストップ・ボレー（出た後に「ストップ」色で止まって戻る）",soccer:"フェイク1対1（合図が出るまで重心を残す）",s3:"ゲーム練習で、途中でルールを変える合図を入れる"},
+ L6:{s1:"リズム・スプリット（一定→不規則なテンポ）",tennis:"拍スプリット（相手の打球音に合わせて着地）",soccer:"拍抜け出し（パサーの踏み込みの拍に合わせて裏へ）",s3:"ゲーム練習で、動き出しの合図を音で入れる"},
+ L7:{s1:"上の課題に騒音・時間制限を足す",tennis:"ラストポイント課題（この1本で決まる設定＋応援音声＋ダッシュ直後）",soccer:"疲労下の判断（インターバル走の直後に判断課題）",s3:"ゲーム練習を、終盤・同点など重要場面の設定から始める"}
+};
+const TYPES = [
+ {id:"A",n:"読めるのに間に合わない",test:s=>low(s,"L6")&&high(s,"L1")},
+ {id:"B",n:"速いが、早まる",test:s=>low(s,"L5")&&high(s,"L6")},
+ {id:"C",n:"見ていない",test:s=>low(s,"L2")||low(s,"L3")},
+ {id:"D",n:"本番で崩れる",test:s=>low(s,"L7")}
+];
+function low(s,l){return s[l]!=null&&s[l]<45}
+function high(s,l){return s[l]!=null&&s[l]>=50}
+function num(v){if(v===""||v==null)return null;const x=parseFloat(v);return isNaN(x)?null:x}
+function esc(t){return String(t??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
+
+// ---- 保存（失敗しても動くように） ----
+const KEY="shindan_v1";
+function load(){try{return JSON.parse(localStorage.getItem(KEY))||{players:[],rx:[]}}catch(e){return {players:[],rx:[]}}}
+function save(db){try{localStorage.setItem(KEY,JSON.stringify(db));return true}catch(e){return false}}
+let DB=load();
+
+// ---- 入力欄 ----
+const cogEl=document.getElementById("cog"), phyEl=document.getElementById("phy");
+COG.forEach(c=>cogEl.insertAdjacentHTML("beforeend",`<div><label><span class="lk">${c.l}</span>${c.n}</label><input inputmode="decimal" id="f-${c.k}"></div>`));
+PHY.forEach(c=>phyEl.insertAdjacentHTML("beforeend",`<div><label>${c.n}</label><input inputmode="decimal" id="f-${c.k}"></div>`));
+document.getElementById("f-date").valueAsDate=new Date();
+
+function readForm(){
+ const p={id:document.getElementById("f-id").value.trim(),sport:document.getElementById("f-sport").value,pos:document.getElementById("f-pos").value.trim(),
+  date:document.getElementById("f-date").value,memo:document.getElementById("f-memo").value.trim()};
+ [...COG,...PHY].forEach(c=>p[c.k]=document.getElementById("f-"+c.k).value.trim());
+ return p;
+}
+function fillForm(p){
+ ["id","sport","pos","date","memo"].forEach(k=>document.getElementById("f-"+k).value=p[k]||"");
+ [...COG,...PHY].forEach(c=>document.getElementById("f-"+c.k).value=p[c.k]??"");
+}
+document.getElementById("save").onclick=()=>{
+ const p=readForm(), m=document.getElementById("msg");
+ if(!p.id){m.textContent="選手番号を入れてください。";return}
+ if(!p.date){m.textContent="測定日を入れてください。";return}
+ const i=DB.players.findIndex(x=>x.id===p.id&&x.date===p.date&&x.sport===p.sport);
+ if(i>=0)DB.players[i]=p;else DB.players.push(p);
+ const ok=save(DB);
+ m.innerHTML=(ok?`${esc(p.id)}（${esc(p.date)}）を保存しました。続けて次の選手を入力できます。`:"保存できませんでした（ブラウザの設定を確認）。今回の画面では使えます。")+
+  ` <button class="btn sub" id="go">${esc(p.id)}の診断を見る</button>`;
+ document.getElementById("go").onclick=()=>showResult(p.id,p.sport);
+ // 次の選手用に、競技・ポジション以外の入力を空にする（測定日は残す）
+ document.getElementById("f-id").value="";document.getElementById("f-memo").value="";
+ [...COG,...PHY].forEach(c=>document.getElementById("f-"+c.k).value="");
+};
+document.getElementById("clear").onclick=()=>{fillForm({sport:document.getElementById("f-sport").value});document.getElementById("f-date").valueAsDate=new Date()};
+
+// ---- スコア計算：同じ競技・各選手の最新の測定でチーム内標準化 ----
+function latest(sport){
+ const m={};DB.players.filter(p=>p.sport===sport).forEach(p=>{if(!m[p.id]||m[p.id].date<p.date)m[p.id]=p});return Object.values(m);
+}
+function metricVal(p,c){return c.f?c.f(p):(c.dir===0?null:num(p[c.k]))}
+function scores(sport, target){
+ // target: スコアを出したい記録（過去の測定も、最新の集団と比べる）
+ const pool=latest(sport), items=[...COG.filter(c=>c.dir!==0),...DERIVED], out={L:{},P:{},n:pool.length,detail:{}};
+ if(pool.length<3)return out;
+ const z=(c,p)=>{const vs=pool.map(q=>metricVal(q,c)).filter(v=>v!=null);const v=metricVal(p,c);
+  if(v==null||vs.length<3)return null;const mu=vs.reduce((a,b)=>a+b,0)/vs.length;const sd=Math.sqrt(vs.reduce((a,b)=>a+(b-mu)**2,0)/(vs.length-1));
+  if(!sd)return 0;return c.dir*(v-mu)/sd};
+ const acc={};items.forEach(c=>{const zz=z(c,target);if(zz!=null){(acc[c.l]=acc[c.l]||[]).push(zz);out.detail[c.n||c.k]=zz}});
+ Object.keys(LINKS).forEach(l=>{if(acc[l])out.L[l]=Math.max(0,Math.min(100,Math.round(50+10*acc[l].reduce((a,b)=>a+b,0)/acc[l].length)))});
+ PHY.forEach(c=>{const zz=z(c,target);if(zz!=null)out.P[c.k]=Math.max(0,Math.min(100,Math.round(50+10*zz)))});
+ return out;
+}
+function bar(v){return `<div class="bar"><i class="${v<45?"low":""}" style="width:${v}%"></i></div>`}
+
+// ---- 診断と処方 ----
+function diagnose(p){
+ const sc=scores(p.sport,p), L=sc.L;
+ const ranked=Object.entries(L).sort((a,b)=>a[1]-b[1]);
+ const types=TYPES.filter(t=>t.test(L));
+ const focus=ranked.filter(([l,v])=>v<50).slice(0,2).map(x=>x[0]);
+ if(!focus.length&&ranked.length)focus.push(ranked[0][0]);
+ const strong=ranked.length?ranked[ranked.length-1][0]:null;
+ const phy=[];const P=sc.P;
+ if(P.side!=null&&P.side<45)phy.push("反復横跳びが低め：段階2の前に、リズム・スプリットで足の運びをそろえる時間を足す");
+ if(P.shuttle!=null&&P.shuttle<45)phy.push("持久力が低め：L7の「疲労下の判断」は回数を少なく始め、体力づくりと並行する");
+ if(P.sprint!=null&&P.sprint<45)phy.push("30m走が低め：判断が合っても届かない場面があり得る。映像で「判断の遅れ」と「移動の遅れ」を分けて見る");
+ if(P.jump!=null&&P.jump<45)phy.push("立ち幅跳びが低め：踏み出しの力は監督の体力メニューと連携。判断課題で無理に踏み込ませない");
+ return {sc,ranked,types,focus,strong,phy};
+}
+function start(v){return v<35?"やさしく（選択肢2つ・見える時間長め・同時課題1つ）":v<45?"ふつう（選択肢3つ・同時課題1つ）":"やや難しく（選択肢4つ・同時課題2つ）"}
+function showResult(id,sport){
+ document.querySelector('[data-t="result"]').click();
+ const hist=DB.players.filter(p=>p.id===id&&p.sport===sport).sort((a,b)=>a.date<b.date?-1:1);
+ const p=hist[hist.length-1], el=document.getElementById("result");
+ if(!p){el.innerHTML='<div class="card">データがありません。</div>';return}
+ const d=diagnose(p), sp=p.sport==="tennis"?"ソフトテニス":"サッカー";
+ if(d.sc.n<3){el.innerHTML=`<div class="card"><h2>${esc(p.id)}（${sp}）</h2><p>同じ競技の選手が${d.sc.n}人です。チーム内で比べるには3人以上の入力が必要です。</p></div>`;return}
+ const linkRows=Object.keys(LINKS).map(l=>`<tr><td><span class="lk">${l}</span>${LINKS[l]}</td><td style="width:45%">${d.sc.L[l]!=null?bar(d.sc.L[l]):'<span class="note">未測定</span>'}</td><td>${d.sc.L[l]??"—"}</td></tr>`).join("");
+ const phyRows=PHY.map(c=>`<tr><td>${c.n}</td><td style="width:45%">${d.sc.P[c.k]!=null?bar(d.sc.P[c.k]):'<span class="note">未測定</span>'}</td><td>${d.sc.P[c.k]??"—"}</td></tr>`).join("");
+ const trend=hist.length>1?(()=>{const first=scores(p.sport,hist[0]).L;return '<h3>前回からの変化</h3>'+Object.keys(LINKS).filter(l=>first[l]!=null&&d.sc.L[l]!=null).map(l=>{const df=d.sc.L[l]-first[l];return `<span class="pill ${df<0?"h":""}">${l} ${df>=0?"+":""}${df}</span>`}).join("")+`<p class="note">初回（${hist[0].date}）と最新（${p.date}）を、今のチームの分布で比べた値です。</p>`})():"";
+ const rx=d.focus.map(l=>`<tr><td><span class="lk">${l}</span>${LINKS[l]}<br><span class="note">スコア ${d.sc.L[l]}／開始：${start(d.sc.L[l])}</span></td><td><b>段階1</b> ${RX[l].s1}<br><b>段階2</b> ${RX[l][p.sport]}<br><b>段階3</b> ${RX[l].s3}</td></tr>`).join("");
+ const w=d.focus, a=w[0], b=w[1]||w[0];
+ const week=`<table><tr><th>回</th><th>はじめ5分</th><th>メイン15分</th><th>しめ5分</th></tr>
+  <tr><td>1回目</td><td>${RX[a].s1}</td><td>${RX[a][p.sport]}</td><td>${d.strong?RX[d.strong].s1+"（得意な輪で自信を残す）":"ふりかえり"}</td></tr>
+  <tr><td>2回目</td><td>${RX[b].s1}</td><td>${RX[b][p.sport]}</td><td>${RX[a].s1}（難しさを1段階上げる）</td></tr>
+  <tr><td>3回目</td><td>${RX[a].s1}</td><td>${RX[a].s3}</td><td>${d.types.some(t=>t.id==="D")?RX.L7.s1:"成功率の記録とふりかえり"}</td></tr></table>`;
+ el.innerHTML=`<div class="card"><h2>${esc(p.id)}（${sp}${p.pos?"・"+esc(p.pos):""}）　測定日 ${esc(p.date)}</h2>
+  <p>${d.types.length?d.types.map(t=>`<span class="pill h">型${t.id}：${t.n}</span>`).join(""):'<span class="pill">はっきりした型なし（低い輪から処方）</span>'}
+  ${d.strong?`<span class="pill">得意：${d.strong} ${LINKS[d.strong]}</span>`:""}</p>
+  <div class="res"><div><h3>判断の7つの輪（チーム内で50が平均）</h3><table>${linkRows}</table><h3>基礎体力</h3><table>${phyRows}</table>${trend}</div>
+  <div><h3>処方（低い輪から2つ）</h3><table>${rx}</table>
+  ${d.phy.length?'<h3>体力面からの調整</h3><ul>'+d.phy.map(x=>`<li>${x}</li>`).join("")+'</ul>':""}
+  <h3>1週間のメニュー例（1回25分×3回）</h3>${week}
+  <p class="note">成功率が80%を超えたら難しく、50%を下回ったらやさしくします（渋滞ゾーン60〜80%）。6週で再測定してください。</p></div></div>
+  <div class="noprint"><button class="btn" id="rec">処方を記録</button><button class="btn sub" id="ai">AI相談用の文章をコピー</button><button class="btn sub" onclick="print()">印刷</button><button class="btn sub" id="edit">この選手の数値を編集</button></div>
+  <p class="note" id="rmsg"></p></div>`;
+ document.getElementById("rec").onclick=()=>{d.focus.forEach(l=>DB.rx.push({id:p.id,sport:p.sport,date:p.date,link:l,score:d.sc.L[l],act:RX[l][p.sport]}));
+  document.getElementById("rmsg").textContent=save(DB)?"処方を記録しました。再測定後に④で伸びを確認できます。":"記録を保存できませんでした。"};
+ document.getElementById("edit").onclick=()=>{fillForm(p);document.querySelector('[data-t="input"]').click()};
+ document.getElementById("ai").onclick=()=>{
+  const lines=[`あなたはスポーツの知覚・認知トレーニングの専門家です。次の匿名の選手データ（${sp}、チーム内で平均50のスコア）から、どの判断の要素が弱いかの解釈と、競技の形で行う練習メニューの改善案を、根拠と不確かさを分けて提案してください。勝敗の保証や、データにない推測はしないでください。`,
+   `選手：${p.id}／ポジション：${p.pos||"未記入"}`,
+   "判断の輪："+Object.keys(LINKS).map(l=>`${l}${LINKS[l]}=${d.sc.L[l]??"未測定"}`).join("、"),
+   "基礎体力："+PHY.map(c=>`${c.n}=${d.sc.P[c.k]??"未測定"}`).join("、"),
+   "判定された型："+(d.types.map(t=>t.id+" "+t.n).join("、")||"なし"),
+   "現在の処方："+d.focus.map(l=>`${l}：${RX[l][p.sport]}`).join("／")];
+  const txt=lines.join("\n");
+  const done=()=>document.getElementById("rmsg").textContent="コピーしました（氏名・メモは含まれていません）。";
+  if(navigator.clipboard)navigator.clipboard.writeText(txt).then(done,()=>prompt("コピーしてください",txt));else prompt("コピーしてください",txt);
+ };
+}
+
+// ---- チーム一覧 ----
+function renderTeam(){
+ const el=document.getElementById("teamTable");let h="";
+ ["tennis","soccer"].forEach(sp=>{const pool=latest(sp);if(!pool.length)return;
+  h+=`<h3>${sp==="tennis"?"ソフトテニス":"サッカー"}（${pool.length}人）</h3><table><tr><th>番号</th><th>ポジション</th><th>測定日</th>${Object.keys(LINKS).map(l=>`<th>${l}</th>`).join("")}<th>型</th></tr>`;
+  pool.sort((a,b)=>a.id<b.id?-1:1).forEach(p=>{const d=diagnose(p);
+   h+=`<tr><td><a href="#" data-id="${esc(p.id)}" data-sp="${sp}">${esc(p.id)}</a></td><td>${esc(p.pos)}</td><td>${esc(p.date)}</td>${Object.keys(LINKS).map(l=>{const v=d.sc.L[l];return `<td style="${v!=null&&v<45?"color:#e5484d;font-weight:bold":""}">${v??"—"}</td>`}).join("")}<td>${d.types.map(t=>t.id).join("・")||"—"}</td></tr>`});
+  h+="</table>"});
+ el.innerHTML=h||"まだデータがありません。";
+ el.querySelectorAll("a[data-id]").forEach(a=>a.onclick=e=>{e.preventDefault();showResult(a.dataset.id,a.dataset.sp)});
+}
+
+// ---- 処方の当たり率 ----
+function renderRx(){
+ const el=document.getElementById("rxTable");if(!DB.rx.length){el.textContent="まだ記録がありません。";return}
+ const g={};
+ DB.rx.forEach(r=>{const later=DB.players.filter(p=>p.id===r.id&&p.sport===r.sport&&p.date>r.date).sort((a,b)=>a.date<b.date?1:-1)[0];
+  const key=r.sport+"|"+r.link+"|"+r.act;g[key]=g[key]||{sport:r.sport,link:r.link,act:r.act,n:0,up:0,wait:0};
+  if(!later){g[key].wait++;return}const now=scores(r.sport,later).L[r.link];
+  if(now==null){g[key].wait++;return}g[key].n++;if(now-r.score>=2)g[key].up++;});
+ el.innerHTML=`<table><tr><th>競技</th><th>輪</th><th>処方</th><th>再測定済み</th><th>伸びた（+2以上）</th><th>当たり率</th><th>再測定待ち</th></tr>`+
+  Object.values(g).map(x=>`<tr><td>${x.sport==="tennis"?"ソフトテニス":"サッカー"}</td><td>${x.link}</td><td>${x.act}</td><td>${x.n}</td><td>${x.up}</td><td>${x.n?Math.round(100*x.up/x.n)+"%":"—"}</td><td>${x.wait}</td></tr>`).join("")+"</table>"+
+  '<p class="note">「+2以上」は暫定の基準です。プログラムで事前に決めた判定基準（開始前のばらつきを超える変化など）に合わせて見直してください。人数が少ないうちは、結論ではなく次に試す候補として扱います。</p>';
+}
+
+// ---- CSV ----
+const COLS=["id","sport","pos","date",...COG.map(c=>c.k),...PHY.map(c=>c.k),"memo"];
+function csvCell(v){v=String(v??"");return /[",\n]/.test(v)?'"'+v.replace(/"/g,'""')+'"':v}
+document.getElementById("exp").onclick=()=>{
+ const rows=[COLS.join(","),...DB.players.map(p=>COLS.map(k=>csvCell(p[k])).join(","))];
+ const rxRows=["","#処方記録","id,sport,date,link,score,act",...DB.rx.map(r=>["id","sport","date","link","score","act"].map(k=>csvCell(r[k])).join(","))];
+ const blob=new Blob(["﻿"+rows.concat(rxRows).join("\n")],{type:"text/csv"});
+ const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="診断データ_"+new Date().toISOString().slice(0,10)+".csv";a.click();
+};
+function parseCSV(t){const out=[];let row=[],cell="",q=false;for(let i=0;i<t.length;i++){const ch=t[i];
+ if(q){if(ch=='"'){if(t[i+1]=='"'){cell+='"';i++}else q=false}else cell+=ch}
+ else if(ch=='"')q=true;else if(ch==","){row.push(cell);cell=""}else if(ch=="\n"){row.push(cell);out.push(row);row=[];cell=""}else if(ch!="\r")cell+=ch}
+ if(cell||row.length){row.push(cell);out.push(row)}return out}
+document.getElementById("imp").onchange=e=>{const f=e.target.files[0];if(!f)return;f.text().then(t=>{
+ const rows=parseCSV(t.replace(/^﻿/,""));const head=rows[0];let mode="p",rxHead=null,np=0,nr=0;
+ rows.slice(1).forEach(r=>{if(r[0]==="#処方記録"){mode="rx";return}if(mode==="rx"&&!rxHead){if(r[0]==="id"){rxHead=r}return}
+  if(!r[0])return;
+  if(mode==="p"){const p={};head.forEach((h,i)=>p[h]=r[i]??"");const i=DB.players.findIndex(x=>x.id===p.id&&x.date===p.date&&x.sport===p.sport);if(i>=0)DB.players[i]=p;else DB.players.push(p);np++}
+  else{const x={};rxHead.forEach((h,i)=>x[h]=r[i]);x.score=num(x.score);DB.rx.push(x);nr++}});
+ save(DB);document.getElementById("dmsg").textContent=`${np}件の測定と${nr}件の処方記録を読み込みました。`;renderRx()})};
+document.getElementById("wipe").onclick=()=>{if(confirm("この端末のデータをすべて削除します。先にCSVで書き出しましたか？")){DB={players:[],rx:[]};save(DB);renderRx();document.getElementById("dmsg").textContent="削除しました。"}};
+
+// ---- タブ ----
+document.querySelectorAll(".tabs button").forEach(b=>b.onclick=()=>{
+ document.querySelectorAll(".tabs button").forEach(x=>x.classList.toggle("on",x===b));
+ document.querySelectorAll("main>section").forEach(s=>s.classList.toggle("hidden",s.id!=="t-"+b.dataset.t));
+ if(b.dataset.t==="team")renderTeam();if(b.dataset.t==="data")renderRx();
+});
+</script>
+</body>
+</html>
