@@ -68,6 +68,8 @@ S.append(slide(4, "私の立ち位置", "主役は監督と選手。私は<em>�
  <div class="card" style="flex:1">{ic('<rect x="16" y="34" width="8" height="14" fill="#0f2340"/><rect x="28" y="24" width="8" height="24" fill="#0f2340"/><rect x="40" y="16" width="8" height="32" fill="#0f2340"/>')}<h3 style="margin-top:12px">数字で報告する</h3><p>開始時・6週・12週に測定してレポート。続けるかは監督が数字で判断できます。</p></div>
  </div><p style="margin-top:26px;font-size:22px">目標：<b>全国を目指す選手の「見て・決める」土台を引き上げる</b></p>'''))
 
+S.append(profile_slide(ACC, ACCD, "soccer"))
+
 # 5 しくみ
 cyc = f'''<svg width="560" height="400" viewBox="0 0 560 400">
 <circle cx="280" cy="200" r="140" fill="none" stroke="#e1e5ec" stroke-width="28"/>

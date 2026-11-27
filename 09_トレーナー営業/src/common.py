@@ -39,7 +39,7 @@ def page(title, acc, accd, slides):
     c = itertools.count(1)
     # ページ番号は並び順で振り直す（表紙・クロージングは番号なし）
     body = "".join(re.sub(r'<span class="n">\d+</span>', lambda m: f'<span class="n">{i}</span>', sec) if 'class="n"' in sec else sec
-                   for i, sec in ((next(c), sec) for sec in re.split(r'(?=<section )', body)))
+                   for i, sec in ((next(c), sec) for sec in re.split(r'(?=<section )', body) if sec))
     return f'<!doctype html><html lang="ja"><head><meta charset="utf-8"><title>{title}</title><style>{css(acc,accd)}</style></head><body>{body}</body></html>'
 
 def slide(n, kicker, h1, inner, note="", cls=""):
@@ -164,3 +164,25 @@ def ai_slides(acc, accd, audio_uses, video_uses):
         "同意書・データ取り扱い方針のひな形は、学校の規程に合わせて事前にご確認いただきます。")
     s2 = s2.replace('<span class="n">0</span>', '<span class="n">1</span>')
     return [s1, s2]
+
+
+def profile_slide(acc, accd, sport):
+    """プロフィール。営業先の競技の経歴を先に出す。"""
+    years = [("サッカー", 6), ("ソフトテニス", 5), ("ソフトボール", 3)]
+    if sport == "tennis":
+        years = [("ソフトテニス", 5), ("サッカー", 6), ("ソフトボール", 3)]
+    bars = "".join(
+        f'<div style="display:flex;align-items:center;gap:12px;margin:8px 0"><span style="width:130px;font-size:18px">{n}</span>'
+        f'<div style="height:26px;width:{y*48}px;border-radius:13px;background:{acc if i == 0 else "#c3cad6"}"></div>'
+        f'<b style="font-size:20px;color:var(--navy)">{y}年</b></div>' for i, (n, y) in enumerate(years))
+    lic = [("JFA公認 B級コーチ", "サッカー"), ("JFA公認 GKコーチ レベル1", "サッカー"),
+           ("ライフキネティック 公認トレーナー", "脳 × 運動"), ("スポーツリズムトレーニング ディフューザー", "リズム")]
+    if sport == "tennis":
+        lic = [lic[2], lic[3], lic[0], lic[1]]
+    lis = "".join(f'<div style="display:flex;justify-content:space-between;align-items:center;background:var(--bg);border-radius:10px;padding:12px 16px;margin-bottom:10px">'
+                  f'<b style="font-size:19px;color:var(--navy)">{a}</b><span class="tag a">{b}</span></div>' for a, b in lic)
+    return slide(1, "プロフィール", "現場14年の指導者が、<em>No.2</em>として入ります",
+        f'''<div class="row"><div style="flex:1"><div class="stat">14<small>年</small></div><p class="lbl">学校の部活動指導</p>{bars}
+        <div class="card" style="margin-top:14px"><p><b>数学科教員</b>として、データの読み取りと統計を指導。測定と分析はその延長線上にあります。</p></div></div>
+        <div style="flex:1.1"><p style="font-size:18px;font-weight:bold;color:var(--navy);margin-bottom:10px">保有資格</p>{lis}
+        <p class="lbl">学校現場を知っているから、練習時間・部の方針・生徒の個人情報の扱いを崩さずに入れます。</p></div></div>''')
