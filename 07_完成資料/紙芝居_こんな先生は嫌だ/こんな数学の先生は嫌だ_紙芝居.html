@@ -1,0 +1,458 @@
+<title>こんな数学の先生は嫌だ</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Yomogi&family=Zen+Maru+Gothic:wght@500;700&display=swap">
+<style>
+/* Layout: スケッチブックを机に置き、上のリングを軸に1枚ずつめくる紙芝居。単一の見た目（暗い机＋白い画用紙） */
+:root {
+  --desk: #35302b;
+  --desk-edge: #24201c;
+  --paper: #fcfbf6;
+  --ink: #2a2826;
+  --pencil: #e0a93b;
+  --ui: #efe8dc;
+  --ui-dim: #b9ad9c;
+  --f-hand: "Yomogi", "Klee One", "Hiragino Maru Gothic ProN", "IPAGothic", sans-serif;
+  --f-ui: "Zen Maru Gothic", "Hiragino Maru Gothic ProN", "Yu Gothic", "IPAGothic", sans-serif;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0; min-height: 100dvh; background: radial-gradient(120% 90% at 50% 20%, var(--desk), var(--desk-edge));
+  color: var(--ui); font-family: var(--f-ui);
+  display: flex; flex-direction: column; align-items: center; gap: 12px;
+  padding-block: 14px 18px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+header { width: 100%; max-width: 1100px; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 4px 16px; }
+header h1 { margin: 0; font-family: var(--f-hand); font-weight: 400; font-size: clamp(20px, 3vw, 28px); letter-spacing: .04em; }
+header p { margin: 0; font-size: 13px; color: var(--ui-dim); }
+.book { width: min(100%, 1100px, calc((100dvh - 190px) * 1.34)); }
+.rings { height: 30px; margin: 0 4%; position: relative; z-index: 5; margin-bottom: -15px;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='26' height='30'%3E%3Crect x='9' y='3' width='8' height='25' rx='4' fill='%23c9c6bf' stroke='%23555' stroke-width='1.5'/%3E%3Crect x='11' y='5' width='2' height='20' rx='1' fill='%23fff' opacity='.7'/%3E%3C/svg%3E") repeat-x center / 26px 30px; }
+.stage { position: relative; aspect-ratio: 1000 / 720; max-width: 100%; perspective: 2200px; cursor: pointer; }
+.card { position: absolute; inset: 0; visibility: hidden; transform-origin: 50% 0; backface-visibility: hidden;
+  background: var(--paper); border-radius: 3px;
+  box-shadow: 0 1px 0 #d8d3c7, 0 3px 0 #ebe7dc, 0 5px 0 #d8d3c7, 0 16px 30px rgba(0,0,0,.45); }
+.card.on { visibility: visible; }
+.card::before { content: ""; position: absolute; inset: 0; pointer-events: none; border-radius: 3px;
+  background: radial-gradient(circle at 20% 30%, rgba(120,110,90,.05), transparent 40%), radial-gradient(circle at 80% 70%, rgba(120,110,90,.06), transparent 45%); }
+.card svg { width: 100%; height: 100%; display: block; }
+.card.flip-out { animation: flipOut .62s cubic-bezier(.4,.1,.6,1) forwards; }
+.card.flip-in  { animation: flipIn .62s cubic-bezier(.4,.1,.6,1) forwards; }
+@keyframes flipOut { from { transform: rotateX(0); opacity: 1 } 70% { opacity: 1 } to { transform: rotateX(105deg); opacity: 0 } }
+@keyframes flipIn  { from { transform: rotateX(105deg); opacity: 0 } 30% { opacity: 1 } to { transform: rotateX(0); opacity: 1 } }
+.ink { stroke: var(--ink); fill: none; stroke-width: 3.6; stroke-linecap: round; stroke-linejoin: round; }
+.hw { font-family: var(--f-hand); fill: var(--ink); stroke: none; }
+.cap { font-family: var(--f-hand); fill: var(--ink); paint-order: stroke; stroke: var(--ink); stroke-width: .8; }
+.controls { width: 100%; max-width: 1100px; display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 10px 14px; }
+.controls button { font: inherit; font-weight: 700; color: var(--ui); background: rgba(255,255,255,.06); border: 1.5px solid rgba(255,255,255,.22);
+  border-radius: 999px; padding: 7px 16px; cursor: pointer; }
+.controls button:hover { background: rgba(255,255,255,.13); }
+.controls button:focus-visible, .stage:focus-visible { outline: 3px solid var(--pencil); outline-offset: 3px; }
+.controls button:disabled { opacity: .35; cursor: default; }
+.count { font-variant-numeric: tabular-nums; min-width: 4.5em; text-align: center; font-size: 15px; }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; justify-content: center; }
+.chips button { font-size: 13px; padding: 4px 12px; font-weight: 500; }
+.chips button[aria-current="true"] { background: var(--pencil); color: #2a2018; border-color: var(--pencil); }
+@media (prefers-reduced-motion: reduce) { .card.flip-out, .card.flip-in { animation: none; } }
+@page { size: A4 landscape; margin: 0; }
+@media print {
+  body { background: #fff; padding: 0; display: block; }
+  header, .controls, .rings { display: none; }
+  .book { width: 297mm; }
+  .stage { aspect-ratio: auto; perspective: none; }
+  .card { position: relative; visibility: visible; width: 297mm; height: 209mm; box-shadow: none; break-after: page; animation: none !important; transform: none !important; opacity: 1 !important; }
+}
+body.export { background: #fff; padding: 0; display: block; }
+body.export header, body.export .controls, body.export .rings { display: none; }
+body.export .book { width: 2000px; }
+body.export .stage { aspect-ratio: auto; perspective: none; }
+body.export .card { position: relative; visibility: visible; width: 2000px; height: 1440px; box-shadow: none; border-radius: 0; }
+</style>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <filter id="pencil" x="-5%" y="-5%" width="110%" height="110%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="2" seed="4" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="3.4" xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+    <pattern id="hL" patternUnits="userSpaceOnUse" width="7" height="7" patternTransform="rotate(40)"><rect width="7" height="7" fill="#fcfbf6"/><line x1="1" y1="0" x2="1" y2="7" stroke="#c4c0b6" stroke-width="1.3"/></pattern>
+    <pattern id="hM" patternUnits="userSpaceOnUse" width="5" height="5" patternTransform="rotate(40)"><rect width="5" height="5" fill="#f3f1ea"/><line x1="1" y1="0" x2="1" y2="5" stroke="#8d8981" stroke-width="1.5"/></pattern>
+    <pattern id="hD" patternUnits="userSpaceOnUse" width="4" height="4" patternTransform="rotate(-35)"><rect width="4" height="4" fill="#8a867e"/><line x1="1" y1="0" x2="1" y2="4" stroke="#36332f" stroke-width="2.2"/></pattern>
+    <pattern id="hB" patternUnits="userSpaceOnUse" width="8" height="8" patternTransform="rotate(-30)"><rect width="8" height="8" fill="#f1f0ea"/><line x1="1" y1="0" x2="1" y2="8" stroke="#d6d3ca" stroke-width="1.4"/></pattern>
+  </defs>
+</svg>
+
+<header>
+  <h1>こんな数学の先生は嫌だ</h1>
+  <p>クリック・タップ／→キーでめくる　←で戻る　※登場する先生はすべて架空の人物です</p>
+</header>
+
+<div class="book">
+  <div class="rings" aria-hidden="true"></div>
+  <div class="stage" id="stage" tabindex="0" aria-label="紙芝居。クリックで次へ"></div>
+</div>
+
+<nav class="controls" aria-label="ページ操作">
+  <button id="prev" type="button">← 戻る</button>
+  <span class="count" id="count" aria-live="polite">1 / 18</span>
+  <button id="next" type="button">めくる →</button>
+  <div class="chips" id="chips"></div>
+</nav>
+
+<script>
+(() => {
+const PAPER = "#fcfbf6", INK = "#2a2826";
+let TX = [];
+const esc = s => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;");
+// 文字は鉛筆フィルターをかけない層に置く（読みやすさのため）
+function T(x, y, str, fs = 32, o = {}) {
+  TX.push(`<text class="hw" x="${x}" y="${y}" font-size="${fs}" text-anchor="${o.a || "middle"}"${o.rot ? ` transform="rotate(${o.rot} ${x} ${y})"` : ""}${o.fill ? ` style="fill:${o.fill}"` : ""}>${esc(str)}</text>`);
+  return "";
+}
+const tube = (d, w = 24) => `<path d="${d}" stroke-width="${w}"/><path d="${d}" stroke="${PAPER}" stroke-width="${w - 7}"/>`;
+const hand = (x, y, r = 10) => `<circle cx="${x}" cy="${y}" r="${r}" fill="${PAPER}"/>`;
+function arrow(x1, y1, x2, y2, dash) {
+  const a = Math.atan2(y2 - y1, x2 - x1), L = 18;
+  const p = s => `${x2 - L * Math.cos(a + s)},${y2 - L * Math.sin(a + s)}`;
+  return `<path d="M${x1},${y1} L${x2},${y2}"${dash ? ` stroke-dasharray="${dash}"` : ""}/><path d="M${p(0.45)} L${x2},${y2} L${p(-0.45)}"/>`;
+}
+const sparkle = (x, y, r) => `<path d="M${x},${y - r} L${x},${y + r} M${x - r},${y} L${x + r},${y} M${x - r * .6},${y - r * .6} L${x - r * .25},${y - r * .25} M${x + r * .6},${y + r * .6} L${x + r * .25},${y + r * .25} M${x + r * .6},${y - r * .6} L${x + r * .25},${y - r * .25} M${x - r * .6},${y + r * .6} L${x - r * .25},${y + r * .25}" stroke-width="3"/>`;
+function star(cx, cy, r) {
+  let d = "";
+  for (let i = 0; i < 10; i++) { const a = -Math.PI / 2 + i * Math.PI / 5, rr = i % 2 ? r * .45 : r; d += (i ? "L" : "M") + (cx + rr * Math.cos(a)).toFixed(1) + "," + (cy + rr * Math.sin(a)).toFixed(1); }
+  return `<path d="${d}Z" fill="url(#hL)" stroke-width="3"/>`;
+}
+
+/* ---------- 先生（架空） ---------- */
+function teacher(x, y, s, o = {}) {
+  const pose = o.pose || "pocket", mood = o.mood || "flat", hair = o.hair || "part";
+  let g = "";
+  // ズボン・くつ
+  g += `<path d="M-40,-120 L-44,-8 L-8,-8 L-3,-84 L3,-84 L8,-8 L44,-8 L40,-120 Z" fill="url(#hM)"/>`;
+  g += `<path d="M-52,2 Q-52,-12 -32,-12 L-6,-10 Q-1,2 -8,4 Z" fill="url(#hD)"/><path d="M52,2 Q52,-12 32,-12 L6,-10 Q1,2 8,4 Z" fill="url(#hD)"/>`;
+  // 上着
+  g += `<path d="M-52,-246 Q-62,-180 -48,-112 L48,-112 Q62,-180 52,-246 Q0,-262 -52,-246 Z" fill="url(#hM)"/>`;
+  g += `<path d="M-22,-254 L0,-196 L22,-254 Z" fill="${PAPER}"/><path d="M0,-196 L0,-114"/><circle cx="0" cy="-170" r="2.6" fill="${INK}"/><circle cx="0" cy="-140" r="2.6" fill="${INK}"/>`;
+  if (o.bow) g += `<path d="M0,-244 L-22,-256 L-22,-230 Z M0,-244 L22,-256 L22,-230 Z" fill="url(#hD)"/><circle cx="0" cy="-244" r="5" fill="${INK}"/>`;
+  else g += `<path d="M-6,-248 L6,-248 L10,-212 L0,-200 L-10,-212 Z" fill="url(#hD)"/>`;
+  g += `<path d="M-12,-264 L-12,-252 M12,-264 L12,-252"/>`;
+  // 腕
+  const mic = `${tube("M-50,-236 Q-74,-190 -34,-262")}${hand(-30, -266)}<path d="M-24,-272 L-14,-286" stroke-width="7"/><circle cx="-11" cy="-290" r="8" fill="url(#hD)"/>`;
+  const arms = {
+    pocket: `${tube("M-50,-236 Q-82,-180 -44,-118")}${tube("M50,-236 Q82,-180 44,-118")}<path d="M-60,-116 L-30,-110 M60,-116 L30,-110"/>`,
+    out: `${tube("M-50,-236 Q-74,-186 -46,-172")}${tube("M50,-236 Q74,-186 46,-172")}`,
+    hold: `${mic}${tube("M50,-236 Q88,-210 112,-190")}${hand(114, -190)}`,
+    hint: `${mic}${tube("M50,-236 Q90,-256 84,-318")}${hand(84, -326, 11)}<path d="M84,-336 L84,-362" stroke-width="7"/>`,
+    present: `${mic}${tube("M50,-236 Q100,-252 148,-290")}${hand(152, -293)}`,
+    shrug: `${tube("M-50,-236 Q-96,-206 -102,-252")}${hand(-103, -260)}${tube("M50,-236 Q96,-206 102,-252")}${hand(103, -260)}`,
+    trophy: `${tube("M-50,-236 Q-86,-306 -46,-398")}${tube("M50,-236 Q86,-306 46,-398")}`,
+    listen: `${tube("M-50,-236 Q-68,-180 -62,-132")}${hand(-62, -124)}${tube("M50,-236 Q92,-262 50,-298")}${hand(47, -301, 12)}`,
+    talk: `${tube("M-50,-236 Q-82,-180 -44,-118")}${tube("M50,-236 Q96,-220 118,-262")}${hand(120, -268)}`
+  };
+  g += arms[pose] || arms.pocket;
+  if (pose === "trophy") g += `<path d="M-48,-470 L48,-470 Q44,-410 0,-404 Q-44,-410 -48,-470 Z" fill="url(#hL)"/><path d="M-47,-458 Q-74,-450 -44,-428 M47,-458 Q74,-450 44,-428"/><path d="M-8,-404 L-10,-384 L10,-384 L8,-404"/><path d="M-28,-384 L28,-384 L28,-372 L-28,-372 Z" fill="url(#hM)"/>${hand(-46, -404)}${hand(46, -404)}`;
+  // 頭
+  let h = `<path d="M-38,-302 Q-50,-302 -47,-290 Q-45,-280 -36,-283 M38,-302 Q50,-302 47,-290 Q45,-280 36,-283"/><circle cx="0" cy="-300" r="40" fill="${PAPER}"/>`;
+  const hairs = {
+    part: `<path d="M-41,-300 Q-44,-347 0,-346 Q44,-347 41,-300 Q34,-322 -6,-324 Q-30,-322 -41,-300 Z" fill="url(#hD)"/><path d="M-10,-344 Q-12,-334 -6,-324"/>`,
+    mop: `<path d="M-44,-298 Q-54,-338 -30,-346 Q-22,-366 0,-356 Q22,-368 34,-346 Q56,-338 44,-298 Q34,-324 0,-322 Q-34,-324 -44,-298 Z" fill="url(#hD)"/>`,
+    slick: `<path d="M-41,-298 Q-46,-348 0,-348 Q46,-348 41,-298 Q38,-330 0,-332 Q-38,-330 -41,-298 Z" fill="url(#hD)"/><path d="M-30,-322 Q0,-344 30,-322" stroke="${PAPER}" stroke-width="2"/>`
+  };
+  h += hairs[hair];
+  const ex = o.glasses ? 16 : 15;
+  if (mood === "happy") h += `<path d="M-${ex + 6},-298 Q-${ex},-305 -${ex - 6},-298 M${ex - 6},-298 Q${ex},-305 ${ex + 6},-298"/>`;
+  else h += `<circle cx="-${ex}" cy="-299" r="3" fill="${INK}"/><circle cx="${ex}" cy="-299" r="3" fill="${INK}"/>`;
+  if (o.glasses) h += `<circle cx="-16" cy="-299" r="12"/><circle cx="16" cy="-299" r="12"/><path d="M-4,-300 L4,-300 M-28,-302 L-39,-306 M28,-302 L39,-306"/>`;
+  const brows = {
+    flat: "M-24,-317 L-8,-317 M8,-317 L24,-317",
+    smug: "M-24,-316 L-8,-316 M8,-320 Q16,-328 25,-321",
+    frown: "M-26,-321 L-7,-313 M26,-321 L7,-313",
+    happy: "M-24,-318 Q-16,-323 -8,-318 M8,-318 Q16,-323 24,-318",
+    talk: "M-24,-318 Q-16,-322 -8,-318 M8,-318 Q16,-322 24,-318",
+    smile: "M-24,-318 Q-16,-323 -8,-318 M8,-318 Q16,-323 24,-318"
+  };
+  h += `<path d="${brows[mood] || brows.flat}" stroke-width="3"/><path d="M0,-294 Q-5,-286 1,-285" stroke-width="2.6"/>`;
+  if (hair === "mop") h += `<path d="M-15,-280 Q-7,-288 0,-281 Q7,-288 15,-280 Q7,-276 0,-279 Q-7,-276 -15,-280 Z" fill="${INK}"/>`;
+  const mouths = {
+    talk: `<ellipse cx="0" cy="-270" rx="8" ry="6" fill="${INK}"/>`,
+    smile: `<path d="M-12,-274 Q0,-262 12,-274"/>`,
+    happy: `<path d="M-13,-275 Q0,-256 13,-275 Z" fill="${INK}"/>`,
+    frown: `<path d="M-10,-266 Q0,-274 10,-266"/>`,
+    smug: `<path d="M-8,-271 Q4,-266 13,-276"/>`,
+    flat: `<path d="M-8,-270 L8,-270"/>`
+  };
+  h += mouths[o.mouth || mood] || mouths.flat;
+  if (o.headRot) h = `<g transform="rotate(${o.headRot} 0 -262)">${h}</g>`;
+  g += h;
+  return `<g transform="translate(${x} ${y}) rotate(${o.rot || 0}) scale(${s})">${g}</g>`;
+}
+
+/* ---------- 生徒（前向き・机つき） ---------- */
+function student(x, y, s = 1, o = {}) {
+  let g = "";
+  if (o.hand) g += `${tube("M22,-40 Q44,-72 36,-112", 20)}${hand(36, -120, 11)}`;
+  g += `<path d="M-26,-46 Q-36,-20 -36,0 L36,0 Q36,-20 26,-46 Q0,-52 -26,-46 Z" fill="${o.girl ? "url(#hL)" : PAPER}"/><path d="M-10,-48 L0,-36 L10,-48"/>`;
+  g += `<circle cx="0" cy="-72" r="25" fill="${PAPER}"/>`;
+  g += o.girl
+    ? `<path d="M-27,-50 Q-34,-104 0,-100 Q34,-104 27,-50 L20,-52 Q24,-82 4,-86 Q-6,-76 -22,-74 Q-22,-62 -20,-52 Z" fill="url(#hD)"/>`
+    : `<path d="M-25,-74 Q-28,-100 0,-99 Q28,-100 25,-74 Q14,-88 -4,-84 Q-16,-86 -25,-74 Z" fill="url(#hD)"/>`;
+  const m = o.mood || "neutral";
+  if (m === "sleep") g += `<path d="M-14,-70 Q-9,-66 -4,-70 M4,-70 Q9,-66 14,-70" stroke-width="3"/><path d="M-4,-58 Q0,-55 4,-58" stroke-width="3"/>`;
+  else g += `<circle cx="-9" cy="-71" r="2.8" fill="${INK}"/><circle cx="9" cy="-71" r="2.8" fill="${INK}"/>`;
+  if (m === "neutral") g += `<path d="M-5,-58 L5,-58" stroke-width="3"/>`;
+  if (m === "sad") g += `<path d="M-7,-56 Q0,-62 7,-56" stroke-width="3"/><path d="M-16,-84 L-4,-80 M16,-84 L4,-80" stroke-width="2.6"/>`;
+  if (m === "open") g += `<ellipse cx="0" cy="-58" rx="5" ry="6" fill="${PAPER}" stroke-width="3"/>`;
+  if (m === "smile") g += `<path d="M-8,-60 Q0,-52 8,-60" stroke-width="3"/>`;
+  if (o.sweat) g += `<path d="M30,-92 Q24,-80 30,-76 Q36,-80 30,-92 Z" fill="${PAPER}" stroke-width="2.4"/>`;
+  // 机
+  g += `<path d="M-62,0 L62,0 L72,14 L-72,14 Z" fill="${PAPER}"/><path d="M-68,14 L68,14 L68,60 L-68,60 Z" fill="url(#hL)"/>`;
+  if (o.buzzer) g += `<path d="M-18,2 Q-18,-18 0,-18 Q18,-18 18,2 Z" fill="url(#hM)"/><path d="M-26,2 L26,2"/>${hand(-20, 0, 9)}`;
+  return `<g transform="translate(${x} ${y}) scale(${s})">${g}</g>`;
+}
+/* 生徒（後ろ姿・手前） */
+function back(x, y, s = 1, o = {}) {
+  let g = `<path d="M-52,0 Q-50,-40 0,-44 Q50,-40 52,0 Z" fill="url(#hL)"/><path d="M-31,-70 Q-38,-70 -36,-62 Q-34,-56 -28,-58 M31,-70 Q38,-70 36,-62 Q34,-56 28,-58"/><circle cx="0" cy="-70" r="29" fill="url(#hD)"/>`;
+  if (o.girl) g += `<path d="M-22,-48 Q-30,-30 -24,-22 M22,-48 Q30,-30 24,-22" stroke-width="5"/>`;
+  return `<g transform="translate(${x} ${y}) scale(${s})">${g}</g>`;
+}
+/* ---------- ふきだし ---------- */
+function bubble(cx, cy, w, h, lines, fs, tx, ty) {
+  const x = cx - w / 2, y = cy - h / 2, r = Math.min(h / 2, 42);
+  let g = `<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="${r}" fill="${PAPER}"/>`;
+  if (tx != null) {
+    let a, b;
+    const cl = (v, lo, hi) => Math.max(lo, Math.min(hi, v));
+    if (ty > y + h) { const bx = cl(cx + (tx - cx) * .55, x + r + 14, x + w - r - 14); a = [bx - 16, y + h]; b = [bx + 16, y + h]; }
+    else if (ty < y) { const bx = cl(cx + (tx - cx) * .55, x + r + 14, x + w - r - 14); a = [bx - 16, y]; b = [bx + 16, y]; }
+    else if (tx < x) { const by = cl(ty, y + 14, y + h - 14); a = [x, by - 14]; b = [x, by + 14]; }
+    else { const by = cl(ty, y + 14, y + h - 14); a = [x + w, by - 14]; b = [x + w, by + 14]; }
+    g += `<path d="M${a} L${tx},${ty} L${b}" fill="${PAPER}"/><path d="M${a} L${b}" stroke="${PAPER}" stroke-width="7" stroke-linecap="butt"/>`;
+  }
+  const lh = fs * 1.3, top = cy - (lines.length - 1) * lh / 2 + fs * .35;
+  lines.forEach((l, i) => T(cx, top + i * lh, l, fs));
+  return g;
+}
+const board = (x, y, w, h) => `<rect x="${x}" y="${y}" width="${w}" height="${h}" fill="url(#hB)" stroke-width="6"/><rect x="${x + 10}" y="${y + 10}" width="${w - 20}" height="${h - 20}" stroke-width="1.6" opacity=".45"/><path d="M${x + 16},${y + h + 9} L${x + w - 16},${y + h + 9}" stroke-width="5"/><path d="M${x + w - 90},${y + h + 3} l26,0" stroke-width="6"/>`;
+function clock(cx, cy, r, hh, mm) {
+  let g = `<circle cx="${cx}" cy="${cy}" r="${r}" fill="${PAPER}" stroke-width="5"/><circle cx="${cx}" cy="${cy}" r="${r - 9}" stroke-width="1.6"/>`;
+  for (let i = 0; i < 12; i++) { const a = i * Math.PI / 6; g += `<path d="M${cx + (r - 14) * Math.sin(a)},${cy - (r - 14) * Math.cos(a)} L${cx + (r - 22) * Math.sin(a)},${cy - (r - 22) * Math.cos(a)}" stroke-width="3"/>`; }
+  const ha = ((hh % 12) + mm / 60) * Math.PI / 6, ma = mm * Math.PI / 30;
+  g += `<path d="M${cx},${cy} L${cx + r * .45 * Math.sin(ha)},${cy - r * .45 * Math.cos(ha)}" stroke-width="6"/><path d="M${cx},${cy} L${cx + r * .7 * Math.sin(ma)},${cy - r * .7 * Math.cos(ma)}" stroke-width="4"/><circle cx="${cx}" cy="${cy}" r="5" fill="${INK}"/>`;
+  return g;
+}
+const rays = () => `<g stroke="#bdb8ad" stroke-width="2.4">${[[0, 40, 260, 560], [0, 40, 380, 560], [1000, 40, 740, 560], [1000, 40, 620, 560]].map(([a, b, c, d]) => `<path d="M${a},${b} L${c},${d}" stroke-dasharray="2 12"/>`).join("")}</g>`;
+
+/* ---------- 各ページ ---------- */
+const TCH = {
+  A: { hair: "part", glasses: true },          // その1：ポケット先生
+  B: { hair: "mop" },                          // その2：しゃべりっぱなし先生
+  C: { hair: "slick", bow: true }              // その3：クイズ番組先生
+};
+const P = [];
+const add = (label, chip, fn, cap, sub) => P.push({ label, chip, fn, cap, sub });
+
+add("表紙", "表紙", () =>
+  T(500, 112, "こんな数学の先生は嫌だ", 78) +
+  teacher(200, 560, .95, { ...TCH.A, pose: "pocket", mood: "smug" }) +
+  teacher(500, 560, .95, { ...TCH.B, pose: "talk", mood: "talk" }) +
+  teacher(800, 560, .95, { ...TCH.C, pose: "hint", mood: "happy" }) +
+  T(200, 600, "その1", 30) + T(500, 600, "その2", 30) + T(800, 600, "その3", 30),
+  null, "※登場する先生は、すべて架空の数学の先生です");
+
+function titleCard(n, name, who) {
+  return () => T(500, 210, "こんな数学の先生は嫌だ", 64) + T(500, 390, "その" + n, 150) +
+    `<path d="M330,420 Q500,440 670,416" stroke-width="5"/>` + T(500, 500, name, 40) +
+    teacher(880, 690, .62, { ...TCH[who], pose: who === "A" ? "pocket" : who === "B" ? "talk" : "hint", mood: who === "C" ? "happy" : "smug" });
+}
+
+/* その1 ポケット先生 */
+add("その1", "その1", titleCard(1, "〜 ポケット先生 〜", "A"), null);
+add("その1-1", null, () =>
+  board(50, 60, 500, 290) + T(120, 125, "比例", 40) + T(300, 230, "y ＝ ax", 66) +
+  teacher(700, 520, 1.2, { ...TCH.A, pose: "pocket", mood: "talk" }) +
+  bubble(872, 95, 240, 118, ["はい、じゃあ", "比例やるぞ〜"], 34, 756, 168) +
+  arrow(560, 440, 638, 392) + T(545, 475, "ずっと", 34) +
+  arrow(900, 440, 762, 392) + T(920, 475, "ずっと", 34) +
+  back(120, 560, 1) + back(260, 560, 1, { girl: true }) + back(400, 560, 1),
+  "ポケットに手を突っ込んだまま、授業をする");
+add("その1-2", null, () =>
+  board(50, 60, 520, 300) + T(230, 150, "y ＝ ax", 58) +
+  `<rect x="150" y="212" width="300" height="74" rx="10" stroke-width="3"/><rect x="144" y="206" width="312" height="86" rx="12" stroke-width="2"/>` + T(300, 263, "a … 比例定数", 40) +
+  star(490, 210, 20) + star(110, 300, 16) +
+  teacher(770, 530, 1.2, { ...TCH.A, pose: "pocket", mood: "smug", headRot: -20 }) +
+  arrow(722, 236, 470, 252, "10 10") + arrow(728, 252, 470, 290, "10 10") +
+  T(620, 205, "クイッ", 34, { rot: -8 }) +
+  bubble(840, 70, 290, 96, ["ここ、", "テストに出るぞ"], 29, 800, 136) +
+  back(150, 560, 1) + back(300, 560, 1, { girl: true }),
+  "大事なところは、あごで指す");
+add("その1-3", null, () =>
+  board(50, 60, 480, 330) + arrow(90, 320, 505, 320) + arrow(230, 375, 230, 82) + T(505, 350, "x", 30) + T(255, 100, "y", 30) + T(212, 348, "O", 26) +
+  `<path d="M196,368 L340,80" stroke-width="5"/>` + T(395, 150, "y＝2x", 36) +
+  `<path d="M690,540 L690,300" stroke-dasharray="8 10" stroke-width="2.4"/>` +
+  teacher(690, 535, 1.2, { ...TCH.A, pose: "pocket", mood: "smug", rot: 26.6 }) +
+  `<path d="M690,440 Q720,436 736,446" stroke-width="2.4"/>` +
+  bubble(660, 120, 230, 92, ["傾き、2！"], 42, 808, 196) +
+  T(935, 430, "ぐぐっ", 34, { rot: 12 }) +
+  back(130, 560, 1) + T(130, 452, "？", 40) + back(280, 560, 1, { girl: true }) + T(280, 452, "？", 40),
+  "グラフの傾きは、体の傾きで表す", "（もちろん、手はポケットのまま）");
+add("その1-4", null, () =>
+  teacher(520, 540, 1.25, { ...TCH.A, pose: "out", mood: "happy" }) +
+  `<path d="M446,258 L594,252 L600,360 L452,366 Z" fill="${PAPER}" stroke-width="4"/>` + T(523, 300, "小テスト", 34) + T(525, 342, "（令和7年度）", 24) +
+  `<path d="M462,404 L452,428 L472,430 Z M578,404 L588,428 L568,430 Z" fill="${PAPER}" stroke-width="2.6"/>` +
+  `<circle cx="452" cy="452" r="2" fill="${INK}"/><circle cx="462" cy="470" r="2" fill="${INK}"/><circle cx="590" cy="458" r="2" fill="${INK}"/>` +
+  T(690, 168, "ジャーン", 44, { rot: 10 }) + sparkle(760, 230, 22) + sparkle(300, 220, 18) +
+  T(395, 480, "ポロ…", 26) +
+  bubble(190, 395, 280, 80, ["それ、去年の…"], 34, 160, 470) +
+  back(150, 565, 1) + back(860, 565, 1, { girl: true }),
+  "やっと手を出したと思ったら、", "ポケットから去年の小テスト");
+
+/* その2 しゃべりっぱなし先生 */
+add("その2", "その2", titleCard(2, "〜 しゃべりっぱなし先生 〜", "B"), null);
+add("その2-1", null, () =>
+  teacher(210, 540, 1.15, { ...TCH.B, pose: "talk", mood: "talk" }) +
+  bubble(660, 232, 640, 400, [
+    "それでね、比例定数っていうのはね、",
+    "つまりこれがこうなって、だからここが",
+    "こうなるわけ。で、さっきの話に戻ると",
+    "ね、先生が中学生のころはね……",
+    "あ、それと関係ないんだけどね……",
+    "……というわけで、さらに言うとね、",
+    "……（このあと45分つづく）"], 31, 290, 200) +
+  back(420, 565, 1) + T(480, 505, "zzz", 30) + back(560, 565, 1, { girl: true }) + back(700, 565, 1) + T(760, 505, "zzz", 30) + back(840, 565, 1, { girl: true }),
+  "45分間、先生だけがしゃべり続ける");
+add("その2-2", null, () =>
+  student(190, 470, 1.4, { hand: true, mood: "open", sweat: true }) +
+  T(92, 300, "あの…", 30) + `<path d="M160,330 l-10,-8 M166,350 l-12,-4" stroke-width="2.6"/>` +
+  bubble(490, 200, 460, 300, ["で、この式はこうで、", "こうなって、こうなるから、", "こうなのね。わかった？", "はい、次いくよ〜"], 36, 754, 190) +
+  teacher(800, 540, 1.15, { ...TCH.B, pose: "talk", mood: "talk" }),
+  "手を挙げた生徒が、ふきだしに埋もれる");
+add("その2-3", null, () =>
+  clock(150, 140, 80, 10, 59) + T(150, 270, "キーンコーン…", 30) +
+  teacher(560, 540, 1.15, { ...TCH.B, pose: "talk", mood: "smile" }) +
+  bubble(780, 100, 300, 86, ["何か質問ある人？"], 34, 606, 186) +
+  bubble(810, 290, 300, 104, ["……ないね！", "はい、終わり！"], 34, 614, 262) +
+  arrow(965, 150, 965, 236) + T(965, 128, "0.5秒", 26) +
+  back(160, 565, 1) + bubble(220, 405, 110, 64, ["え…"], 32, 180, 480) + back(820, 565, 1, { girl: true }) + back(950, 565, .9),
+  "「質問は？」の0.5秒後に、授業が終わる");
+add("その2-4", null, () =>
+  `<path d="M130,90 L495,70 L495,520 L130,540 Z" fill="${PAPER}" stroke-width="4"/><path d="M505,70 L870,90 L870,540 L505,520 Z" fill="${PAPER}" stroke-width="4"/>` +
+  `<path d="M495,70 Q500,60 505,70 L505,520 Q500,532 495,520 Z" fill="url(#hM)"/>` +
+  Array.from({ length: 9 }, (_, i) => `<path d="M150,${160 + i * 40 - i * 1.8} L478,${148 + i * 40 - i * 1.8} M522,${148 + i * 40 + i * 1.2} L852,${160 + i * 40 + i * 1.2}" stroke="#c9c5bb" stroke-width="1.6"/>`).join("") +
+  T(312, 130, "今日の数学", 34) + T(300, 200, "y ＝ ax（比例）", 30) +
+  Array.from({ length: 6 }, (_, i) => `<path d="M165,${240 + i * 40} q20,-8 40,0 t40,0 t40,0 t40,0 t40,0 t40,0 t40,0" stroke-width="2"/>`).join("") +
+  T(690, 130, "今日、ぼくが言ったこと", 30) +
+  T(560, 220, "・起立", 48, { a: "start" }) + T(560, 300, "・礼", 48, { a: "start" }) + T(560, 380, "・……", 48, { a: "start" }) +
+  `<g transform="rotate(-28 820 470)"><path d="M700,460 L880,460 L900,470 L880,480 L700,480 Z" fill="url(#hL)"/><path d="M880,460 L880,480"/><path d="M700,460 L688,460 L688,480 L700,480" fill="url(#hM)"/></g>`,
+  "今日、生徒が口にしたのは", "「起立」と「礼」だけ");
+
+/* その3 クイズ番組先生 */
+add("その3", "その3", titleCard(3, "〜 クイズ番組先生 〜", "C"), null);
+add("その3-1", null, () =>
+  rays() + T(720, 62, "★ 数学クイズの時間 ★", 34) +
+  teacher(320, 540, 1.15, { ...TCH.C, pose: "hold", mood: "happy" }) +
+  `<rect x="440" y="140" width="300" height="220" rx="8" fill="${PAPER}" stroke-width="5"/>` +
+  T(478, 185, "Q.", 40) + T(600, 232, "y ＝ 2x ＋ 1", 40) + T(600, 285, "x ＝ 3 のとき、", 32) + T(600, 334, "y は？", 38) +
+  bubble(210, 90, 330, 90, ["これわかるかな〜？"], 34, 300, 168) +
+  student(800, 470, .9, { buzzer: true, mood: "neutral" }) + student(925, 470, .9, { buzzer: true, girl: true, mood: "neutral" }),
+  "なぜか授業が、クイズ番組になる");
+add("その3-2", null, () =>
+  rays() +
+  teacher(320, 540, 1.15, { ...TCH.C, pose: "hint", mood: "smug" }) +
+  bubble(700, 115, 400, 140, ["ヒントは〜…", "「答えは 7」です！"], 40, 390, 190) +
+  student(700, 480, 1, { buzzer: true, mood: "open", sweat: true }) + student(870, 480, 1, { buzzer: true, girl: true, mood: "open", sweat: true }) +
+  T(785, 330, "（それ、答え…）", 32),
+  "ヒントが、ほぼ答え");
+add("その3-3", null, () =>
+  teacher(500, 540, 1.15, { ...TCH.C, pose: "shrug", mood: "frown", headRot: 10 }) +
+  `<path d="M420,150 q-12,10 0,20 M408,140 q-18,20 0,40 M580,150 q12,10 0,20 M592,140 q18,20 0,40" stroke-width="2.6"/>` +
+  bubble(500, 66, 470, 90, ["なんでわからんのかな〜"], 38, 520, 140) +
+  student(150, 480, 1, { mood: "sad" }) + student(820, 480, .95, { mood: "sad", girl: true }) + student(940, 480, .9, { mood: "sad" }) +
+  T(160, 330, "（どこがわからないか、", 26) + T(160, 362, "聞いてほしい…）", 26) +
+  T(870, 330, "（しょんぼり）", 26),
+  "わからない理由を、生徒に聞かずに嘆く");
+add("その3-4", null, () =>
+  rays() +
+  teacher(280, 540, 1.15, { ...TCH.C, pose: "present", mood: "happy" }) +
+  `<rect x="440" y="92" width="410" height="250" rx="8" fill="${PAPER}" stroke-width="5"/>` +
+  T(645, 150, "正解は……", 38) + T(645, 270, "y ＝ 7 ！", 84) +
+  sparkle(880, 110, 22) + sparkle(890, 300, 16) + sparkle(420, 76, 16) + T(640, 70, "ピンポーン♪", 34) +
+  student(700, 520, .9, { mood: "neutral" }) +
+  student(865, 520, 1, { mood: "neutral", girl: true }) +
+  bubble(800, 384, 270, 64, ["……で、なんで？"], 32, 850, 424),
+  "正解は発表されるが、", "「なぜ」は発表されない");
+add("その3-5", null, () =>
+  teacher(500, 545, 1.12, { ...TCH.C, pose: "trophy", mood: "happy" }) +
+  Array.from({ length: 18 }, (_, i) => { const x = 120 + (i * 137) % 760, y = 30 + (i * 71) % 260; return i % 3 ? `<rect x="${x}" y="${y}" width="16" height="9" fill="${i % 2 ? "url(#hM)" : PAPER}" stroke-width="2.4" transform="rotate(${i * 37} ${x + 8} ${y + 4})"/>` : `<circle cx="${x}" cy="${y}" r="5" fill="url(#hD)" stroke-width="2"/>`; }).join("") +
+  `<path d="M660,170 L980,170 L960,200 L980,230 L660,230 L680,200 Z" fill="${PAPER}" stroke-width="3.4"/>` + T(820, 212, "本日の優勝：先生", 30) +
+  student(150, 480, 1, { mood: "sleep" }) + T(205, 380, "zzz", 30) +
+  student(850, 480, 1, { mood: "neutral", girl: true }) + T(850, 365, "パチ…パチ…", 28),
+  "いちばん考えて、いちばん楽しんだのは、", "先生だった");
+
+/* おわり */
+add("おわり", "おわり", () =>
+  T(500, 108, "主役は、子どもたち。", 76) +
+  student(130, 520, 1, { hand: true, mood: "smile" }) + student(300, 520, 1, { hand: true, girl: true, mood: "smile" }) + student(470, 520, 1, { mood: "open" }) + student(640, 520, .95, { girl: true, mood: "smile" }) +
+  bubble(200, 245, 250, 70, ["こう考えたよ！"], 30, 150, 386) +
+  bubble(520, 250, 270, 70, ["でも、なんで？"], 30, 470, 420) +
+  teacher(840, 540, 1.05, { ...TCH.A, pose: "listen", mood: "smile" }) +
+  T(840, 600, "（ポケットは、からっぽ）", 24),
+  "〜 おわり 〜");
+
+/* ---------- 組み立て ---------- */
+const stage = document.getElementById("stage");
+function capSvg(cap, sub) {
+  if (!cap) return sub ? `<text class="hw" x="500" y="668" font-size="28" text-anchor="middle">${esc(sub)}</text>` : "";
+  const two = sub && !sub.startsWith("（");
+  const fit = s => Math.min(50, Math.floor(920 / [...s].length));
+  if (two) { const fs = Math.min(fit(cap), fit(sub)); return `<text class="cap" x="500" y="640" font-size="${fs}" text-anchor="middle">${esc(cap)}</text><text class="cap" x="500" y="${640 + fs * 1.25}" font-size="${fs}" text-anchor="middle">${esc(sub)}</text>`; }
+  let s = `<text class="cap" x="500" y="${sub ? 640 : 662}" font-size="${fit(cap)}" text-anchor="middle">${esc(cap)}</text>`;
+  if (sub) s += `<text class="hw" x="500" y="694" font-size="30" text-anchor="middle">${esc(sub)}</text>`;
+  return s;
+}
+P.forEach((p, i) => {
+  TX = [];
+  const d = p.fn();
+  const el = document.createElement("section");
+  el.className = "card";
+  el.setAttribute("aria-label", `${i + 1}枚目：${[p.cap, p.sub].filter(Boolean).join("") || p.label}`);
+  el.innerHTML = `<svg viewBox="0 0 1000 720" role="img" aria-hidden="true"><g class="ink" filter="url(#pencil)">${d}</g><g>${TX.join("")}</g>${capSvg(p.cap, p.sub)}<text class="hw" x="972" y="34" font-size="20" text-anchor="end" style="fill:#9d988d">${i + 1}</text></svg>`;
+  stage.appendChild(el);
+});
+const cards = [...stage.children], N = cards.length;
+const chips = document.getElementById("chips");
+P.forEach((p, i) => { if (!p.chip) return; const b = document.createElement("button"); b.type = "button"; b.textContent = p.chip; b.dataset.i = i; b.onclick = e => { e.stopPropagation(); go(i); }; chips.appendChild(b); });
+const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+let cur = 0, busy = false;
+cards[0].classList.add("on");
+function update() {
+  document.getElementById("count").textContent = `${cur + 1} / ${N}`;
+  document.getElementById("prev").disabled = cur === 0;
+  document.getElementById("next").disabled = cur === N - 1;
+  let sec = 0; P.forEach((p, i) => { if (p.chip && i <= cur) sec = i; });
+  chips.querySelectorAll("button").forEach(b => b.setAttribute("aria-current", String(+b.dataset.i === sec)));
+}
+function go(n) {
+  if (n < 0 || n >= N || n === cur || busy) return;
+  const a = cards[cur], b = cards[n];
+  const done = () => { a.classList.remove("on", "flip-out"); b.classList.remove("flip-in"); a.style.zIndex = b.style.zIndex = ""; busy = false; };
+  cur = n; update();
+  if (reduce) { b.classList.add("on"); done(); return; }
+  busy = true;
+  if (cards.indexOf(b) > cards.indexOf(a)) { b.classList.add("on"); b.style.zIndex = 1; a.style.zIndex = 2; a.classList.add("flip-out"); a.addEventListener("animationend", done, { once: true }); }
+  else { b.classList.add("on", "flip-in"); b.style.zIndex = 2; a.style.zIndex = 1; b.addEventListener("animationend", done, { once: true }); }
+}
+stage.addEventListener("click", e => { const r = stage.getBoundingClientRect(); go(e.clientX - r.left < r.width * .3 ? cur - 1 : cur + 1); });
+document.getElementById("prev").onclick = () => go(cur - 1);
+document.getElementById("next").onclick = () => go(cur + 1);
+addEventListener("keydown", e => {
+  if (["ArrowRight", "PageDown", " ", "Enter"].includes(e.key)) { if (e.key === "Enter" && e.target.tagName === "BUTTON") return; e.preventDefault(); go(cur + 1); }
+  else if (["ArrowLeft", "PageUp"].includes(e.key)) { e.preventDefault(); go(cur - 1); }
+  else if (e.key === "Home") go(0); else if (e.key === "End") go(N - 1);
+});
+update();
+})();
+</script>
